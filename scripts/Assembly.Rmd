@@ -181,8 +181,14 @@ data.frame(
 
 ```
 
+```{r}
+library(tidyverse)
+library(sf)
+```
 
-```{r Rename all geodata}
+The files have no consistency in naming. We will provide a similar format to name all files. 
+
+```{r Rename all geodata, eval = F}
 
 p2raw <- '../data/geodata/raw/'
 
@@ -202,18 +208,97 @@ raw_names <- data.frame(
     )
 )
   
-raw_names2 <- paste0(p2raw, list.files(p2raw))
-fnames <- lapply(raw_names2, unzip, list = T)
-names(fnames) <- list.files(p2raw)
+raw_names2 <- paste0(p2raw, list.files(p2raw)) #
+fnames <- lapply(raw_names2, unzip, list = T) # need individual file names in the compressed directory
+names(fnames) <- list.files(p2raw) # we will add the zipped directory as an identified to the files
 raw_names2 <- data.table::rbindlist(fnames, idcol = 'ZipName') |>
-  dplyr::select(-Length, -Date)
+  dplyr::select(-Length, -Date) 
 raw_names2 <- dplyr::left_join(raw_names2, raw_names, by = c('ZipName' = 'Raw_Name'))
 
 lapply(unique(raw_names2$Path_Name), unzip, junkpaths = T, exdir = '../data/geodata/step1')
 
-stringr::str_extract('aliens.not.cool', '[.].*')
+raw_names2 <- raw_names2 %>% 
+  mutate(
+    New_Name = paste0(New_Name,  stringr::str_extract(Name, '[.].*')),
+    Name = sub('.*\\/', "", Name)
+  ) %>% 
+  filter(str_detect(Name, '[.]'))
 
+file.rename(from = paste0('../data/geodata/step1/', raw_names2$Name),
+            to = paste0('../data/geodata/step1/', raw_names2$New_Name))
 
 rm(fnames, p2raw, raw_names)
+```
+
+Subset the attributes of Geodata and Provide standardized naming for the seed zones
+
+```{r}
+
+
+shapes <- list.files(path = '../data/geodata/step1/', pattern = '.shp$')
+fnames <- paste0('../data/geodata/step1/', shapes)
+
+Allium_acuminatum_WUS <- st_read(fnames[1], quiet = T) %>% 
+  select(Zone = GRIDCODE)
+
+Artemisia_tridentata_spp_vaseyana_WUS <- st_read(fnames[2], quiet = T) %>% 
+  select(Zone = GRIDCODE)
+
+Artemisia_tridentata_spp_tridentata <- st_read(fnames[3], quiet = T) %>% 
+  select(Zone = Seedzone)
+
+Artemisia_tridentata_spp_wyomingensis <- st_read(fnames[3], quiet = T) %>% 
+  select(Zone = Seedzone)
+
+Astragalus_lonchocarpus_CP <- st_read(fnames[4], quiet = T) %>% 
+  select(Zone = OBJECTID)
+
+Bouteloua_gracilis_CP <- st_read(fnames[6], quiet = T) %>% 
+  select(Zone = OBJECTID)
+
+Bromus_sitchensis_ssp_carinatus_BM <- st_read(fnames[7], quiet = T) %>% 
+  select(Zone = GRIDCODE)
+  
+Cleome_lutea_CP <- st_read(fnames[8], quiet = T) %>% 
+  select(Zone = Axis)
+
+Cleome_serrulata <- st_read(fnames[9], quiet = T) %>% 
+  select(Zone = assignment)
+
+Elymus_elymoides_CP <- st_read(fnames[10], quiet = T) %>% 
+  select(Zone = OBJECTID)
+
+Elymus_elymoides_WUS <- st_read(fnames[11], quiet = T) %>% 
+  select(Zone = GRIDCODE)
+
+Elymus_glaucus_BM <- st_read(fnames[12], quiet = T) %>% 
+  select(Zone = ZONE)
+
+Ephedra_nevadensis_MD <- st_read(fnames[13], quiet = T) %>% 
+  select(Zone = GRIDCODE)
+
+Eriocoma_hymenoides_WUS <- st_read(fnames[14], quiet = T) %>% 
+  select(Zone = GRIDCODE)
+
+Heliomeris_multiflora_CP <- st_read(fnames[15], quiet = T) %>% 
+  select(Zone = assignment)
+
+Koeleria_macrantha_CB_GB <- st_read(fnames[16], quiet = T) %>% 
+  select(Zone = OBJECTID)
+
+Leymus_cinereus_CB_GB <- st_read(fnames[17], quiet = T) %>% 
+  select(Zone = GRIDCODE)
+
+Machaeranthera_canescens_CP <- st_read(fnames[18], quiet = T) %>% 
+  select(Zone = Axis)
+
+Pleuraphis_jamesii_CP_GB_MD_WP <- st_read(fnames[19], quiet = T) %>% 
+  select(Zone = gridcode)
+
+Pleuraphis_jamesii_CP_GB_MD_WP <- st_read(fnames[19], quiet = T) %>% 
+  select(Zone = gridcode)
+
+
+plot(Leymus_cinereus_CB_GB)
 ```
 
