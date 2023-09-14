@@ -1,0 +1,219 @@
+---
+title: "Consolidate Western Empirical Seed Zones"
+author: "steppe"
+date: "2023-09-14"
+output: html_document
+---
+
+Roughly 2 dozen western species have empirical seed transfer zones and climate matched seed zones. 
+However, nearly all of the spatial vector products derived from these experiments are in variable formats.
+Here we attempt to make the naming and contents of this projects unified. 
+Further in the end we produce a raster stack of all products to enable the rapid retrieval of empirical seed zone information. 
+
+We first attempted to use wget to download the links, however the webpage is difficult... 
+```{sh List all available Seed Zones, eval = F}
+# sudo apt install lynx -y
+lynx -listonly -dump https://www.fs.usda.gov/wwetac/threat-map/TRMSeedZoneData.php | awk '/http/{print $2}' | grep -E '\.zip' > ../data/raw/links.txt
+# manually removed the three records for provisional zones
+cd ../data/raw
+ls
+#wget -b links.txt -P ../geodata/raw/
+```
+
+
+```{r Create all tables, eval = F}
+
+data.frame(
+  Species = c(
+    'Astragalus lonchocarpus', 'Bouteloua gracilis', 'Heliomeris multiflora',
+    'Koeleria macrantha', 'Elymus elymoides', 
+    
+    'Elymus glaucus', 'Elymus elymoides', 'Leymus cinereus',
+    'Bromus carinatus',  'Koeleria macrantha', 'Pseudoroegneria spicata', 'Poa secunda', 
+    'Allium acuminatum', 'Achnatherum hymenoides', 'Holodiscus discolor', 
+    'Achnatherum thurberianum', 'Artemisia tridentata spp. vaseyana', 'Artemisia tridentata spp. wyomingensis', 
+    'Artemisia tridentata ssp. tridentata',
+    
+    'Sphaeralcea ambigua', 'Ephedra nevadensis', 
+    'Macheranthera canescens', 'Cleome lutea', 'Sphaeralcea parvifolia', 
+    'Sporobolus cryptandrus', 'Pleuraphis jamesii'
+    ), 
+  PLANTS_code = c(
+    'ASLO3', 'BOGR2', 'HEMU3',
+    'KOMA', 'ELEL5',
+    
+    'ELGL', 'ELEL5', 'LECI4',
+    'BRCA5', 'KOMA', 'PSSP6',
+    'POSE', 'ALAC4', 'ACHY',
+    'HODI', 'ACHT7', 'ARTRV',
+    'ARTRW8', 'ARTRT', 
+    
+    'SPAM2', 'EPNE',
+    'MACA3', 'CLLU2', 'SPPA2',
+    'SPCR', 'PLJA'
+    ), 
+  Method_broad = c(
+    rep('Climate-Matched', times = 5),
+    rep('Empirical', times = 21)
+  ),
+  Method_fine = c(
+    rep('Climate-Matched', times = 5),
+    rep('Common Garden', times = 14),
+    rep('Landscape Genetic', times = 7)
+    )
+) |> 
+  write.csv('../data/raw/STZ_Methods.csv', row.names = F)
+
+data.frame(
+  PLANTS_code = c(
+    'ASLO3', 'BOGR2', 'HEMU3',
+    'KOMA', 'ELEL5',
+    
+    'ELGL', 'ELEL5', 'LECI4',
+    'BRCA5', 'KOMA', 'PSSP6',
+    'POSE', 'ALAC4', 'ACHY',
+    'HODI', 'ACHT7', 'ARTRV',
+    'ARTRW8', 'ARTRT', 
+    
+    'SPAM2', 'EPNE',
+    'MACA2', 'CLLU2', 'SPPA2',
+    'SPCR', 'PLJA'
+    ),
+  Range = c(
+    rep('Colorado Plateau', times = 5),
+    'Blue Mountains', 'Western US', 'Columbia Basin - Great Basin',
+    'Blue Mountains', 'Columbia Basin - Great Basin',
+    rep('Western US', times = 9), rep('Mojave Desert', times = 2),
+    rep('Colorado Plateau', times = 2), 'Colorado Plateau - Great Basin',
+    'Colorado Plateau', 'Colorado Plateau - Great Basin - Mojave Desert - Western Plains'
+  ),
+  Range_Code = c(
+    rep('CP', times = 5),
+    'BM', 'WUS', 'CB - GB', 
+    'BM',  'CB - GB', rep('WUS', times = 9), rep('MD', times = 2),
+    rep('CP', times = 2), 'CP - GB',
+    'CP', 'CP - GB - MD - WP'
+    )
+) |> 
+  write.csv('../data/raw/Spatial_Domains_STZ.csv', row.names = F)
+
+data.frame(
+  PLANTS_code = c(
+    'ASLO3', 'BOGR2', 'HEMU3',
+    'KOMA', 'ELEL5',
+    
+    'ELGL', 'ELEL5', 'LECI4',
+    'BRCA5', 'KOMA', 'PSSP6',
+    'POSE', 'ALAC4', 'ACHY',
+    'HODI', 'ACHT7', 'ARTRV',
+    'ARTRW8', 'ARTRT', 
+    
+    'SPAM2', 'EPNE',
+    'MACA2', 'CLLU2', 'SPPA2',
+    'SPCR', 'PLJA'
+    ),
+  Range_Code = c(
+    rep('CP', times = 5),
+    'BM', 'WUS', 'CB - GB', 
+    'BM',  'CB - GB', rep('WUS', times = 9), rep('MD', times = 2),
+    rep('CP', times = 2), 'CP - GB',
+    'CP', 'CP - GB - MD - WP'
+    ),
+  Bibtex_key = c(
+    rep('doherty2017matching', times = 5),
+    'erickson2004landscape', 'UNKNOWN', 'johnson2016linking',
+    'johnson2010mapping', 'UNKNOWN', 'bradley2013genetic',
+    'johnson2015relating', 'johnson2013genecology', 'johnson2012genecology', 
+    'horning2010genecology', 'johnson2017genecology', rep('UNKNOWN', times = 3),
+    rep('shryock2017landscape', times = 2), 
+    rep('massatti2020genetically', times = 2), 
+    rep('massatti2019genetically', times = 3)
+  )
+) |> 
+  write.csv('../data/raw/Citations.csv', row.names = F)
+
+data.frame(
+    USDA_Species = c(
+    'Astragalus lonchocarpus', 'Bouteloua gracilis', 'Heliomeris multiflora',
+    'Koeleria macrantha', 'Elymus elymoides', 
+    
+    'Elymus glaucus', 'Elymus elymoides', 'Leymus cinereus',
+    'Bromus carinatus',  'Koeleria macrantha', 'Pseudoroegneria spicata', 'Poa secunda', 
+    'Allium acuminatum', 'Achnatherum hymenoides', 'Holodiscus discolor', 
+    'Achnatherum thurberianum', 'Artemisia tridentata spp. vaseyana', 'Artemisia tridentata spp. wyomingensis', 
+    'Artemisia tridentata ssp. tridentata',
+    
+    'Sphaeralcea ambigua', 'Ephedra nevadensis', 
+    'Macheranthera canescens', 'Cleome lutea', 'Sphaeralcea parvifolia', 
+    'Sporobolus cryptandrus', 'Pleuraphis jamesii'
+    ), 
+    Species = c(
+    'Astragalus lonchocarpus', 'Bouteloua gracilis', 'Heliomeris multiflora',
+    'Koeleria macrantha', 'Elymus elymoides', 
+    
+    'Elymus glaucus', 'Elymus elymoides', 'Leymus cinereus',
+    'Bromus sitchensis ssp. carinatus',  'Koeleria macrantha', 'Pseudoroegneria spicata', 'Poa secunda', 
+    'Allium acuminatum', 'Eriocoma hymenoides', 'Holodiscus discolor', 
+    'Eriocoma thurberiana', 'Artemisia tridentata spp. vaseyana', 'Artemisia tridentata spp. wyomingensis', 
+    'Artemisia tridentata ssp. tridentata',
+    
+    'Sphaeralcea ambigua', 'Ephedra nevadensis', 
+    'Macheranthera canescens', 'Cleomella lutea', 'Sphaeralcea parvifolia', 
+    'Sporobolus cryptandrus', 'Pleuraphis jamesii'
+    ), 
+  PLANTS_code = c(
+    'ASLO3', 'BOGR2', 'HEMU3',
+    'KOMA', 'ELEL5',
+    
+    'ELGL', 'ELEL5', 'LECI4',
+    'BRCA5', 'KOMA', 'PSSP6',
+    'POSE', 'ALAC4', 'ACHY',
+    'HODI', 'ACHT7', 'ARTRV',
+    'ARTRW8', 'ARTRT', 
+    
+    'SPAM2', 'EPNE',
+    'MACA2', 'CLLU2', 'SPPA2',
+    'SPCR', 'PLJA'
+    ) 
+)  |> 
+  write.csv('../data/raw/Taxonomy.csv', row.names = F)
+
+
+```
+
+
+```{r Rename all geodata}
+
+p2raw <- '../data/geodata/raw/'
+
+raw_names <- data.frame(
+  Path_Name = paste0(p2raw, list.files(p2raw)),
+  Raw_Name = list.files(p2raw),
+  New_Name = c(
+    'Eriocoma_hymenoides-WUS', 'Allium_acuminatum-WUS', 'Artemisia_tridentata-WUS', 
+    'Artemisia_tridentata_spp._vaseyana-WUS', 'Astragalus_lonchocarpus-CP', 'Astragalus_lonchocarpus-GSTZ', 
+    'Pseudoroegneria_spicata-WUS', 'Bouteloua_gracilis-CP', 'Cleome_lutea-CP', 'Cleome_serrulata-', 
+    'Elymus_elymoides-CP', 'Elymus_elymoides-WUS', 'Elymus_glaucus-BM', 
+    'Ephedra_nevadensis-MD', 'Heliomeris_multiflora-CP', 
+    'Koeleria_macrantha-CB-GB', 'Leymus_cinereus-CB-GB', 'Machaeranthera_canescens-CP', 
+    'Bromus_sitchensis_ssp._carinatus-BM', 'Pleuraphis_jamesii-CP-GB-MD-WP', 
+    'Poa_secunda-WUS', 'Sporobolus_cryptandrus-CP', 'Sphaeralcea_ambigua-MD',
+    'Sphaeralcea_parvifolia-CP-GB'
+    )
+)
+  
+raw_names2 <- paste0(p2raw, list.files(p2raw))
+fnames <- lapply(raw_names2, unzip, list = T)
+names(fnames) <- list.files(p2raw)
+raw_names2 <- data.table::rbindlist(fnames, idcol = 'ZipName') |>
+  dplyr::select(-Length, -Date)
+raw_names2 <- dplyr::left_join(raw_names2, raw_names, by = c('ZipName' = 'Raw_Name'))
+
+lapply(unique(raw_names2$Path_Name), unzip, junkpaths = T, exdir = '../data/geodata/step1')
+
+stringr::str_extract('aliens.not.cool', '[.].*')
+
+
+rm(fnames, p2raw, raw_names)
+```
+
