@@ -184,6 +184,7 @@ data.frame(
 ```{r}
 library(tidyverse)
 library(sf)
+library(terra)
 ```
 
 The files have no consistency in naming. We will provide a similar format to name all files. 
@@ -249,13 +250,7 @@ Cleome_lutea_CP <- empSZ_reader(fnames[8], 'Axis')
 Cleome_serrulata <- empSZ_reader(fnames[9], 'assignment')
 Elymus_elymoides_CP <- empSZ_reader(fnames[10], 'OBJECTID')
 Elymus_elymoides_WUS <- empSZ_reader(fnames[11], 'GRIDCODE')
-
-Elymus_glaucus_BM <- st_read(fnames[12], quiet = T) %>%  
-  select(Zone_char = ZONE) %>% 
-  group_by(Zone_char) %>% 
-  mutate(Zone = n(), .before = geometry) %>% 
-  st_transform(4326)
-
+Elymus_glaucus_BM <- empSZ_reader(fnames[12], 'ZONE')
 Ephedra_nevadensis_MD <- empSZ_reader(fnames[13], 'GRIDCODE')
 Eriocoma_hymenoides_WUS <- empSZ_reader(fnames[14], 'GRIDCODE')
 Heliomeris_multiflora_CP <- empSZ_reader(fnames[15], 'assignment')
@@ -264,11 +259,7 @@ Leymus_cinereus_CB_GB <- empSZ_reader(fnames[17], 'GRIDCODE')
 Machaeranthera_canescens_CP <- empSZ_reader(fnames[18], 'Axis')
 Pleuraphis_jamesii_CP_GB_MD_WP <- empSZ_reader(fnames[19], 'gridcode')
 Poa_secunda_WUS <- empSZ_reader(fnames[20], 'GRIDCODE')
-Pseudoroegneria_spicata_WUS <- st_read(fnames[21], quiet = T)  %>%  
-  select(Zone_char = ZONE) %>% 
-  group_by(Zone_char) %>% 
-  mutate(Zone = n(), .before = geometry) %>% 
-  st_transform(4326)
+Pseudoroegneria_spicata_WUS <- empSZ_reader(fnames[21], 'ZONE')
 Sphaeralcea_ambigua_MD <- empSZ_reader(fnames[22], 'GRIDCODE')
 Sphaeralcea_parvifolia_CP_GB <- empSZ_reader(fnames[23], 'gridcode')
 Sporobolus_cryptandrus_CP <- empSZ_reader(fnames[24], 'gridcode')
@@ -281,9 +272,34 @@ rm(list = ls()[(ls() != 'emp_seed_zones')])
 ```
 
 
+```{r Produce Rasters of seedzones}
+
+emp_seed_zones <- emp_seed_zones %>% 
+  mutate(Species_Domain = paste(Species, Domain, sep = "-"), .before = geometry)
+esz <- split(emp_seed_zones, f = emp_seed_zones$Species_Domain)
+
+w_ext <- ext( vect(emp_seed_zones))
+template <- rast(x = w_ext, crs = "epsg:5070", res = 1/720, nlyr = length(esz),
+                 '../data/geodata/rasters/SeedTransferZones.tif') # 5 arc second
+names(template) <- names(esz)
+
+system.time({
+  alac_test <- rasterize(vect(alac), template, field = 'Zone')
+})
+
+for(i in 1:length(esz)){
+  template[[i]] <- rasterize(vect(esz[[i]]), template[[i]], field = 'Zone')
+}
+
+
+ggplot() +
+  geom_sf(data = alac, color = NA, fill = 'red')
+
+```
+
 ```{r}
-
-
+cols <- c('#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3','#fdb462',
+          '#b3de69','#fccde5','#d9d9d9','#bc80bd','#ccebc5','#ffed6f')
 
 ```
 

@@ -19,7 +19,8 @@ empSZ_reader <- function(x, colname){
   geodata <- geodata |>
     dplyr::select(Zone = all_of(colname)) |>
     dplyr::mutate(Species = spp_name,
-                  Domain = domain_name, .before = Zone) |>
+                  Domain = domain_name, .before = Zone,
+                  Zone = as.character(Zone)) |>
     dplyr::arrange(Zone)
   
   return(geodata)
