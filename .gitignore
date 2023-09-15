@@ -49,5 +49,7 @@ po/*~
 rsconnect/
 
 geodata/*
-literature/literature*
+geodata/
+literature/literature/*
+literature/literature/
 

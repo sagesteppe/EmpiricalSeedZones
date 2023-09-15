@@ -230,75 +230,60 @@ file.rename(from = paste0('../data/geodata/step1/', raw_names2$Name),
 rm(fnames, p2raw, raw_names)
 ```
 
-Subset the attributes of Geodata and Provide standardized naming for the seed zones
+Subset the attributes of Geo-data and Provide standardized naming for the seed zones
+
+```{r identify columns containing relevant seed zone data}
+
+fnames <- paste0('../data/geodata/step1/', 
+                 list.files(path = '../data/geodata/step1/', pattern = '.shp$'))
+source('functions.R')
+
+Allium_acuminatum_WUS <- empSZ_reader(fnames[1], 'GRIDCODE')
+Artemisia_tridentata_spp_vaseyana_WUS <- empSZ_reader(fnames[2], 'GRIDCODE')
+Artemisia_tridentata_spp_tridentata <- empSZ_reader(fnames[3], 'Seedzone')
+Artemisia_tridentata_spp_wyomingensis <- empSZ_reader(fnames[3], 'Seedzone')
+Astragalus_lonchocarpus_CP <- empSZ_reader(fnames[4], 'OBJECTID')
+Bouteloua_gracilis_CP <- empSZ_reader(fnames[6], 'OBJECTID')
+Bromus_sitchensis_ssp_carinatus_BM <- empSZ_reader(fnames[7], 'GRIDCODE')
+Cleome_lutea_CP <- empSZ_reader(fnames[8], 'Axis')
+Cleome_serrulata <- empSZ_reader(fnames[9], 'assignment')
+Elymus_elymoides_CP <- empSZ_reader(fnames[10], 'OBJECTID')
+Elymus_elymoides_WUS <- empSZ_reader(fnames[11], 'GRIDCODE')
+
+Elymus_glaucus_BM <- st_read(fnames[12], quiet = T) %>%  
+  select(Zone_char = ZONE) %>% 
+  group_by(Zone_char) %>% 
+  mutate(Zone = n(), .before = geometry) %>% 
+  st_transform(4326)
+
+Ephedra_nevadensis_MD <- empSZ_reader(fnames[13], 'GRIDCODE')
+Eriocoma_hymenoides_WUS <- empSZ_reader(fnames[14], 'GRIDCODE')
+Heliomeris_multiflora_CP <- empSZ_reader(fnames[15], 'assignment')
+Koeleria_macrantha_CB_GB <- empSZ_reader(fnames[16], 'OBJECTID')
+Leymus_cinereus_CB_GB <- empSZ_reader(fnames[17], 'GRIDCODE')
+Machaeranthera_canescens_CP <- empSZ_reader(fnames[18], 'Axis')
+Pleuraphis_jamesii_CP_GB_MD_WP <- empSZ_reader(fnames[19], 'gridcode')
+Poa_secunda_WUS <- empSZ_reader(fnames[20], 'GRIDCODE')
+Pseudoroegneria_spicata_WUS <- st_read(fnames[21], quiet = T)  %>%  
+  select(Zone_char = ZONE) %>% 
+  group_by(Zone_char) %>% 
+  mutate(Zone = n(), .before = geometry) %>% 
+  st_transform(4326)
+Sphaeralcea_ambigua_MD <- empSZ_reader(fnames[22], 'GRIDCODE')
+Sphaeralcea_parvifolia_CP_GB <- empSZ_reader(fnames[23], 'gridcode')
+Sporobolus_cryptandrus_CP <- empSZ_reader(fnames[24], 'gridcode')
+
+rm(fnames, empSZ_reader)
+
+emp_seed_zones <- bind_rows(mget(ls()))
+
+rm(list = ls()[(ls() != 'emp_seed_zones')])
+```
+
 
 ```{r}
 
 
-shapes <- list.files(path = '../data/geodata/step1/', pattern = '.shp$')
-fnames <- paste0('../data/geodata/step1/', shapes)
 
-Allium_acuminatum_WUS <- st_read(fnames[1], quiet = T) %>% 
-  select(Zone = GRIDCODE)
-
-Artemisia_tridentata_spp_vaseyana_WUS <- st_read(fnames[2], quiet = T) %>% 
-  select(Zone = GRIDCODE)
-
-Artemisia_tridentata_spp_tridentata <- st_read(fnames[3], quiet = T) %>% 
-  select(Zone = Seedzone)
-
-Artemisia_tridentata_spp_wyomingensis <- st_read(fnames[3], quiet = T) %>% 
-  select(Zone = Seedzone)
-
-Astragalus_lonchocarpus_CP <- st_read(fnames[4], quiet = T) %>% 
-  select(Zone = OBJECTID)
-
-Bouteloua_gracilis_CP <- st_read(fnames[6], quiet = T) %>% 
-  select(Zone = OBJECTID)
-
-Bromus_sitchensis_ssp_carinatus_BM <- st_read(fnames[7], quiet = T) %>% 
-  select(Zone = GRIDCODE)
-  
-Cleome_lutea_CP <- st_read(fnames[8], quiet = T) %>% 
-  select(Zone = Axis)
-
-Cleome_serrulata <- st_read(fnames[9], quiet = T) %>% 
-  select(Zone = assignment)
-
-Elymus_elymoides_CP <- st_read(fnames[10], quiet = T) %>% 
-  select(Zone = OBJECTID)
-
-Elymus_elymoides_WUS <- st_read(fnames[11], quiet = T) %>% 
-  select(Zone = GRIDCODE)
-
-Elymus_glaucus_BM <- st_read(fnames[12], quiet = T) %>% 
-  select(Zone = ZONE)
-
-Ephedra_nevadensis_MD <- st_read(fnames[13], quiet = T) %>% 
-  select(Zone = GRIDCODE)
-
-Eriocoma_hymenoides_WUS <- st_read(fnames[14], quiet = T) %>% 
-  select(Zone = GRIDCODE)
-
-Heliomeris_multiflora_CP <- st_read(fnames[15], quiet = T) %>% 
-  select(Zone = assignment)
-
-Koeleria_macrantha_CB_GB <- st_read(fnames[16], quiet = T) %>% 
-  select(Zone = OBJECTID)
-
-Leymus_cinereus_CB_GB <- st_read(fnames[17], quiet = T) %>% 
-  select(Zone = GRIDCODE)
-
-Machaeranthera_canescens_CP <- st_read(fnames[18], quiet = T) %>% 
-  select(Zone = Axis)
-
-Pleuraphis_jamesii_CP_GB_MD_WP <- st_read(fnames[19], quiet = T) %>% 
-  select(Zone = gridcode)
-
-Pleuraphis_jamesii_CP_GB_MD_WP <- st_read(fnames[19], quiet = T) %>% 
-  select(Zone = gridcode)
-
-
-plot(Leymus_cinereus_CB_GB)
 ```
 
