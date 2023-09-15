@@ -233,7 +233,7 @@ rm(fnames, p2raw, raw_names)
 
 Subset the attributes of Geo-data and Provide standardized naming for the seed zones
 
-```{r identify columns containing relevant seed zone data}
+```{r identify columns containing relevant seed zone data, eval = F}
 
 fnames <- paste0('../data/geodata/step1/', 
                  list.files(path = '../data/geodata/step1/', pattern = '.shp$'))
@@ -265,41 +265,76 @@ Sphaeralcea_parvifolia_CP_GB <- empSZ_reader(fnames[23], 'gridcode')
 Sporobolus_cryptandrus_CP <- empSZ_reader(fnames[24], 'gridcode')
 
 rm(fnames, empSZ_reader)
-
 emp_seed_zones <- bind_rows(mget(ls()))
 
 rm(list = ls()[(ls() != 'emp_seed_zones')])
 ```
 
 
-```{r Produce Rasters of seedzones}
+```{r Produce Rasters of seedzones, eval = F}
 
 emp_seed_zones <- emp_seed_zones %>% 
   mutate(Species_Domain = paste(Species, Domain, sep = "-"), .before = geometry)
 esz <- split(emp_seed_zones, f = emp_seed_zones$Species_Domain)
 
 w_ext <- ext( vect(emp_seed_zones))
-template <- rast(x = w_ext, crs = "epsg:5070", res = 1/720, nlyr = length(esz),
-                 '../data/geodata/rasters/SeedTransferZones.tif') # 5 arc second
+template <- rast(x = w_ext, crs = "epsg:5070", res = 1/360) # 10 arc second
 names(template) <- names(esz)
 
-system.time({
-  alac_test <- rasterize(vect(alac), template, field = 'Zone')
-})
+fp <- '../data/geodata/rasters/'
 
-for(i in 1:length(esz)){
-  template[[i]] <- rasterize(vect(esz[[i]]), template[[i]], field = 'Zone')
+for(i in 1:length(esz)){ ## need to write each tif seperately!!!! 
+  rasterize(vect(esz[[i]]), template, field = 'Zone', filename = paste0(fp, names(esz[i]), '.tif'))
 }
 
-
-ggplot() +
-  geom_sf(data = alac, color = NA, fill = 'red')
-
+rm(esz, w_ext, template, fp, i)
 ```
 
-```{r}
+```{r inspect results, eval = F}
+
+fp <- '../data/geodata/rasters/'
+
+rs <- paste0(fp, list.files(fp, pattern = '.tif$'))
+rs <- rast(rs)
+plot(rs[[16:20]])
+
 cols <- c('#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3','#fdb462',
           '#b3de69','#fccde5','#d9d9d9','#bc80bd','#ccebc5','#ffed6f')
 
+```
+
+```{r Determine empirical Seed zones of 2023 Great Basin SOS collections}
+
+
+emp_sz <- read.csv('../data/raw/Taxonomy.csv') %>% pull(PLANTS_code)
+
+manual_cols <-c(
+  'ObjectID', 'COLL_ID', 'Collection.Number', 'Seed.Collection.Reference.Number',
+  'Taxa', 'NRCS.PLANTS.Code')
+
+p1 <- '/media/steppe/ExternalHD/SoS_GB/QAQC/data/'
+
+collections <- read.csv(paste0(p1, 'Great_Basin_X_Utah_Seed_Collection_2023_0.csv'), na.strings = "") %>% 
+  st_as_sf(coords = c('x', 'y'), crs = 4326)  %>% 
+  select(all_of(manual_cols)) %>% 
+  janitor::clean_names() %>% 
+  mutate(
+    taxa = str_replace(taxa, 'Achnatherum hymenoides', 'Eriocoma hymenoides'),
+    taxa = str_replace(taxa, 'Peritoma lutea', 'Cleome lutea')
+    ) %>% 
+  filter(!str_detect(coll_id, 'FWS'), nrcs_plants_code %in% emp_sz) %>% 
+  mutate(taxa_ = gsub(' ', '_', taxa))
+
+fstz <- filter(emp_seed_zones, Species %in% unique(collections$taxa_))
+coll_stz <- st_intersection(collections, fstz) %>% 
+  filter(taxa_ == Species)
+
+coll_stz <- coll_stz %>% 
+  st_drop_geometry() %>% 
+  select(object_id, Ref_no = seed_collection_reference_number, nrcs_plants_code, taxa, Zone)
+
+write.csv(coll_stz, file = '../data/processed/GB_colls.csv')
+
+rm(p1, emp_sz, manual_cols, collections)
 ```
 
