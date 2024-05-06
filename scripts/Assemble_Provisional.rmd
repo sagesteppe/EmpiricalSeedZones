@@ -1,0 +1,83 @@
+---
+title: "Consolidate Western Provisional Seed Zones"
+author: "steppe"
+date: "2023-09-14"
+output: html_document
+---
+We will also consolidate the provisional seed zones. 
+The provisional seed zones are used more commonly than the empirical, because most species
+have not yet had their empirical zones produced. 
+
+```{r}
+library(tidyverse)
+library(sf)
+library(terra)
+```
+
+Currently, these data exist as a mix of vector and raster data. 
+We will consolidate them into a raster stack, which can be readily queried, and requires
+less storage and active memory. 
+
+```{r load data}
+p <- '../data/geodata/raw_provisional'
+f <- file.path(p, list.files(p, recursive = T, pattern = 'tif$|shp$'))
+
+Bower2013 <- st_read(f[1], quiet = TRUE) %>% 
+  select(seed_zone) 
+
+GreatBasin_Bower <- st_read(f[2], quiet = TRUE) %>% 
+  select(seed_zone)
+
+DesertSW <- st_read(f[3], quiet = TRUE) %>% 
+  select(seed_zone = Zone) 
+
+Mojave <- st_read(f[5], quiet = TRUE) %>% 
+  rename(seed_zone = Zone) 
+```
+
+Now convert these data into raster format.  
+
+```{r, eval = F}
+
+domain <- st_bbox(c(xmin = -125.1, xmax = -100, ymax = 52.1, ymin = 32.0), crs = st_crs(4326))
+template <- terra::rast(x = ext(domain), crs = "epsg:4326", res = 1/360) # 10 arc second
+
+plot(ext(rs))
+
+#' combine the provisional seed zones as rasters
+#' @param x sf/dataframe/tibble to transform to a raster
+#' @param bbox the domain to crop data to, optional
+#' @param template raster template with the appropriate domain, grain, and crs to convert x to. 
+#' @param outpath an output directory to save the raster
+prov_writer <- function(x, bbox, template, outpath){
+
+  ob_name <- deparse(substitute(x))
+  if(any(sf::st_is_valid(x) == FALSE)) {x <- sf::st_make_valid(x)}
+  if(terra::crs(x) != terra::crs(template)){x <- sf::st_transform(x, terra::crs(template))}
+  if(!missing(bbox)){x <- sf::st_crop(x, sf::st_bbox(template))}
+  
+  x_r <- terra::rasterize(x, template, field = 'seed_zone', 
+                          filename = file.path(outpath, paste0(ob_name, '.tif')))
+}
+
+prov_writer(Bower2013, bbox = domain, template = template, outpath = '../data/geodata/provisional_products')
+prov_writer(DesertSW, bbox = domain, template = template, outpath = '../data/geodata/provisional_products')
+prov_writer(GreatBasin_Bower, bbox = domain, template = template, outpath = '../data/geodata/provisional_products')
+prov_writer(Mojave, bbox = domain, template = template, outpath = '../data/geodata/provisional_products')
+
+rm(prov_writer, template, domain, f, p, Bower2013, DesertSW, GreatBasin_Bower, Mojave)
+```
+
+now combine these raster layers into a single stack
+
+```{r}
+p <- '../data/geodata/provisional_products'
+f <- file.path(p, list.files(p, pattern = 'tif$'))
+r <- rast(f)
+names(r) <- gsub('\\.tif', '', basename(sources(r)))
+
+writeRaster(r, filename = '../data/geodata/final_provisional/provisional_stack.tif')
+rm(p, f, r)
+getwd()
+```
+
