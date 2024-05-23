@@ -1,7 +1,7 @@
 Trait,Count,Characteristic
 Filename-Binomial,2,common_name
-Filename-Binomial,8,USDA_PLANTS_code_lower
-Filename-Binomial,12,USDA_PLANTS_code_upper
+Filename-Binomial,8,PLANTS_lower
+Filename-Binomial,12,PLANTS_upper
 Filename-Binomial,2,spelled_out
 Filename-Geographic Extent,6,Specified
 Filename-Geographic Extent,18,Not-specified
