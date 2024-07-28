@@ -37,11 +37,10 @@ filenames <- filenames |>
 ```
 
 
-
 ```{r}
 
 # We are going to create a barplot, which we want to use to showcase the current
-# disorganization of the existing filenames. 
+# disorganization of the existing file names. 
 
 binom_plot <- filenames %>% 
   
@@ -78,7 +77,7 @@ binom_plot <- filenames %>%
   labs(
     x = NULL,
     y = 'Count', 
-    title = 'How do filenames represent the species in them', 
+    title = 'How do filenames\nrepresent the species?', 
     fill = 'Character State'
       ) + 
   
@@ -94,18 +93,22 @@ binom_plot <- filenames %>%
         legend.title.position = 'top', 
         legend.title = element_text(hjust = 0.5)) +
 
+  # by default ggplot puts a lot of white space between the content of the plot
+  # and the axis labels; we are going to reduce the x-axis spacing. 
+  scale_x_discrete(expand = c(0,0)) +
+  
   # we are also going to select some preferable colours to the default scheme
   scale_fill_manual(values = c('#C0C5C1', '#F08080', '#6279B8',  '#496F5D'))
 
 
 # We will repeat the process with Geographic extent. 
-filenames %>% 
+extent_plot <- filenames %>% 
   filter(Trait == 'Geographic_Extent') |>
   mutate(Response = 
            factor(Response, levels = c('Specified', 'Not-specified'))) %>% 
   ggplot(., aes(y = Value, x = '', fill = forcats::fct_rev(Response))) + 
   geom_bar(position = "stack", stat = "identity") + 
-  labs(y = 'Count', x = NULL, title = 'Is the Geographic Extent of the Seed Zones specified?', 
+  labs(y = 'Count', x = NULL, title = 'Is the geographic\nextent specified?', 
        fill = 'Specified') +
   theme_minimal() +
   theme(
@@ -114,18 +117,19 @@ filenames %>%
     legend.title.position = 'top', 
     legend.title = element_text(hjust = 0.5)
     ) + 
+  scale_x_discrete(expand = c(0,0)) +
   
   geom_text(aes(label = Response), position = position_stack(vjust = 0.5)) +
   scale_fill_manual(values = c('#C0C5C1',  '#496F5D')) 
 
 
-filenames %>% 
+file_plot <- filenames %>% 
   filter(Trait == 'Seed_Zone') |>
   mutate(Response = 
            factor(Response, levels = c('zone', 'seed_zone', 'sz', 'missing'))) %>% 
   ggplot(., aes(y = Value, x = '', fill = forcats::fct_rev(Response))) + 
-  geom_bar(position = "stack", stat = "identity") + 
-  labs(y = 'Count', x = NULL, title = 'Do files mention their subject matter?', 
+  geom_bar(position = "stack", stat = "identity", width=1) + 
+  labs(y = 'Count', x = NULL, title = 'Do files mention\nthey contain STZs?', 
        fill = 'Seed Zone Specified') + 
     scale_fill_manual(values = c('#C0C5C1', '#F08080', '#6279B8',  '#496F5D'))+
   theme_minimal() +
@@ -135,7 +139,20 @@ filenames %>%
     legend.title.position = 'top', 
     legend.title = element_text(hjust = 0.5)
     ) + 
+  scale_x_discrete(expand = c(0,0)) +
   geom_text(aes(label = Response), position = position_stack(vjust = 0.5)) 
+
+
+fnames <- binom_plot  + file_plot + extent_plot
+ggsave('../poster/filenames.png', fnames, width = 10, height = 10, units = 'in')
+
+rm(binom_plot, file_plot, extent_plot)
+```
+
+
+Maps
+
+```{r}
 
 ```
 
