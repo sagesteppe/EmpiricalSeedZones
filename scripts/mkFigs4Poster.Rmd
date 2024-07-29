@@ -143,15 +143,38 @@ file_plot <- filenames %>%
   geom_text(aes(label = Response), position = position_stack(vjust = 0.5)) 
 
 
-fnames <- binom_plot  + file_plot + extent_plot
+fnames <- binom_plot  + file_plot + extent_plot + 
+  plot_annotation(title = 'Inconsistency in File Naming', 
+                  theme = theme(plot.title = element_text(size = 18, hjust = 0.5))) 
+
 ggsave('../poster/filenames.png', fnames, width = 10, height = 10, units = 'in')
 
-rm(binom_plot, file_plot, extent_plot)
+rm(binom_plot, file_plot, extent_plot, filenames, fnames)
 ```
 
-Maps 
+Maps, many map features take on binary outcomes. 
+We can display them as 'Yes/No'. 
+We'll order the bars from the most to least "No's"
 
 ```{r}
 
+maps <- maps |> 
+  mutate(Trait = str_remove(Trait, '.*-')) |>
+  filter(Trait %in% c('Title', 'North_Arrow', 'Sources', 'Zone_Key',
+                      'Distance_Key', 'State_Lines')) |>
+  mutate(Trait = factor(Trait, levels = c('Title', 'North_Arrow', 'Sources', 'Zone_Key',
+                      'Distance_Key', 'State_Lines')))
+
+ggplot(data = maps, aes(fill = Response, y = Value, x = Trait)) + 
+  geom_bar(position = 'fill', stat = 'identity') + 
+  scale_fill_manual(values = c('#00203F','#ADEFD1')) + 
+  theme_classic() + 
+  labs(title = 'Is the content of maps consistent?', fill = 'Component', 
+  y = 'Proportion of Maps with element') +
+  theme(plot.title = element_text(hjust = 0.5)) + 
+  scale_x_discrete(labels=c('Title', 'North Arrow', 'Sources', 'Zone Legend',
+                      'Distance Key', 'State Lines')) 
+  
+ggsave('../poster/maps.png', width = 10, height = 10, units = 'in')
 ```
 
