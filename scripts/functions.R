@@ -42,6 +42,7 @@ mapmaker <- functionx(x, species, outdir, ecoregions, cities){
   
 }
 
+install.packages("rnaturalearth")
 borders <- spData::world |>
   dplyr::filter(iso_a2 %in% c('CA', 'US', 'MX')) |>
   dplyr::select(name_long)

@@ -149,8 +149,7 @@ ggsave('../poster/filenames.png', fnames, width = 10, height = 10, units = 'in')
 rm(binom_plot, file_plot, extent_plot)
 ```
 
-
-Maps
+Maps 
 
 ```{r}
 
