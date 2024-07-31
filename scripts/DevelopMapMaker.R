@@ -48,12 +48,12 @@ buffeR <- function(x, buf_prcnt){
 #' a map for embedding in a publication or poster. 
 mapmaker <- function(x, species, outdir, ecoregions, landscape, caption, filetype){ 
   
-  if(missing(species))(stop('Species Name Not supplied.'))
-  if(missing(outdir)){outdir = getwd()}
-  if(missing(caption)){caption = NULL}
-  if(missing(landscape)){landscape = TRUE}
-  if(missing(filetype)){filetype = 'pdf'}
-  fname <- paste0(file.path(outdir, gsub(' ', '_', species)), '_STZmap.', filetype)
+  if(missing(species))(stop('Species Name Not supplied.')) 
+  if(missing(outdir)){outdir = getwd()} 
+  if(missing(caption)){caption = NULL} 
+  if(missing(landscape)){landscape = TRUE} 
+  if(missing(filetype)){filetype = 'pdf'} 
+  fname <- paste0(file.path(outdir, gsub(' ', '_', species)), '_STZmap.', filetype) 
   
   # Buffer the map so that the species only doesn't occupy the entire region. 
   extent <- buffeR(x) 
@@ -144,4 +144,47 @@ setwd('/media/steppe/hdd/EmpiricalSeedZones/scripts')
 acth <- st_read('../data/geodata/step1/Achnatherum_thurberianum-WUS.shp') |> 
   select(zone) 
 
-mapmaker(acth, species = 'Achnatherum thurberianum', landscape = FALSE) 
+mapmaker(acth, species = 'Achnatherum thurberianum', landscape = FALSE, filetype = 'png') 
+
+
+
+
+################################################################################
+######## Determine which interior regions the STZ should be marked with ########
+#' This function helps determine which Interior Regions coincide with the majority 
+#' of an empirical seed transfer zone and should be used for naming the file. 
+#' @param x an empirical STZ as vector data. 
+#' @param n a sample size for determining which interior regions cover the most area of the stz
+#' defaults to 1000, sizes above a couple thousand seem gratuitous. 
+#' @return a list with a vector and a dataframe. The vector lists this component of the filename, at most 
+#' two interior regions separated by a '-'. 
+#' The dataframe contains a count of the number of randomly drawn points which intersect
+#' interior regions. For areas with near ties we recommend increasing the sample size argument, `n` which is paseed to
+#'  to st:sample. 
+regionCoding <- function(x, n){
+  
+  if(missing(n)){n <- 1000}
+  #regions <- data('interiorRegions')
+  
+  pts <- sf::st_sample(x, size = n, type = 'regular') |> 
+    sf::st_as_sf() |> 
+    sf::st_intersection(regions) |> 
+    sf::st_drop_geometry() |> 
+    dplyr::count(REG_ABB) |> 
+    dplyr::arrange(-n) 
+  
+  suggested_name <- pts |> 
+    dplyr::slice_head(n = 2) |> 
+    dplyr::pull(REG_ABB) |>  
+    paste0(collapse = '-') 
+  
+  return(
+    list( 
+      'SuggestedName' = suggested_name, 
+      'RegionsCovered' = pts  
+      )
+    )
+  
+}
+
+ob <- regionCoding(acth, n = 2500)
