@@ -11,9 +11,14 @@ We will only use functions contained within R packages in the tidyverse ecosyste
 The `readxl` package is part of the tidyverse ecosystem, but one of the kind of more
 far flung packages which needs to be directly loaded by name rather than in the
 `library(tidyverse)` call. 
+We'll also use the `sf` package to create some shapes for illustrating our suggestions!
+There are certainly some other packages for this, but... 
+I think `sf` is one of the all-around best R packages out there, and it can be used
+to accomplish just about anything graphics related which is meant to be clear and concise. 
 ```{r}
 library(tidyverse)
 library(readxl)
+library(sf)
 ```
 
 ```{r load relevant data for plotting}
@@ -176,5 +181,137 @@ ggplot(data = maps, aes(fill = Response, y = Value, x = Trait)) +
                       'Distance Key', 'State Lines')) 
   
 ggsave('../poster/maps.png', width = 10, height = 10, units = 'in')
+```
+
+
+
+# Create an example filename
+
+```{r}
+
+fname
+```
+
+
+# Make folder directories
+
+We will use sf to update our directory tree. 
+We want this to be a nice big catchy tree that helps to pull attendees in!
+We'll use continuous colours, moving from darker to lighter, to try and pull this off. 
+
+```{r Create Directory Tree Example}
+
+# we will use the simple features package to create polygon shapes which we can then
+# map both text, and lines onto. 
+
+# We will create many rhombic polygons to showcase the various levels of the directory (folders)
+# we'll then 'buffer', or add a predefined distance around  these polygons. The
+# real reason we want to buffer the polygons is so that we can create 'soft corners'
+# These are generally seen as more gentle and inviting than hard corners. 
+# We achieve this effect via the combination of the joinStyle and endCapStyle 
+# arguments, with a very minimal buffer distance (1)
+
+# sf objects can take on just about any projection in existence, however by not specifying
+# any real datum, we are just gonna keep everything in a cartesian grid. 
+
+# notice that despite us creating square-like shapes we have to define 
+# 5 pairs of coordinates (x, y), this is because the 5th set of coordinates
+# needs to go back to the origin point (the 1st set of coordinates) to close 
+# the polygon.
+Genus_epithet_lgSTZ <- sf::st_buffer(
+  st_polygon(list(rbind(c(0,0), c(10,0), c(10,10), c(0,10), c(0,0)))),
+  dist = 1,
+  joinStyle = 'ROUND', 
+  endCapStyle = "ROUND") 
+
+Data <- sf::st_buffer(
+  st_polygon(list(rbind(c(1,5.5), c(1,9), c(9,9), c(9,5.5), c(1,5.5)))),
+  dist = 1,
+  joinStyle = 'ROUND', 
+  endCapStyle = "ROUND") 
+
+Information <- sf::st_buffer(
+  st_polygon(list(rbind(c(1,1), c(1,3), c(9,3), c(9,1), c(1,1)))),
+  dist = 1,
+  joinStyle = 'ROUND', endCapStyle = "ROUND")
+
+Raster <- sf::st_buffer(
+  st_polygon(list(rbind(c(2,8.5), c(2,8.5), c(8.75,8.5), c(8.5,8.5), c(2,8.5)))),
+  dist = 1,
+  joinStyle = 'ROUND', endCapStyle = "ROUND")
+
+Vector <- sf::st_buffer(
+  st_polygon(list(rbind(c(2,6), c(2,6), c(8.75,6), c(7,6), c(2,6)))),
+  dist = 1,
+  joinStyle = 'ROUND', endCapStyle = "ROUND") 
+
+# notice that here we are creating a 'point' type geometry, and placing it
+# into a dataframe, We can map the 'Label' to a function later to type this out. 
+# all of these labels will be combined with the function geom_sf_label so that we
+# have a nice label box around them. 
+ge_lg_lab <- data.frame(Label = 'Genus_epithet_lgSTZ', x = 1, y = 11) |>
+  st_as_sf(coords = c(x = 'x', y = 'y'))
+data_lab <- data.frame(Label = 'Data', x = 0.5, y = 10) |>
+  st_as_sf(coords = c(x = 'x', y = 'y'))
+raster_lab <- data.frame(Label = 'Raster', x = 2, y = 9.25) |>
+  st_as_sf(coords = c(x = 'x', y = 'y'))
+vector_lab <- data.frame(Label = 'Vector', x = 2, y = 7) |>
+  st_as_sf(coords = c(x = 'x', y = 'y'))
+information_lab <- data.frame(Label = 'Information', x = 1.25, y = 4) |>
+  st_as_sf(coords = c(x = 'x', y = 'y'))
+
+# These are text data again, and we will simply write them onto the plot using
+# geom_sf_text. 
+raster_file <- data.frame(Label = 'ABCD_lgSTZ_UCB-LCB.tif', x = 6.25, y = 8.5) |>
+  st_as_sf(coords = c(x = 'x', y = 'y')) 
+vector_file <- data.frame(Label = 'ABCD_lgSTZ_UCB-LCB.shp', x = 6.25, y = 6) |>
+  st_as_sf(coords = c(x = 'x', y = 'y')) 
+citation <- data.frame(Label = 'citation.txt', x = 2.5, y = 3) |>
+  st_as_sf(coords = c(x = 'x', y = 'y')) 
+map <- data.frame(Label = 'map.txt', x = 2.2, y = 2) |>
+  st_as_sf(coords = c(x = 'x', y = 'y')) 
+paper <- data.frame(Label = 'Paper_about_making_the_STZ.pdf', x = 4.9, y = 1) |>
+  st_as_sf(coords = c(x = 'x', y = 'y')) 
+
+ggplot () +
+  geom_sf(data = Genus_epithet_lgSTZ, fill = NA) + 
+  geom_sf(data = Data) + 
+  geom_sf(data = Information) + 
+  geom_sf(data = Raster) + 
+  geom_sf(data = Vector) +
+
+  # we can draw some 'line' type geometries straight onto the plot, this means
+  # we don't have to delete (rm) as many objects at the end of this r chunk. 
+  geom_sf(data = st_as_sfc("LINESTRING(-0.5 11,-0.5 10, 0 10)")) + # upper bend to 'Data'
+  geom_sf(data = st_as_sfc("LINESTRING(0.5 10, 0.5 9.25, 1.5 9.25)")) + # bend to 'Raster'
+  geom_sf(data = st_as_sfc("LINESTRING(0.5 10, 0.5 7, 1.5 7)")) + # bend to 'Vector'
+  geom_sf(data = st_as_sfc("LINESTRING(2 9, 2 8.5, 3 8.5)")) + # Raster file contents
+  geom_sf(data = st_as_sfc("LINESTRING(2 7, 2 6, 3 6)")) + # Vector file contents
+  geom_sf(data = st_as_sfc("LINESTRING(-0.5 10, -0.5 4, 0 4)")) +  # bend to 'Information' 
+  geom_sf(data = st_as_sfc("LINESTRING(0.5 4, 0.5 3, 1.25 3)")) +  # bends throughout 'Information 1
+  geom_sf(data = st_as_sfc("LINESTRING(0.5 3, 0.5 2, 1.25 2)")) +  # bends throughout 'Information 2
+  geom_sf(data = st_as_sfc("LINESTRING(0.5 2, 0.5 1, 1.25 1 )")) + # bends throughout 'Information 2
+
+  # add on our sub directory names
+  geom_sf_label(data = ge_lg_lab, aes(label = Label)) +
+  geom_sf_label(data = data_lab, aes(label = Label)) +
+  geom_sf_label(data = raster_lab, aes(label = Label)) +
+  geom_sf_label(data = vector_lab, aes(label = Label)) +
+  geom_sf_label(data = information_lab, aes(label = Label)) +
+  
+  # throw in the example file names. 
+  geom_sf_text(data = raster_file, aes(label = Label)) + 
+  geom_sf_text(data = vector_file, aes(label = Label)) +
+  geom_sf_text(data = citation, aes(label = Label)) +
+  geom_sf_text(data = map, aes(label = Label)) + 
+  geom_sf_text(data = paper, aes(label = Label)) +
+  theme_void()
+
+ggsave('../poster/ExampleDirectory.png', width = 5, height = 5, units = 'in', dpi = 300)
+
+
+rm(Genus_epithet_lgSTZ, Data, Information, Raster, Vector, 
+   ge_lg_lab, data_lab, raster_lab, vector_lab, information_lab,
+   raster_file, vector_file, citation, map, paper)
 ```
 
