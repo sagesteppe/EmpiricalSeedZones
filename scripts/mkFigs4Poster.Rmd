@@ -17,6 +17,7 @@ I think `sf` is one of the all-around best R packages out there, and it can be u
 to accomplish just about anything graphics related which is meant to be clear and concise. 
 ```{r}
 library(tidyverse)
+library(ggtext)
 library(readxl)
 library(sf)
 ```
@@ -47,6 +48,9 @@ filenames <- filenames |>
 # We are going to create a barplot, which we want to use to showcase the current
 # disorganization of the existing file names. 
 
+showtext_auto() # helps ggsave avoid shrinking text = 
+showtext_opts(dpi = 300)
+
 binom_plot <- filenames %>% 
   
   # when we save a plot to an object, by default Rstudio will not render it into 
@@ -57,8 +61,8 @@ binom_plot <- filenames %>%
   # will allow us to easily display the values in an order, we will always put the
   # desired file name component at the bottom of the chart. 
   mutate(Response = 
-           factor(Response, levels = c('scientific_name', 'NRCS_PLANTS_upper', 
-                                       'NRCS_PLANTS_lower', 'common_name'))) %>% 
+           factor(Response, levels = c('NRCS_PLANTS_upper', 'NRCS_PLANTS_lower',
+                                       'scientific_name',  'common_name'))) %>% 
   
   # ggplot is low-order plotting device. it will require the following arguments: 
   # 1 data = the dataset which will be plotted, in this instance we denote that the 
@@ -93,39 +97,43 @@ binom_plot <- filenames %>%
   # we are going to label the portion of the chart, and place the legend beneath
   # rather than to the side of the plot. 
   geom_text(aes(label = Response), position = position_stack(vjust = 0.5)) +
-  theme(legend.position="bottom", 
+  theme(legend.position="none", 
         plot.title = element_text(hjust = 0.5),
         legend.title.position = 'top', 
-        legend.title = element_text(hjust = 0.5)) +
+        legend.title = element_text(hjust = 0.5)
+) +
 
   # by default ggplot puts a lot of white space between the content of the plot
   # and the axis labels; we are going to reduce the x-axis spacing. 
   scale_x_discrete(expand = c(0,0)) +
   
   # we are also going to select some preferable colours to the default scheme
-  scale_fill_manual(values = c('#C0C5C1', '#F08080', '#6279B8',  '#496F5D'))
+  scale_fill_manual(values = c('#686963', '#EF476F', '#758BFD',  '#06D6A0'))
 
 
 # We will repeat the process with Geographic extent. 
 extent_plot <- filenames %>% 
   filter(Trait == 'Geographic_Extent') |>
+  mutate(Response = if_else(Response == 'Specified', 'Yes', 'No')) |>
   mutate(Response = 
-           factor(Response, levels = c('Specified', 'Not-specified'))) %>% 
+           factor(Response, levels = c('Yes', 'No'))) %>% 
   ggplot(., aes(y = Value, x = '', fill = forcats::fct_rev(Response))) + 
   geom_bar(position = "stack", stat = "identity") + 
   labs(y = 'Count', x = NULL, title = 'Is the geographic\nextent specified?', 
        fill = 'Specified') +
   theme_minimal() +
   theme(
-    legend.position="bottom", 
+    legend.position="none", 
     plot.title = element_text(hjust = 0.5),
     legend.title.position = 'top', 
-    legend.title = element_text(hjust = 0.5)
+    legend.title = element_text(hjust = 0.5), 
+    axis.text.y = element_blank()
     ) + 
+  labs(y = NULL) + 
   scale_x_discrete(expand = c(0,0)) +
   
   geom_text(aes(label = Response), position = position_stack(vjust = 0.5)) +
-  scale_fill_manual(values = c('#C0C5C1',  '#496F5D')) 
+  scale_fill_manual(values = c('#686963',  '#06D6A0')) 
 
 
 file_plot <- filenames %>% 
@@ -134,25 +142,28 @@ file_plot <- filenames %>%
            factor(Response, levels = c('zone', 'seed_zone', 'sz', 'missing'))) %>% 
   ggplot(., aes(y = Value, x = '', fill = forcats::fct_rev(Response))) + 
   geom_bar(position = "stack", stat = "identity", width=1) + 
-  labs(y = 'Count', x = NULL, title = 'Do files mention\nthey contain STZs?', 
+  labs(y = 'Count', x = NULL, title = 'Do files mention\nthey contain STZs\n if so how?', 
        fill = 'Seed Zone Specified') + 
-    scale_fill_manual(values = c('#C0C5C1', '#F08080', '#6279B8',  '#496F5D'))+
+    scale_fill_manual(values = c('#686963', '#758BFD', '#FF8600',  '#06D6A0'))+
   theme_minimal() +
   theme(
-    legend.position="bottom", 
+    legend.position="none", 
     plot.title = element_text(hjust = 0.5),
     legend.title.position = 'top', 
-    legend.title = element_text(hjust = 0.5)
+    legend.title = element_text(hjust = 0.5),
+    axis.text.y = element_blank()
     ) + 
+  labs(y = NULL) + 
   scale_x_discrete(expand = c(0,0)) +
   geom_text(aes(label = Response), position = position_stack(vjust = 0.5)) 
 
 
 fnames <- binom_plot  + file_plot + extent_plot + 
-  plot_annotation(title = 'Inconsistency in File Naming', 
+  plot_annotation(title = 'Are there consistent file name components?', 
                   theme = theme(plot.title = element_text(size = 18, hjust = 0.5))) 
 
-ggsave('../poster/filenames.png', fnames, width = 10, height = 10, units = 'in')
+fnames
+ggsave('../poster/filenames.png', fnames)
 
 rm(binom_plot, file_plot, extent_plot, filenames, fnames)
 ```
@@ -172,7 +183,7 @@ maps <- maps |>
 
 ggplot(data = maps, aes(fill = Response, y = Value, x = Trait)) + 
   geom_bar(position = 'fill', stat = 'identity') + 
-  scale_fill_manual(values = c('#00203F','#ADEFD1')) + 
+  scale_fill_manual(values = c('#758BFD','#EF476F')) + 
   theme_classic() + 
   labs(title = 'Is the content of maps consistent?', fill = 'Component', 
   y = 'Proportion of Maps with element') +
@@ -183,7 +194,7 @@ ggplot(data = maps, aes(fill = Response, y = Value, x = Trait)) +
 ggsave('../poster/maps.png', width = 10, height = 10, units = 'in')
 ```
 
-f
+
 # Make folder directories
 
 We will use sf to update our directory tree. 
@@ -261,15 +272,15 @@ citation <- data.frame(Label = 'citation.txt', x = 2.5, y = 3) |>
   st_as_sf(coords = c(x = 'x', y = 'y')) 
 map <- data.frame(Label = 'map.txt', x = 2.2, y = 2) |>
   st_as_sf(coords = c(x = 'x', y = 'y')) 
-paper <- data.frame(Label = 'Paper_about_making_the_STZ.pdf', x = 4.9, y = 1) |>
+paper <- data.frame(Label = 'Paper_about_making_the_STZ.pdf', x = 4.75, y = 1) |>
   st_as_sf(coords = c(x = 'x', y = 'y')) 
 
 ggplot () +
-  geom_sf(data = Genus_epithet_lgSTZ, fill = NA) + 
-  geom_sf(data = Data) + 
-  geom_sf(data = Information) + 
-  geom_sf(data = Raster) + 
-  geom_sf(data = Vector) +
+  geom_sf(data = Genus_epithet_lgSTZ, fill = '#BCD8C1') + 
+  geom_sf(data = Data, fill = '#439A86') + 
+  geom_sf(data = Information, fill = '#439A86') + 
+  geom_sf(data = Raster, fill = '#007991') + 
+  geom_sf(data = Vector, fill = '#007991') +
 
   # we can draw some 'line' type geometries straight onto the plot, this means
   # we don't have to delete (rm) as many objects at the end of this r chunk. 
@@ -278,17 +289,17 @@ ggplot () +
   geom_sf(data = st_as_sfc("LINESTRING(0.5 10, 0.5 7, 1.5 7)")) + # bend to 'Vector'
   geom_sf(data = st_as_sfc("LINESTRING(2 9, 2 8.5, 3 8.5)")) + # Raster file contents
   geom_sf(data = st_as_sfc("LINESTRING(2 7, 2 6, 3 6)")) + # Vector file contents
-  geom_sf(data = st_as_sfc("LINESTRING(-0.5 10, -0.5 4, 0 4)")) +  # bend to 'Information' 
+  geom_sf(data = st_as_sfc("LINESTRING(-0.5 10, -0.5 4, 1 4)")) +  # bend to 'Information' 
   geom_sf(data = st_as_sfc("LINESTRING(0.5 4, 0.5 3, 1.25 3)")) +  # bends throughout 'Information 1
   geom_sf(data = st_as_sfc("LINESTRING(0.5 3, 0.5 2, 1.25 2)")) +  # bends throughout 'Information 2
   geom_sf(data = st_as_sfc("LINESTRING(0.5 2, 0.5 1, 1.25 1 )")) + # bends throughout 'Information 2
 
   # add on our sub directory names
-  geom_sf_label(data = ge_lg_lab, aes(label = Label)) +
-  geom_sf_label(data = data_lab, aes(label = Label)) +
-  geom_sf_label(data = raster_lab, aes(label = Label)) +
-  geom_sf_label(data = vector_lab, aes(label = Label)) +
-  geom_sf_label(data = information_lab, aes(label = Label)) +
+  geom_sf_label(data = ge_lg_lab, aes(label = Label), fill = '#E9D985') +
+  geom_sf_label(data = data_lab, aes(label = Label), fill = '#E9D985') +
+  geom_sf_label(data = raster_lab, aes(label = Label), fill = '#E9D985') +
+  geom_sf_label(data = vector_lab, aes(label = Label), fill = '#E9D985') +
+  geom_sf_label(data = information_lab, aes(label = Label), fill = '#E9D985') +
   
   # throw in the example file names. 
   geom_sf_text(data = raster_file, aes(label = Label)) + 
@@ -299,7 +310,6 @@ ggplot () +
   theme_void()
 
 ggsave('../poster/ExampleDirectory.png', width = 5, height = 5, units = 'in', dpi = 300)
-
 
 rm(Genus_epithet_lgSTZ, Data, Information, Raster, Vector, 
    ge_lg_lab, data_lab, raster_lab, vector_lab, information_lab,
@@ -454,68 +464,236 @@ rm(p, f, out, colReporter)
 
 vals <- data.frame(
   Trait = c(rep(c('Zone', 'Multipolygon', 'Area'), each = 2), 'Area'), 
-  Value = c(8, 16, 13, 13, 3, 7, 16), 
+  Value = c(8, 18, 13, 13, 3, 7, 16), 
   Response = c('Yes', 'No', 'Yes', 'No', 'Yes', 'Yes, but unlabelled', 'No') 
 )
 
+showtext_auto() # helps ggsave avoid shrinking text = 
+showtext_opts(dpi = 300)
 
 zones_plot <- vals %>% 
   filter(Trait == 'Zone') %>% 
   ggplot(., aes(y = Value, x = '', fill = Response)) + 
   geom_bar(position = "stack", stat = "identity", width = 1) + 
-  labs(y = 'Count', x = NULL, title = 'Does the field with Seed Zone\ninformation have "Zone" in the name?', 
+  labs(y = 'Count', x = NULL, title = 'Is the Seed Zone\nfield labelled?', 
        fill = 'Zone') + 
-    scale_fill_manual(values = c('#C0C5C1',  '#496F5D'))+
+    scale_fill_manual(values = c('#686963',  '#06D6A0'))+
   theme_minimal() +
+  
+  geom_text(aes(label = Response), position = position_stack(vjust = 0.5)) + 
   theme(
-    legend.position="bottom", 
+    legend.position="none", 
     plot.title = element_text(hjust = 0.5),
     legend.title.position = 'top', 
-    legend.title = element_text(hjust = 0.5)
+    legend.title = element_text(hjust = 0.5), 
+    axis.text.y = element_blank()
     ) + 
-  scale_x_discrete(expand = c(0,0)) +
-  geom_text(aes(label = Response), position = position_stack(vjust = 0.5)) 
+  labs(y = NULL) + 
+  scale_x_discrete(expand = c(0,0)) 
 
 polygons_plot <- vals %>% 
   filter(Trait == 'Multipolygon') %>% 
   ggplot(., aes(y = Value, x = '', fill = Response)) + 
   geom_bar(position = "stack", stat = "identity", width = 1) + 
-  labs(y = 'Count', x = NULL, title = 'Are the geometries multipolygons?', 
+  labs(y = 'Count', x = NULL, title = 'Are the geometries\nmultipolygons?', 
        fill = 'Multipolygon') + 
-    scale_fill_manual(values = c('#C0C5C1',  '#496F5D'))+
+    scale_fill_manual(values = c('#686963',  '#06D6A0'))+
   theme_minimal() +
   theme(
-    legend.position="bottom", 
+    legend.position="none", 
     plot.title = element_text(hjust = 0.5),
     legend.title.position = 'top', 
     legend.title = element_text(hjust = 0.5)
     ) + 
   scale_x_discrete(expand = c(0,0)) +
+  scale_y_continuous(breaks = seq(0, 30, by = 5)) + 
   geom_text(aes(label = Response), position = position_stack(vjust = 0.5)) 
 
 
 areas_plot <- vals %>% 
   filter(Trait == 'Area') %>% 
+  mutate(Response = 
+           factor(Response, 
+                  levels = c('No', 'Yes, but unlabelled', 'Yes'))) %>% 
+
+
   ggplot(., aes(y = Value, x = '', fill = Response)) + 
   geom_bar(position = "stack", stat = "identity", width = 1) + 
-  labs(y = 'Count', x = NULL, title = 'Are the geometries multipolygons?', 
+  labs(y = 'Count', x = NULL, title = 'Is an "Area" field Present-\nand labelled?', 
        fill = 'Multipolygon') + 
-    scale_fill_manual(values = c('#C0C5C1',  'green', '#496F5D'))+
+    scale_fill_manual(values = c('#686963', '#758BFD', '#06D6A0'))+
   theme_minimal() +
+    scale_x_discrete(expand = c(0,0)) +
   theme(
-    legend.position="bottom", 
+    legend.position="none", 
     plot.title = element_text(hjust = 0.5),
     legend.title.position = 'top', 
-    legend.title = element_text(hjust = 0.5)
+    legend.title = element_text(hjust = 0.5), 
+    axis.text.y = element_blank(), 
+    axis.text = element_text(size = 50)
     ) + 
-  scale_x_discrete(expand = c(0,0)) +
+  labs(y = NULL) + 
   geom_text(aes(label = Response), position = position_stack(vjust = 0.5)) 
 
-
-
-fnames <- polygons_plot  + zones_plot + areas_plot + 
-  plot_annotation(title = 'How are fields named in files?', 
+fields <- polygons_plot + zones_plot + areas_plot + 
+  plot_annotation(title = 'Are field names consistent across files?', 
                   theme = theme(plot.title = element_text(size = 18, hjust = 0.5))) 
   
+ggsave('../poster/fields.png', fields, bg = 'transparent')
+rm(zones_plot, polygons_plot, areas_plot)
 ```
 
+
+
+# Rules for Fields within the file. 
+
+
+```{r Rules textbox}
+
+df <- tibble(
+  label = c(
+    'Use UpperCamelCase for field names whenever possible.',
+    'The four field names above should be in every file.',
+    'Do you need to include extra variables? If so place them "after" these four fields.',
+    'If using Bioclim variables, use their\nofficial bioclim designations - e.g. BIO8.',
+    'If using a statistic use: min, max, mean, R, SD; prefixed with "_" e.g. "BIO8_R".',
+    'Have SeedZone numbers in ascending order from the hottest and driest areas.',
+    'Descriptive names (SZName) e.g. "SW montane" are useful additions to the Seed Zones.',
+    '"ID" reflects each polygon geometry - if using multipolygons the ID will be "SeedZone".'
+  ),
+  x = 0,
+  y = seq(from = 40, to = 5, by = -5),
+  fill = '#BCD8C1',
+  orientation = c("upright"),
+  color = c("black")
+)
+
+
+ggplot(df) +
+  aes(
+    x, y, label = label, color = color, fill = fill, box.colour = '#439A86', 
+    orientation = orientation
+  ) +
+  geom_textbox(width = unit(1, "npc")) +
+  scale_discrete_identity(aesthetics = c("color", "fill", "orientation")) +
+  xlim(-1, 1) + 
+  theme_void() + 
+  theme(
+    panel.background = element_rect(fill = "#007991")
+    )
+
+ggsave('../poster/FieldRules.png',  height = 4, units = 'in', dpi = 300)
+
+rm(df)
+```
+
+
+Example df for field names
+
+```{r}
+
+df <- data.frame(
+  ID = 1:4,
+  SeedZone = 1:4,
+  SZName = c('Salt Desert', 'Desert Scrub', 'Pinyon-Juniper/Oak Brush', 'Montane'), 
+  AreaAcres = c(12340, 14230, 30142, 9872),
+  'BIO1_R' = c(20.2, 19.1, 15.1, 12.3),
+  'BIO2_mean' = c(5.1, 7.1, 10.1, 12.3)
+)
+
+library(gt)
+
+gt_tbl <- 
+  gt(df) |>
+  tab_header(
+    title = "Example field names in a shapefile",
+  ) |>
+  tab_options(
+    table.background.color = '#BCD8C1', 
+    column_labels.background.color = '#E9D985') |>
+  tab_style(
+    style = cell_fill(color = "#007991" |> adjust_luminance(steps = 2)),
+    locations = cells_body(columns = 1:4)
+  ) |>
+  tab_style(
+    style = cell_fill(color = "#439A86" |> adjust_luminance(steps = 2)),
+    locations = cells_body(columns = 5:6)
+  ) |>
+  tab_footnote(
+    footnote = "The first four (blue) fields should be in every file. More fields are optional."
+  )
+
+gt_tbl |> 
+  gtsave('../poster/ExampleFields-table.png', expand = 10)
+
+gtExtras::gtsave_extra(gt_tbl, '../poster/ExampleFields-table.png', expand = 10)
+```
+
+
+
+```{r Example of fields data, eval = F}
+
+fields <- data.frame(Label = 'ID | SeedZone | SZName | AreaAcres', x = 0, y = 0) |>
+  st_as_sf(coords = c(x = 'x', y = 'y'))
+
+ID_Poly <- st_polygon(
+  list(
+    rbind(
+      c(-0.05075,-0.0025), c(-0.05075,0.0095),  c(-0.08,0.0095),  c(-0.08,-0.0025), 
+      c(-0.05075,-0.0025))
+    )
+  ) |>
+  st_buffer(dist = 0.0005,
+  joinStyle = 'ROUND', 
+  endCapStyle = "ROUND") 
+
+SeedZone_poly <- st_polygon(
+  list(
+    rbind(
+      c(-0.050, -0.0025), c(-0.050, 0.0105), c(-0.065,0.0105), c(-0.065,0.0195), 
+      c(-0.01175, 0.0195), c(-0.01175, -0.0025), c(-0.050,-0.0025))
+    )
+  ) |> 
+  st_buffer(dist = 0.0005,
+  joinStyle = 'ROUND', 
+  endCapStyle = "ROUND") 
+
+SZName_poly <- st_polygon(
+  list(
+    rbind(
+      c(-0.01075, -0.0025), c(-0.01075, 0.0195), 
+      c(0.0425, 0.0195), c(0.0425, 0.0095), c(0.022, 0.0095), 
+      c(0.022, -0.0025), c(-0.01075, -0.0025)) 
+    )
+  ) |> 
+  st_buffer(dist = 0.0005,
+  joinStyle = 'ROUND', 
+  endCapStyle = "ROUND") 
+
+AreaAcres_poly <- st_polygon(
+  list(
+    rbind(
+      c(0.023, -0.0025), c(0.023, 0.0085), c(0.070, 0.0085), c(0.070, -0.0025),
+      c(0.023, -0.0025)) 
+    )
+  ) |> 
+  st_buffer(dist = 0.0005,
+  joinStyle = 'ROUND', 
+  endCapStyle = "ROUND") 
+
+
+ggplot() + 
+  geom_sf_text(data = fields, aes(label = Label), fontface = 'bold', size = 8) +  
+   labs(x = NULL, y = NULL, title = 'Contents and Naming Conventions for Fields') +  
+  theme_void() +
+  theme(plot.title = element_text(hjust = 0.5)) + 
+  
+  geom_sf(data = ID_Poly,  linetype = 2, fill = 'orange4', alpha = 0.2) +
+  geom_sf(data = SeedZone_poly,  linetype = 2, fill = 'red', alpha = 0.2) +
+  geom_sf(data = SZName_poly,  linetype = 2, fill = 'green', alpha = 0.2) +
+  geom_sf(data = AreaAcres_poly,  linetype = 2, fill = 'purple', alpha = 0.2) +
+  
+  coord_sf(ylim = c(-0.02, 0.02), xlim = c(-0.08, 0.08)) 
+  
+ggsave('../poster/ExampleFields.png', height = 8, width = 8, units = 'in', dpi = 300)
+```

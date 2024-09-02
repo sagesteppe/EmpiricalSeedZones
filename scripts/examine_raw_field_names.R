@@ -7,8 +7,6 @@ p <- '../data/geodata/step1'
 f <- file.path(p, list.files(p, pattern = '[.]shp$'))
 
 
-
-
 colReporter <- function(x){
 
   dat <- sf::st_read(x, quiet = T)
