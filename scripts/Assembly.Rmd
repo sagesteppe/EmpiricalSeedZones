@@ -178,13 +178,13 @@ data.frame(
 )  |> 
   write.csv('../data/raw/Taxonomy.csv', row.names = F)
 
-
 ```
 
 ```{r}
 library(tidyverse)
 library(sf)
 library(terra)
+source('functions.R')
 ```
 
 The files have no consistency in naming. We will provide a similar format to name all files. 
@@ -197,7 +197,8 @@ raw_names <- data.frame(
   Path_Name = paste0(p2raw, list.files(p2raw)),
   Raw_Name = list.files(p2raw),
   New_Name = c(
-    'Eriocoma_hymenoides-WUS', 'Allium_acuminatum-WUS', 'Artemisia_tridentata-WUS', 
+    'Achnatherum_hymenoides-WUS', 'Achnatherum_thurberianum-WUS',
+    'Allium_acuminatum-WUS', 'Artemisia_tridentata-WUS', 
     'Artemisia_tridentata_spp._vaseyana-WUS', 'Astragalus_lonchocarpus-CP', 'Astragalus_lonchocarpus-GSTZ', 
     'Pseudoroegneria_spicata-WUS', 'Bouteloua_gracilis-CP', 'Cleome_lutea-CP', 'Cleome_serrulata-', 
     'Elymus_elymoides-CP', 'Elymus_elymoides-WUS', 'Elymus_glaucus-BM', 
@@ -237,54 +238,60 @@ Subset the attributes of Geo-data and Provide standardized naming for the seed z
 
 fnames <- paste0('../data/geodata/step1/', 
                  list.files(path = '../data/geodata/step1/', pattern = '.shp$'))
-source('functions.R')
 
-Allium_acuminatum_WUS <- empSZ_reader(fnames[1], 'GRIDCODE')
-Artemisia_tridentata_spp_vaseyana_WUS <- empSZ_reader(fnames[2], 'GRIDCODE')
-Artemisia_tridentata_spp_tridentata <- empSZ_reader(fnames[3], 'Seedzone')
-Artemisia_tridentata_spp_wyomingensis <- empSZ_reader(fnames[3], 'Seedzone')
-Astragalus_lonchocarpus_CP <- empSZ_reader(fnames[4], 'OBJECTID')
-Bouteloua_gracilis_CP <- empSZ_reader(fnames[6], 'OBJECTID')
-Bromus_sitchensis_ssp_carinatus_BM <- empSZ_reader(fnames[7], 'GRIDCODE')
-Cleome_lutea_CP <- empSZ_reader(fnames[8], 'Axis')
-Cleome_serrulata <- empSZ_reader(fnames[9], 'assignment')
-Elymus_elymoides_CP <- empSZ_reader(fnames[10], 'OBJECTID')
-Elymus_elymoides_WUS <- empSZ_reader(fnames[11], 'GRIDCODE')
-Elymus_glaucus_BM <- empSZ_reader(fnames[12], 'ZONE')
-Ephedra_nevadensis_MD <- empSZ_reader(fnames[13], 'GRIDCODE')
-Eriocoma_hymenoides_WUS <- empSZ_reader(fnames[14], 'GRIDCODE')
-Heliomeris_multiflora_CP <- empSZ_reader(fnames[15], 'assignment')
-Koeleria_macrantha_CB_GB <- empSZ_reader(fnames[16], 'OBJECTID')
-Leymus_cinereus_CB_GB <- empSZ_reader(fnames[17], 'GRIDCODE')
-Machaeranthera_canescens_CP <- empSZ_reader(fnames[18], 'Axis')
-Pleuraphis_jamesii_CP_GB_MD_WP <- empSZ_reader(fnames[19], 'gridcode')
-Poa_secunda_WUS <- empSZ_reader(fnames[20], 'GRIDCODE')
-Pseudoroegneria_spicata_WUS <- empSZ_reader(fnames[21], 'ZONE')
-Sphaeralcea_ambigua_MD <- empSZ_reader(fnames[22], 'GRIDCODE')
-Sphaeralcea_parvifolia_CP_GB <- empSZ_reader(fnames[23], 'gridcode')
-Sporobolus_cryptandrus_CP <- empSZ_reader(fnames[24], 'gridcode')
+Achnatherum_hymenoides_WUS <- empSZ_reader(fnames[1], 'GRIDCODE')
+Achnatherum_thurberianum_WUS <- empSZ_reader(fnames[2], 'GRIDCODE')
+Allium_acuminatum_WUS <- empSZ_reader(fnames[3], 'GRIDCODE')
+Artemisia_tridentata_spp_vaseyana_WUS <- empSZ_reader(fnames[4], 'GRIDCODE')
+Artemisia_tridentata_spp_tridentata <- empSZ_reader(fnames[5], 'Seedzone')
+Artemisia_tridentata_spp_wyomingensis <- empSZ_reader(fnames[5], 'Seedzone')
+Astragalus_lonchocarpus_CP <- empSZ_reader(fnames[6], 'OBJECTID')
+Bouteloua_gracilis_CP <- empSZ_reader(fnames[8], 'OBJECTID')
+Bromus_sitchensis_ssp_carinatus_BM <- empSZ_reader(fnames[9], 'GRIDCODE')
+Cleome_lutea_CP <- empSZ_reader(fnames[10], 'Axis')
+Cleome_serrulata <- empSZ_reader(fnames[11], 'assignment')
+Elymus_elymoides_CP <- empSZ_reader(fnames[12], 'OBJECTID')
+Elymus_elymoides_WUS <- empSZ_reader(fnames[13], 'GRIDCODE')
+Elymus_glaucus_BM <- empSZ_reader(fnames[14], 'ZONE')
+Ephedra_nevadensis_MD <- empSZ_reader(fnames[15], 'GRIDCODE')
+
+Heliomeris_multiflora_CP <- empSZ_reader(fnames[17], 'assignment')
+Koeleria_macrantha_CB_GB <- empSZ_reader(fnames[18], 'OBJECTID')
+Leymus_cinereus_CB_GB <- empSZ_reader(fnames[19], 'GRIDCODE')
+Machaeranthera_canescens_CP <- empSZ_reader(fnames[20], 'Axis')
+Pleuraphis_jamesii_CP_GB_MD_WP <- empSZ_reader(fnames[21], 'gridcode')
+Poa_secunda_WUS <- empSZ_reader(fnames[22], 'GRIDCODE')
+Pseudoroegneria_spicata_WUS <- empSZ_reader(fnames[23], 'ZONE')
+Sphaeralcea_ambigua_MD <- empSZ_reader(fnames[24], 'GRIDCODE')
+Sphaeralcea_parvifolia_CP_GB <- empSZ_reader(fnames[25], 'gridcode')
+Sporobolus_cryptandrus_CP <- empSZ_reader(fnames[26], 'gridcode')
 
 rm(fnames, empSZ_reader)
 emp_seed_zones <- bind_rows(mget(ls()))
 
 rm(list = ls()[(ls() != 'emp_seed_zones')])
+
+head(Eriocoma_hymenoides_WUS)
 ```
 
 
 ```{r Produce Rasters of seedzones, eval = F}
 
 emp_seed_zones <- emp_seed_zones %>% 
-  mutate(Species_Domain = paste(Species, Domain, sep = "-"), .before = geometry)
+  mutate(Species_Domain = paste(Species, Domain, sep = "-"), .before = geometry) 
 esz <- split(emp_seed_zones, f = emp_seed_zones$Species_Domain)
 
-w_ext <- ext( vect(emp_seed_zones))
-template <- rast(x = w_ext, crs = "epsg:5070", res = 1/360) # 10 arc second
-names(template) <- names(esz)
-
+w_ext <- ext(-125.0, -100.0, 25.0, 49.0)
+template <- rast(x = w_ext, crs = "EPSG:4326", res = 1/360) # 10 arc second
+#names(template) <- names(esz)
 fp <- '../data/geodata/rasters/'
 
-for(i in 1:length(esz)){ ## need to write each tif separately!!!! 
-  rasterize(vect(esz[[i]]), template, field = 'Zone', filename = paste0(fp, names(esz[i]), '.tif'))
+
+esz_svy <- esz[20:25]
+
+for(i in 1:length(esz_svy)){ ## need to write each tif separately!!!! 
+  rasterize(vect(esz_svy[[i]]), template, field = 'Zone', fun = min, 
+            filename = paste0(fp, names(esz_svy[i]), '.tif'), overwrite = TRUE)
 }
 
 rm(esz, w_ext, template, fp, i)
@@ -296,7 +303,7 @@ fp <- '../data/geodata/rasters/'
 
 rs <- paste0(fp, list.files(fp, pattern = '.tif$'))
 rs <- rast(rs)
-plot(rs[[16:20]])
+plot(rs[[8:12]])
 cols <- c('#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3','#fdb462',
           '#b3de69','#fccde5','#d9d9d9','#bc80bd','#ccebc5','#ffed6f')
 
