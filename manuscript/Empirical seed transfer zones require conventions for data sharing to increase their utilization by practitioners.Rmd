@@ -1,13 +1,14 @@
 ---
-title: 'Empirical seed transfer zones require conventions for data sharing to increase
-  their utilization by practitioners' 
+title: Empirical seed transfer zones require conventions for data sharing to increase
+  their utilization by practitioners 
 author: | 
-  | Brianna Wieferich$^2$$^,$$^3$, Reed Clark Benkendorf$^1$$^,$$^2$^[Correspondence: rbenkendorf@chicagobotanic.org]
-  |  $^1$ Program in Plant Biology and Conservation, Northwestern University, Evanston, Illinois 60208, USA  
-  |  $^2$ Negaunee Institute for Plant Conservation Science & Action, The Chicago Botanic Garden, 1000 Lake Cook Road, Glencoe Illinois 60022 USA  
-  |  $^3$ Dorena Genetic Resource Center, 34963 Shoreview Dr, Cottage Grove, Oregon 97424 USA  
+    | Brianna Wieferich$^2$$^,$$^3$,  Reed Clark Benkendorf$^1$$^,$$^2$^[Correspondence: rbenkendorf@chicagobotanic.org] 
+    | $^1$ Program in Plant Biology and Conservation, Northwestern University, Evanston, Illinois 60208, USA  
+    | $^2$ Negaunee Institute for Plant Conservation Science & Action, The Chicago Botanic Garden, 1000 Lake Cook Road, Glencoe Illinois 60022 USA  
+    | $^3$ Dorena Genetic Resource Center, 34963 Shoreview Dr, Cottage Grove, Oregon 97424 USA  
 abstract: |
-  | Empirical seed transfers zones (ESTZs) are becoming increasingly developed to help guide both the development of native plant materials, and the most desirable seed sources for restoration projects.  Despite the growing popularity of ESTZs, standards for distributing these data are nascent. In order to maximize the utilization of ESTZs we propose a set of standards to guide the distribution of ESTZs which should allow for making them easier to interact with, and increase the focus of seed collection efforts and foster utilization of the most appropriate seed source available. Further we propose that sharing of metrics of uncertainty for these data, which can help practitioners identify best alternatives for a seed transfer zone, should become common practice.  Finally, we briefly introduce an R package eSTZwritR which implements our core suggestions for data dissemination.
+  \noindent 
+  Empirical seed transfers zones (ESTZs) are becoming increasingly developed to help guide both the development of native plant materials, and the most desirable seed sources for restoration projects.  Despite the growing popularity of ESTZs, standards for distributing these data are nascent. In order to maximize the utilization of ESTZs we propose a set of standards to guide the distribution of ESTZs which should allow for making them easier to interact with, and increase the focus of seed collection efforts and foster utilization of the most appropriate seed source available. Further we propose that sharing of metrics of uncertainty for these data, which can help practitioners identify best alternatives for a seed transfer zone, should become common practice.  Finally, we briefly introduce an R package eSTZwritR which implements our core suggestions for data dissemination.
 keywords: | 
   five or six of these
 orcid: |
@@ -50,12 +51,13 @@ While the suggestions for best practices during the development of ESTZs are bec
 
 We argue that the dissemination of data during restoration is a vital portion of any projects success... 
 
-Here, using 23 sets of ESTZs produced for 22 taxa, we show that most of the data developed and disseminated, to share the results of an ETZ, are incongruous [@doherty2017matching, @erickson2004landscape, @johnson2016linking, @johnson2010mapping, @bradley2013genetic, @johnson2015relating, @johnson2013genecology,  @johnson2012genecology,  @horning2010genecology, @johnson2017genecology, @shryock2017landscape, @massatti2020genetically, @massatti2019genetically, @massatti2020assessment]. 
+Here, using 23 sets of eSTZs produced for 22 taxa, we show that most of the data developed and disseminated, to share the results of an ETZ, are incongruous [@doherty2017matching, @erickson2004landscape, @johnson2016linking, @johnson2010mapping, @bradley2013genetic, @johnson2015relating, @johnson2013genecology,  @johnson2012genecology,  @horning2010genecology, @johnson2017genecology, @shryock2017landscape, @massatti2020genetically, @massatti2019genetically, @massatti2020assessment]. 
 Subsequently, using any consensus (wisdom of the masses) from these data, combined with standard conventions of data sharing, we present a set of guiding standards for researchers to employ to make results more congruous. 
 
 # Current Condition
 
-We conducted a review of all ESTZs on the Western Wildland Environmental Threat Assessment Center WWETAC website (as of May 1, 2024).
+We conducted a review of all eSTZs on the Western Wildland Environmental Threat Assessment Center WWETAC website (as of May 1, 2024).
+Although we are aware of the development of eSTZs in Europe, we are unfamiliar with land management protocols there, and consequentially did not review these data (CITE). 
 Each data product was analyzed for its file name structure (using 5 categories), metadata, naming conventions, and directory structure.
 All scoring was done by hand, and all analyses were carried out in R version 4.2.1.
 
