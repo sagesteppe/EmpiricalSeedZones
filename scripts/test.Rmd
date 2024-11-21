@@ -1,0 +1,17 @@
+--- 
+title: 'A few people may read this thing'
+author:  | 
+    | Reed Clark Benkendorf$^1$^[Author for Correspondence: human@place.org], Charles Newton$^1$$^,$$^2$
+    |  $^1$Collection of many old buildings with an enormous endowment    
+    |  $^2$University  
+abstract: | 
+  **Premise:** We did stuff.     
+  **Methods and Results:** We used and developed stuff to accomplish stuff.       
+  **Conclusions:** You too can do stuff.     
+keywords: |
+  rmarkdown, latex, weird indent in abstract   
+output:
+  pdf_document: default
+--- 
+
+# Introduction

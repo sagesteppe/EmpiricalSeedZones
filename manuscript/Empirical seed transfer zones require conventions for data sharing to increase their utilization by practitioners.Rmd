@@ -1,27 +1,34 @@
 ---
-title: Empirical seed transfer zones require conventions for data sharing to increase
-  their utilization by practitioners 
-author: | 
-    | Brianna Wieferich$^2$$^,$$^3$,  Reed Clark Benkendorf$^1$$^,$$^2$^[Correspondence: rbenkendorf@chicagobotanic.org] 
-    | $^1$ Program in Plant Biology and Conservation, Northwestern University, Evanston, Illinois 60208, USA  
-    | $^2$ Negaunee Institute for Plant Conservation Science & Action, The Chicago Botanic Garden, 1000 Lake Cook Road, Glencoe Illinois 60022 USA  
-    | $^3$ Dorena Genetic Resource Center, 34963 Shoreview Dr, Cottage Grove, Oregon 97424 USA  
-abstract: |
-  \noindent 
-  Empirical seed transfers zones (ESTZs) are becoming increasingly developed to help guide both the development of native plant materials, and the most desirable seed sources for restoration projects.  Despite the growing popularity of ESTZs, standards for distributing these data are nascent. In order to maximize the utilization of ESTZs we propose a set of standards to guide the distribution of ESTZs which should allow for making them easier to interact with, and increase the focus of seed collection efforts and foster utilization of the most appropriate seed source available. Further we propose that sharing of metrics of uncertainty for these data, which can help practitioners identify best alternatives for a seed transfer zone, should become common practice.  Finally, we briefly introduce an R package eSTZwritR which implements our core suggestions for data dissemination.
-keywords: | 
-  five or six of these
-orcid: |
- Reed Benkendorf https://orcid.org/0000-0003-3110-6687  
+title: 'Empirical seed transfer zones require conventions for data sharing to increase their utilization by practitioners'
+author: |
+  | Brianna Wieferich$^2$$^,$$^3$,  Reed Clark Benkendorf$^1$$^,$$^2$^[Correspondence: rbenkendorf@chicagobotanic.org]
+  | $^1$ Northwestern University, Evanston, Illinois 60208, USA  
+  | $^2$ Chicago Botanic Garden, 1000 Lake Cook Road, Glencoe Illinois 60022 USA  
+  | $^3$ Dorena Genetic Resource Center, 34963 Shoreview Dr, Cottage Grove, Oregon 97424 USA  
+abstract: "\\noindent \nEmpirical seed transfers zones (eSTZs) are becoming increasingly
+  developed to help guide both the development of native plant materials, and the
+  most desirable seed sources for restoration projects.  Despite the growing popularity
+  of eSTZs, standards for distributing these data are nascent. In order to maximize
+  the utilization of eSTZs we propose a set of standards to guide the distribution
+  of eSTZs which should allow for making them easier to interact with, and increase
+  the focus of seed collection efforts and foster utilization of the most appropriate
+  seed source available. Further we propose that sharing of metrics of uncertainty
+  for these data, which can help practitioners identify best alternatives for a seed
+  transfer zone, should become common practice.  Finally, we briefly introduce an
+  R package eSTZwritR which implements our core suggestions for data dissemination.\n"
 output:
   pdf_document: default
-  toc: no
-  figsintext : no
-csl: ./restoration-ecology.csl
+  toc: false
+  figsintext: false
+  word_document: default
+orcid: "Reed Benkendorf https://orcid.org/0000-0003-3110-6687  \n"
+keywords: |
+  five or six of these
+csl: "./restoration-ecology.csl"
 bibliography: ./citations.bib
-link-citations: yes
-fig_caption: yes
-always_allow_html: yes
+link-citations: true
+fig_caption: true
+always_allow_html: true
 header-includes:
 - \usepackage{endfloat}
 - \usepackage{setspace}\doublespacing
@@ -34,79 +41,91 @@ header-includes:
 - Developing a restoration plan in a short time period can be a stressful process. 
 To decrease the chances of simple human induced mistakes we develop standards to increase consistency between eSTZs to make using them in GIS software more consistent.  
 
-- We implement these suggestions in an R package ‘eSTZwritR’ which should make adherence to the guidelines more simple for the scientists developing eSTZ products, allowing for a rapid uptake of these conventions.  
+- We implement these suggestions in an R package ‘[eSTZwritR](https://sagesteppe.github.io/eSTZwritR/)’ which should make adherence to the guidelines more simple for the scientists developing eSTZ products, allowing for a rapid uptake of these conventions.  
 
 - We further suggest the incorporation of estimates of uncertainty for spatial eSTZ data products so practitioners can determine the most suitable alternative seed zones when material from a preferred zone is not available.  
 
-- Finally we present a collation of known eSTZ products for the Western United States as a single raster stack allowing easy use by practitioners.  
-
 # INTRODUCTION  
-![Dissemination](./figures/Wu-naut.jpg){width=50%}  
+![Dissemination... By Emily Woodworth](./figures/Wu-naut.jpg){width=75%}  
 
-Empirical seed transfer zones (ESTZ’s) are gaining in popularity among restoration practitioners as a tool to help ensure that the most appropriate locally adapted seed source is utilized at restoration sites [@mckay2005local]. 
-The development of empirical seed transfer zones (ESTZ’s) for a species is a costly and time consuming process, most often involving common garden studies, or genetic studies, with many individual populations being represented as samples (@kramer2015assessing).
-To our knowledge, in Western North America, a couple research groups are regularly developing ESTZ’s for multiple species at a time, while intermittently an eSTZ for a single species are being developed by various labs focused on restoration ecology more broadly. 
-Further these zones are being developed via funding from multiple agencies with multiple different final use cases and implementation strategies in mind. 
-While the suggestions for best practices during the development of ESTZs are becoming more available, the results of ESTZs need to be conveyed via spatial products, however standardization or guidance on the best practices for accomplishing this are absent.
+Empirical seed transfer zones (eSTZ’s) are gaining popularity among restoration practitioners as a tool to help ensure that the most appropriate locally adapted seed source is utilized at restoration sites [@mckay2005local]. 
+The development of empirical seed transfer zones (eSTZ’s) for a species is a costly and time consuming process, most often involving common garden studies, or genetic studies, with many individual populations being represented as samples (@kramer2015assessing).
+To our knowledge, in Western North America, a couple research groups are regularly developing eSTZ’s for multiple species at a time, while intermittently an eSTZ for a single species are being developed by various labs focused on ecology more broadly. 
+These zones are being developed via funding from multiple agencies with multiple different final use cases and implementation strategies in mind. 
+Accordingly, discord exists between the products generated by different labs, and for different funding agencies. 
+While the suggestions for best practices during the development of eSTZs are becoming more available, the results of eSTZs need to be conveyed via spatial products, however standardization or guidance on the best practices for accomplishing this are wanting.
 
-We argue that the dissemination of data during restoration is a vital portion of any projects success... 
+We argue that the dissemination of data and ideas during restoration projects is a vital portion of any projects success, whether it be information verbally communicated between local practitioners, or written information from studies  (Figure 1).... 
+Given the relative complexity of communicating precise spatial information strict standard should exist to ensure not only it's accuracy, but also the ease by which it can be interpreted. 
 
-Here, using 23 sets of eSTZs produced for 22 taxa, we show that most of the data developed and disseminated, to share the results of an ETZ, are incongruous [@doherty2017matching, @erickson2004landscape, @johnson2016linking, @johnson2010mapping, @bradley2013genetic, @johnson2015relating, @johnson2013genecology,  @johnson2012genecology,  @horning2010genecology, @johnson2017genecology, @shryock2017landscape, @massatti2020genetically, @massatti2019genetically, @massatti2020assessment]. 
+Here, using 23 sets of eSTZs produced for 22 taxa, we show that most of the data developed and disseminated, to share the results of an eSTZ, are incongruous [@doherty2017matching, @erickson2004landscape, @johnson2016linking, @johnson2010mapping, @bradley2013genetic, @johnson2015relating, @johnson2013genecology,  @johnson2012genecology,  @horning2010genecology, @johnson2017genecology, @shryock2017landscape, @massatti2020genetically, @massatti2019genetically, @massatti2020assessment]. 
 Subsequently, using any consensus (wisdom of the masses) from these data, combined with standard conventions of data sharing, we present a set of guiding standards for researchers to employ to make results more congruous. 
 
 # Current Condition
+![File Naming](./figures/filenames.png){width=50%}  
 
-We conducted a review of all eSTZs on the Western Wildland Environmental Threat Assessment Center WWETAC website (as of May 1, 2024).
-Although we are aware of the development of eSTZs in Europe, we are unfamiliar with land management protocols there, and consequentially did not review these data (CITE). 
-Each data product was analyzed for its file name structure (using 5 categories), metadata, naming conventions, and directory structure.
+We conducted a review of all eSTZs on the Western Wildland Environmental Threat Assessment Center (WWETAC) website (https://research.fs.usda.gov/pnw/products/dataandtools/datasets/seed-zone-gis-data, as of May 1, 2024).
+Each data product was analyzed for its file name structure (using 5 categories), metadata, naming conventions, and directory structure. 
 All scoring was done by hand, and all analyses were carried out in R version 4.2.1.
 
-Herein we present only what we consider to be the most inconsistent, and likely to interfere with practitioners workflows, results in Panel 1. 
-In summary …
+![Field Names Shapefile](./figures/fields.png){width=50%}
+
+Here we present only the results which we consider to be the most consequential, and likely to interfere with practitioners workflows, in Figures 2 through 4. 
+We encountered considerable inconsistency exists within file names (Figure 2), and even more so in directory structure names. 
+While decent consensus existed around the use of USDA NRCS-Plants codes for denoting the contents of the file, the lack of file mentioning what they contained (e.g. 'zones', 'seed_zone', 'sz'), and the lack of specified geographic extents can make determining what the file contains, without opening it in a Geographic Information System (GIS), software difficult. 
+Unless all users have centralized directories on their networks for all of their STZ products we propose that the current approaches offer considerable resistance to a practitioner trying to find a file within their file system using common GUI searching functionality. 
+
+The naming of the fields (columns) within shapefiles likely presented the most problematic of all results (Figure 3), while many inconsistencies existed, here we focus on only three. 
+Different usages of polygon geometry types existed for representing the individual seed transfer zones, i.e. sometimes all portions of a seed transfer zone - when at least some components are disconnected - where stored within the same object or row (a multipolygon). 
+Other times each discontinuous portion of the range would be stored as it's own polygon. 
+For most infrequent Geographic Information System (GIS) users, multipolygons can be confusing... 
+Surprisingly, within each shapefile the field denoting the Seed Zones were often unlabeled, or entirely lacking any indication; in a number of instances it took us several minutes to determine which field was the seed zone by toggling through visualizing each field. 
+
+![Map Components](./figures/maps.png){width=50%}
 
 # Recommendations 
 
-Consensus exists among the developers of ESTZs for a range of attributes related to distribution of spatial products.
+Consensus exists among the developers of eSTZs for a range of attributes related to distribution of spatial products.
 Combining those opinions with our perceived best practices for data sharing, and experience as users of each of the existing empirical products, results in the recommendations below.
 
 ### Directory Structure
-![Directory Structure](./figures/DirectoryStructure.png){width=35%}
+![Directory Structure](./figures/DirectoryStructure.png){width=50%}
 
-ESTZ’s should be distributed using a predictable directory structure allowing practitioners to be immediately familiar with where to find relevant contents (Figure XX). 
+eSTZ’s should be distributed using a predictable directory structure allowing practitioners to be immediately familiar with where to find relevant contents (Figure XX). 
 This predictable nature should decrease the time required to find particular attributes of the data. 
 
-We recommend (FIGURE X) that all directories have two main subdirectories, one containing the essential Data products, preferably in both raster and vector data formats. 
-The other directory contains Information relating to the product, including a formatted citation for data use, a map for quick reference, and any materials describing the production of the product both as a paper, and a text file of quick metadata attributes. 
+We recommend that all directories have two main subdirectories (Figure 5), one containing the essential data products, preferably in both raster and vector data formats. 
+The other directory contains information relating to the product, including a formatted citation for data use, a map for quick reference, and any materials describing the production of the product both as a paper, and a text file of quick metadata attributes. 
 
 ### File Naming
-![File Naming](./figures/FileNamingConventions.png){width=35%}  
+![File Naming](./figures/FileNamingConventions.png){width=50%}  
 
 The individual files within the directory should follow a simple naming format which is easy for users of various softwares to interpret and readily import for use, while also containing key parameters of the data product. 
-We recommend (FIGURE) that each filename has three main components, in addition to the file extension. 
+We recommend (figure 6) that each file name has three main components, in addition to the file extension. 
 The first component is the USDA PLANTS code, the specific taxon, and the second is the type of data used to develop the STZ, the final is the two main regions which the product overlaps. 
 We strongly recommend the use of the 12 Department of Interior regions as they cover considerable geographic expanses and reflect some degree of ecological patterns. 
 
 ## Maps 
 Maps should be included within the Information directory. 
-Many questions about ESTZs can be answered quickly and simply from a practitioner consulting a map saved as a PDF with the essential cartographic components.
-We recommend (FIGURE X) that each map contains the following elements: north arrow, scale bar, state borders, geographically relevant cities, coordinate reference system information, sensible categorical color schemes for the seed zones, a legend, the taxons name as a title, and the maps theme ('Seed Transfer Zones') as a subtitle. 
+Many questions about eSTZs can be answered quickly and simply from a practitioner consulting a map saved as a PDF with the essential cartographic components.
+We recommend that each map contains the following elements: north arrow, scale bar, state borders, geographically relevant cities, coordinate reference system information, sensible categorical color schemes for the seed zones, a legend, the taxons name as a title, and the maps theme ('Seed Transfer Zones') as a subtitle. 
 
 ## Data Formats
-We recommend that the spatial data associated with an ESTZ be distributed using both popular spatial data models, vector and raster. 
+We recommend that the spatial data associated with an eSTZ be distributed using both popular spatial data models, vector and raster. 
 For vector data we advocate for the continued usage of data using the shapefile format, while for raster data we propose the usage of geoTIFFs (‘tifs’, the .tif extension). 
 In our experience tifs seem to be the most widely used of the raster data models in ecology for non-time series data, they are widely supported by a variety of geographic information systems, and generally seem to perform better than ASCII. 
 
 ## Vector Data Field Attributes
-![Vector Data Field Attributes](./figures/FieldNames.png){width=35%}  
+![Vector Data Field Attributes](./figures/FieldNames.png){width=50%}  
 
 We believe that the fields, or columns, of the vector data should follow a predictable pattern. 
 This will allow humans visualizing the data in a GUI to quickly visually detect their field of interest, and while it’s bad practice – allow code to subset columns by position rather than field name. 
-We further recommend the standardization of field names to allow for code and scripts to retrieve these values without more complicated coding techniques. 
+We further recommend the standardization of field names to allow for code and scripts to retrieve these values without more complicated coding techniques (Figure 7). 
 
 We recommend that each shapefile has a bare minimum of four fields in the following order and of the following data types.
 1) ID (numeric - integer) a unique number associated with each individual polygon in the file, we do not recommend combining polygons into multipolygon units, as individual polygons can retain information about their Area, and are easier for users to subset. 
-2) Seed Zone (numeric - integer) a unique identifier for each of the eSTZs delineated by the practitioners, these allow for quick subsetting of the data based on a simple value which is hard to mispecify. 
-3) SZName (character) a human developed name for the zone this may refer to a components of a principal component analysis, e.g. LOW MEDIUM LOW, or be defined by the analysts. We opine that semi-informative names should be developed before data distribution to help practitioners more easily convey important attributes without having to rely on numeric values which may be more difficult to remember due to their non-descript nature. 
+2) Seed Zone (numeric - integer) a unique identifier for each of the eSTZs delineated by the practitioners, these allow for quick filtering of the data based on a simple value which is hard to misspecify. 
+3) SZName (character) a human developed name for the zone this may refer to a components of a principal component analysis, e.g. LOW MEDIUM LOW, or be defined by the analysts. We opine that semi-informative names should be developed before data distribution to help practitioners more easily convey important attributes without having to rely on numeric values which may be more difficult to remember due to their nondescript nature. 
 
 In addition to these standard field naming and placement conventions, we further recommend a series of standards for the contents within these essential fields, and how to format any additional fields relevant to the project. 
 
@@ -117,31 +136,33 @@ Metadata offers a way of rapidly distilling many parameters of the ESTZ developm
 The inclusion of metadata may make it easier for a practitioner to find relevant details which they may otherwise have to peruse the literature files to glean.
 Given that the results of eSTZS are published in a variety of journals requiring different amounts of methodological reporting this is a fruitful format for sharing data in a standardized way.
 
-## Database Tracking Results 
-We have created a Github page for tracking the results of all ESTZ papers, along with their citations to foster future synthesis, and to ensure practitioners are aware of all available results. 
-We ask that developers of eSTZs make user submitted updates to the database to help ensure their results are found by relevant parties.
-
 ## Estimating Uncertainty
+
+![Using multiple predictions to create a consensus product](./figures/Rasters.png){width=50%}  
+
 We have observed considerable consternation from seed collection crews, curators, and restoration practitioners alike over the ‘proper’ classification for both a seed source, and the selection of a seed source for a restoration.
 In most instances these hesitations relate to a seed source which is present from a population which ‘straddles’ two or more seed zones.
 We predict that with the increasing availability of fine resolution spatial data, and the wider availability of ecological relevant variables - which more accurately reflects local ecological heterogeneity - individual portions of seed zones will become more fine, increasing the perimeter to surface area ratio and thereby increasing the prevalence of this already common phenomenon [@gibson2019importance]. 
 
-Based on our literature review we believe that currently eSTZs are distributed only as vector data (e.g. shapefiles) polygons. 
+Based on our literature review we believe that currently eSTZs are distributed only as polygon vector data (e.g. shapefiles).  
 Vector data convey a sense of separation between the objects they represent, i.e. they are used to represent discrete classes with meaningful borders between them. 
 Common examples of polygon vector data model usage include administrative units (e.g. zip codes, states, and countries), hydrologic basins, and the geographic range of a species. 
-On the other hand raster data, or gridded surfaces, are used for representing continuous phenomena, i.e. gradients. Common examples of raster data model usages include climate variables, land cover classes, and predictions of species habitat suitability.
+On the other hand raster data, or gridded surfaces, are used for representing continuous phenomena, i.e. gradients. 
+Common examples of raster data model usages include climate variables, land cover classes, and predictions of species habitat suitability.
 
-While we agree with the current prevailing census that in most applications, the use of the polygon vector data model is generally the preferred method of sharing data, we have witnessed enough scenarios where a population crosses multiple seed zones, that we believe the usage of raster data is warranted. 
-Raster data come with an enormous benefit in that they can readily incorporate multiple layers (individual raster files) for each pixel across  a domain, thus allowing for a first layer of consensus predictions for each cell (the data conveyed in a vector data set), and a few other levels of prediction, e.g. the second and third most likely classification of seed zone in the following layers. 
-An alternative scenario is that a first raster layer can contain the final assignments, while a second layer has the probability of those assignments contained in it, thereby denoting the confidence in the assignment. 
+While we agree with the current prevailing census that in most applications, the use of the polygon vector data model is generally the preferred method of sharing data, we have witnessed enough scenarios where a population crosses multiple seed zones, that we believe the usage of raster data is warranted for all reports. 
+Raster data come with an enormous benefit in that they can readily incorporate multiple layers (individual raster files) for each pixel across  a domain, thus allowing for a first layer of consensus predictions for each cell (the data conveyed in a vector data set), and a few other levels of prediction. 
+For example, a raster with 4 layers could have 3 layers dedicated to raw model output and the final consensus layer between these products, in the case of regression type analyses these three layers would represent predictions at the specified lower and upper confidence intervals and the model prediction, and in the case of a classification algorithm the 3 classes with the highest predicted probabilities.   
+In the above examples the consensus layer would then be informed by the plurality of assignment between the predictions, and by the preferred prediction model (e.g. via the typical regression prediction) when no plurality exists. 
 
-We believe that conveying these uncertainties will behoove data users to understand and explore the caveats with model predictions more. 
+We believe that conveying these uncertainties will allow data users to understand and explore the caveats with model predictions more. 
 This practice is further grounded in best scientific practice as the spatial data used to develop the initial zones are imperfect, the study itself was imperfect, and the classification process is itself imperfect. 
 Further on an ecological level we believe that a porosity exists between these populations of species – they are by virtue of being components of a species connected at least marginally via gene flow, and the expression of this continuity is the most appropriate course of action for data dissemination. 
 
 # IMPLEMENTATION
-
-The suggestions above may seem relatively onerous to carry out at the end of a multi year study, especially when considering manuscripts are being prepared for publication and further funding opportunities are being applied for, and staff (e.g. Postdocs) may be leaving the group at the end of the project. For these reasons we have created an R package, eSTZwritR (‘pronounced easy rider’), which can implement all of them, less the statistical processing, with minimal user inputs. The package is installable from GitHub via devtools at https://github.com/sagesteppe/eSTZwritR.  
+The suggestions above may seem relatively onerous to carry out at the end of a multi -year study, especially when considering manuscripts are being prepared for publication and further funding opportunities are being applied for, and staff (e.g. postdocs) may be leaving the group at the end of the project. 
+For these reasons we have created an R package, eSTZwritR (‘pronounced easy rider’), which can implement all of them, less the statistical processing, with minimal user inputs. 
+The package is installable from GitHub at https://github.com/sagesteppe/eSTZwritR, and a Github website (https://sagesteppe.github.io/eSTZwritR/) exists for users interested in better understanding it's functionality and which includes supplemental figures and more intricate details not discussed here. 
 
 ### FOR DEVELOPERS  
 The package requires only 4-5 functions to produce a directory with the contents discussed above, with minimal data entry. 
@@ -150,7 +171,7 @@ Most importantly the entries are well outlined and easily entered without requir
 ### FOR PRACTITIONERS  
 These results should allow for simple utilization of existing empirical seed transfer zone resources. 
 We have re-processed all eSTZ data products we are aware of to follow these standards, with the exception of creating the uncertainty raster layers. 
-We have provided some sample code which showcases loading these data into a GIS which utilizes either R or python coding elements, as well as the freely available QGIS which is set up with an advanced graphical user interface (GUI), which allows a user to navigate via a computer mouse. 
+We have provided some sample code which showcases loading these data into a Geographic Information System (GIS) which utilizes either R or python coding elements, as well as the freely available QGIS which is set up with an advanced graphical user interface (GUI), which allows a user to navigate via a computer mouse. 
 
 # CONCLUSIONS
 Seed based active restoration will always be a relatively expensive, yet necessary, option for restoration.

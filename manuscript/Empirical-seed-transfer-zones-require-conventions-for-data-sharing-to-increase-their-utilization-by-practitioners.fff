@@ -1,26 +1,54 @@
 \begin{figure}
 \centering
-\includegraphics[width=0.5\textwidth,height=\textheight]{./figures/Wu-naut.jpg}
-\caption{Dissemination}
+\includegraphics[width=0.75\textwidth,height=\textheight]{./figures/Wu-naut.jpg}
+\caption{Dissemination\ldots{} By Emily Woodworth}
 \end{figure}
 \efloatseparator
  
 \begin{figure}
 \centering
-\includegraphics[width=0.35\textwidth,height=\textheight]{./figures/DirectoryStructure.png}
-\caption{Directory Structure}
-\end{figure}
-\efloatseparator
- 
-\begin{figure}
-\centering
-\includegraphics[width=0.35\textwidth,height=\textheight]{./figures/FileNamingConventions.png}
+\includegraphics[width=0.5\textwidth,height=\textheight]{./figures/filenames.png}
 \caption{File Naming}
 \end{figure}
 \efloatseparator
  
 \begin{figure}
 \centering
-\includegraphics[width=0.35\textwidth,height=\textheight]{./figures/FieldNames.png}
+\includegraphics[width=0.5\textwidth,height=\textheight]{./figures/fields.png}
+\caption{Field Names Shapefile}
+\end{figure}
+\efloatseparator
+ 
+\begin{figure}
+\centering
+\includegraphics[width=0.5\textwidth,height=\textheight]{./figures/maps.png}
+\caption{Map Components}
+\end{figure}
+\efloatseparator
+ 
+\begin{figure}
+\centering
+\includegraphics[width=0.5\textwidth,height=\textheight]{./figures/DirectoryStructure.png}
+\caption{Directory Structure}
+\end{figure}
+\efloatseparator
+ 
+\begin{figure}
+\centering
+\includegraphics[width=0.5\textwidth,height=\textheight]{./figures/FileNamingConventions.png}
+\caption{File Naming}
+\end{figure}
+\efloatseparator
+ 
+\begin{figure}
+\centering
+\includegraphics[width=0.5\textwidth,height=\textheight]{./figures/FieldNames.png}
 \caption{Vector Data Field Attributes}
+\end{figure}
+\efloatseparator
+ 
+\begin{figure}
+\centering
+\includegraphics[width=0.5\textwidth,height=\textheight]{./figures/Rasters.png}
+\caption{Using multiple predictions to create a consensus product}
 \end{figure}
