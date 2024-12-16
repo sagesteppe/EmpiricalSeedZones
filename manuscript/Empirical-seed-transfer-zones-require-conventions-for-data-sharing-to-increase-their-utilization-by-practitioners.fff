@@ -30,12 +30,10 @@ least desirable condition in grey.}
 \begin{figure}
 \centering
 \includegraphics[width=0.5\textwidth,height=\textheight]{./figures/maps.png}
-\caption{Map Components. We reviewed the maps associated with products,
-when present, and generated a list of common elements, and those which
-we would consider essentials on cartographic products in natural
-resources management. As can be seen, several elements - most notably a
-Title, a statement on data sources, and a legend for the seed zones,
-where missing from at least - or nearly half of the products inspected.}
+\caption{Map Components. Several essential cartographic elements - most
+notably a Title, a statement on data sources, and a legend for the seed
+zones, where missing from at least - or nearly half of the products
+inspected.}
 \end{figure}
 \efloatseparator
  

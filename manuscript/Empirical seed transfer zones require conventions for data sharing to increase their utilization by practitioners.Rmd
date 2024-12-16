@@ -87,7 +87,7 @@ Other times each discontinuous portion of the range would be stored as it's own 
 For most infrequent Geographic Information System (GIS) users, we have observed that multipolygons can be confusing and require them to use several moderately advanced spatial techniques to interact with. 
 Surprisingly, within each shapefile the field denoting the seed zones was often ambiguously labelled, or entirely lacking any indication (Figure 3); in a number of instances it took us several minutes to determine which field was the seed zone by toggling through and visualizing many fields. 
 
-![Map Components. We reviewed the maps associated with products, when present, and generated a list of common elements, and those which we would consider essentials on cartographic products in natural resources management. As can be seen, several elements - most notably a Title, a statement on data sources, and a legend for the seed zones, where missing from at least - or nearly half of the products inspected.](./figures/maps.png){width=50%}
+![Map Components. Several essential cartographic elements - most notably a Title, a statement on data sources, and a legend for the seed zones, where missing from at least - or nearly half of the products inspected.](./figures/maps.png){width=50%}
 
 # Recommendations 
 
@@ -137,29 +137,30 @@ In addition to these standard field naming and placement conventions, we further
 
 ![Using multiple predictions to create a consensus product.](./figures/Rasters.png){width=50%}  
 
-We have observed consternation from seed collection crews, curators, and restoration practitioners alike over the ‘proper’ classification for both a seed source, and the selection of a seed source for a restoration.
-Generally, these hesitations relate to a seed source which ‘straddles’ multiple seed zones.
-We predict that with the increasing availability of fine resolution spatial data, and the wider availability of ecological relevant variables - which more accurately reflects local ecological heterogeneity - individual portions of seed zones will become more fine, increasing the perimeter to surface area ratio and the prevalence of this already common confusion [@gibson2019importance]. 
+We have observed consternation from seed collection crews, curators, and restoration practitioners over the appropriate classification for a seed source, and the selection of a seed source for restorations.
+Generally, these hesitations relate to a source which ‘straddles’ multiple seed zones.
+We predict that with increasing availability of fine resolution spatial data which more accurately reflect local ecological heterogeneity - seed zones will become more fine, increasing the perimeter to surface area ratio and the prevalence of this already common confusion [@gibson2019importance]. 
 
-Based on our survey we believe that eSTZs are currently distributed only as polygon vector data (e.g. shapefiles). 
-Vector data convey a sense of separation between the objects they represent, i.e. they are used to represent discrete classes with meaningful borders between them. 
-Common examples of polygon vector data model usage include administrative units (e.g. zip codes, states, and countries), watersheds, and the geographic range of a species. 
-On the other hand raster data, or gridded surfaces, are used for representing continuous phenomena, i.e. gradients. 
-Common examples of raster data model usages include climate variables, land cover classes, and predictions of species habitat suitability.
+Currently eSTZs are distributed exclusively as polygon vector data (e.g. shapefiles). 
+Vector data convey a separation between the entities they represent, i.e. discrete classes with hard borders between them. 
+Common examples of polygon vector data usage include administrative units (e.g. zip codes, states, and countries), watersheds, and the geographic range of a species. 
+Whereas raster data, or gridded surfaces, are used for representing continuous phenomena, i.e. gradients. 
+Common examples of raster data usages include climate variables, land cover classes, and predictions of species habitat suitability.
 
-While we agree with the current prevailing consensus that in most applications, the use of the polygon vector data model is generally the preferred method of sharing data, we have frequently observed scenarios where a population crosses multiple seed zones, that we believe the usage of raster data is warranted for all reports. 
-Raster data come with an enormous benefit in that they can readily incorporate multiple layers (individual raster files, or 'raster stacks') for each pixel across  a domain, thus allowing for a first layer of consensus predictions for each cell (the data conveyed in a vector data set), and a few other levels of prediction. 
-For example, a raster with four layers could have the final three layers dedicated to raw model output while the first layer is consensus of these products, in the case of regression type analyses these three layers would represent predictions at the specified lower and upper confidence intervals and the model prediction, and in the case of a classification algorithm the three classes with the highest predicted probabilities.   
-In the above examples the consensus layer would then be informed by the plurality of assignment between the predictions, and by the preferred prediction model (e.g. via the typical regression prediction) when no plurality exists. 
+While we agree with the consensus that vector data are generally preferable, given the number of times we have observed classification confusion we believe the inclusion of raster data is always warranted.  
+Raster data have an additional benefit that they can intuitively incorporate multiple layers (a 'raster stack') for each of their pixels. 
+Thus allowing for a first layer of consensus predictions for each cell (the data conveyed in a vector data set), and other levels of raw predictions. 
+For example, a raster with four layers would have three layers of raw model output while the final layer is consensus of these products. 
+In the case of regression type analyses these raw layers could represent predictions at the lower and upper confidence intervals and the model prediction, and in the case of a classification algorithm the three classes with the highest predicted probabilities.   
 
-We believe that conveying these uncertainties will allow data users to understand and explore the caveats with model predictions.  
+We believe that conveying these uncertainties will allow users to understand and explore the caveats with model predictions. 
 This practice is further grounded in best scientific practice as the spatial data used to develop the initial zones are imperfect, the study itself was imperfect, and the classification process is itself imperfect. 
-Further on an ecological level we believe that a porosity exists between these populations of species – they are by virtue of being components of a species connected at least marginally via gene flow, and the expression of this continuity is the most appropriate course of action for data dissemination. 
+Further on an ecological level we believe that a continuum exists between the seed zones of species – these zones are by virtue of being components of a species connected at least marginally via gene flow, and the expression of this continuity is the most appropriate course of action for data dissemination. 
 
 # IMPLEMENTATION
-The suggestions above may seem relatively onerous to carry out at the end of a multi-year study, especially when considering manuscripts are being prepared for publication and further funding opportunities are being applied for, and staff (e.g. postdocs, lab managers) may be leaving the group at the end of the project. 
+The suggestions above may seem onerous to carry out at the end of a multi-year study, especially when considering manuscripts are being prepared for publication and further funding opportunities are being applied for, and staff (e.g. postdocs) may be leaving the group at the end of the project. 
 For these reasons we have created an R package, eSTZwritR (‘pronounced easy rider’), which can implement all of them, less the statistical processing, with minimal user inputs. 
-The package is installable on GitHub at https://github.com/sagesteppe/eSTZwritR, and a Github website (https://sagesteppe.github.io/eSTZwritR/) exists for users interested in better understanding it's functionality and which includes supplemental figures and more intricate details not discussed here. 
+The package is installable from GitHub https://github.com/sagesteppe/eSTZwritR, and has a Github website (https://sagesteppe.github.io/eSTZwritR/) for users interested in better understanding it's functionality and which includes supplemental figures and details not discussed here. 
 
 ### FOR DEVELOPERS  
 The package requires only 4-5 functions to produce a directory with the contents discussed above, with minimal data entry. 
@@ -168,11 +169,11 @@ Most importantly the entries are well outlined and easily entered without requir
 ### FOR PRACTITIONERS  
 These results should allow for simple utilization of existing empirical seed transfer zone resources. 
 We have re-processed all eSTZ data products we are aware of to follow these standards, with the exception of creating the uncertainty raster layers. 
-We have provided some sample code which showcases loading these data into a Geographic Information System (GIS) which utilizes either R or python coding elements, as well as the freely available QGIS which is set up with an advanced graphical user interface (GUI), which allows a user to navigate via click-and-point action.  
+We have provided some sample code which showcases loading these data into a non-gui GIS at the website above.  
 
 # CONCLUSIONS
-Seed based active restoration will always be a relatively expensive, yet necessary, option for restoration.
-Here we present simple standards for the scientists developing eSTZs to use in order to standardize the data products they are developing to ease their implementation. 
-While these conventions should be easy to implement for a sufficiently detail oriented and interested individual, we also present an R package which can quickly achieve these results.
+Seed based active restoration will always be a relatively expensive, yet necessary, option for terrestrial restoration.
+Here we present simple standards for the scientists developing eSTZs to use in order to standardize the data products they are developing to assist in their uptake. 
+While these conventions should be easy to implement for a sufficiently motivated individual, we also present an R package which can quickly achieve these results. 
 
 # LITERATURE CITED  
