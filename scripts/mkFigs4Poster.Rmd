@@ -20,6 +20,9 @@ library(tidyverse)
 library(ggtext)
 library(readxl)
 library(sf)
+library(showtext)
+library(patchwork)
+library(gtable)
 ```
 
 ```{r load relevant data for plotting}
@@ -159,7 +162,7 @@ file_plot <- filenames %>%
 
 
 fnames <- binom_plot  + file_plot + extent_plot + 
-  plot_annotation(title = 'Are there consistent file name components?', 
+  plot_annotation(title = 'Do file names have consistent components?', 
                   theme = theme(plot.title = element_text(size = 18, hjust = 0.5))) 
 
 fnames
@@ -185,9 +188,14 @@ ggplot(data = maps, aes(fill = Response, y = Value, x = Trait)) +
   geom_bar(position = 'fill', stat = 'identity') + 
   scale_fill_manual(values = c('#758BFD','#EF476F')) + 
   theme_classic() + 
-  labs(title = 'Is the content of maps consistent?', fill = 'Component', 
+  labs(title = 'Do maps have consistent content?', fill = 'Component', 
   y = 'Proportion of Maps with element') +
-  theme(plot.title = element_text(hjust = 0.5)) + 
+  theme(
+    axis.text = element_text(size = 14),
+    axis.title  = element_text(size = 16),
+    legend.text = element_text(size = 14),
+    legend.title = element_text(size = 16),
+    plot.title = element_text(size = 24, hjust = 0.5)) + 
   scale_x_discrete(labels=c('Title', 'North Arrow', 'Sources', 'Zone Legend',
                       'Distance Key', 'State Lines')) 
   
@@ -409,7 +417,8 @@ ggplot() +
   geom_sf(data = ext_poly, linetype = 2, fill = 'maroon', alpha = 0.2 ) + 
   labs(x = NULL, y = NULL, title = 'File naming convention') +  
   theme_void() +
-  theme(plot.title = element_text(hjust = 0.5)) + 
+  theme(
+    plot.title = element_text(size = 24, hjust = 0.5)) + 
   coord_sf(ylim = c(-0.02, 0.02), xlim = c(-0.035, 0.035)) +
   
   geom_sf_text(data = NRCS, aes(label = Label)) +
@@ -495,7 +504,7 @@ polygons_plot <- vals %>%
   filter(Trait == 'Multipolygon') %>% 
   ggplot(., aes(y = Value, x = '', fill = Response)) + 
   geom_bar(position = "stack", stat = "identity", width = 1) + 
-  labs(y = 'Count', x = NULL, title = 'Are the geometries\nmultipolygons?', 
+  labs(y = 'Count', x = NULL, title = 'Are the geometries\npolygons?', 
        fill = 'Multipolygon') + 
     scale_fill_manual(values = c('#686963',  '#06D6A0'))+
   theme_minimal() +
@@ -536,7 +545,7 @@ areas_plot <- vals %>%
   geom_text(aes(label = Response), position = position_stack(vjust = 0.5)) 
 
 fields <- polygons_plot + zones_plot + areas_plot + 
-  plot_annotation(title = 'Are field names consistent across files?', 
+  plot_annotation(title = 'Do fields have consistent names across files?', 
                   theme = theme(plot.title = element_text(size = 18, hjust = 0.5))) 
   
 ggsave('../poster/fields.png', fields, bg = 'transparent')
