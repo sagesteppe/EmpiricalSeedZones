@@ -15,6 +15,7 @@ We'll also use the `sf` package to create some shapes for illustrating our sugge
 There are certainly some other packages for this, but... 
 I think `sf` is one of the all-around best R packages out there, and it can be used
 to accomplish just about anything graphics related which is meant to be clear and concise. 
+
 ```{r}
 library(tidyverse)
 library(ggtext)
