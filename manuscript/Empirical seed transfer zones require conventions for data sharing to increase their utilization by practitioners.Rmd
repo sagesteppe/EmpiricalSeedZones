@@ -20,6 +20,7 @@ abstract: "\\noindent \nEmpirical seed transfers zones (eSTZs) are being develop
   \ Finally, we briefly introduce an R package eSTZwritR ('easy rider') which
    implements our core suggestions for data dissemination.\n"
 output:
+  word_document: default
   pdf_document: default
   toc: false
   figsintext: false
@@ -54,7 +55,7 @@ eSTZs are popular for two primary reasons 1) they are based on empirical data - 
 While popular, the development of eSTZs for a species is a costly and time consuming process, most often involving common garden, or genetic studies, with many populations from across the species range incorporated as samples [@kramer2015assessing].  
 
 In western North America, the majority of eSTZs have been developed by just a couple of lab groups, whilst the remainder have been developed as one-off's by other assorted groups. 
-While standards for the best practices during the development of eSTZs are becoming more defined, no standards exist for sharing the results of eSTZs (MASS MEE, WYOMING GUY). 
+While standards for the best practices during the development of eSTZs are becoming more defined, no standards exist for sharing the results of eSTZs. 
 Despite eSTZs being produced by a relatively small pool of lab groups and individuals, inconsistencies vary across the spatial data products used to report eSTZs, inconsistencies which we posit are associated with a combination of individual analysts preferences and to a lesser extent a natural evolution of the product reporting itself.  
 
 The success of a restoration project relies on the application of techniques which are suitable for the site at hand. 
