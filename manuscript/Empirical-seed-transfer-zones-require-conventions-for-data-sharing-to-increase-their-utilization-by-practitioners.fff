@@ -2,7 +2,7 @@
 \centering
 \includegraphics[width=0.75\textwidth,height=\textheight]{./figures/Wu-naut.jpg}
 \caption{Dissemination. The first three panels indicate the process of
-developing an eSTZ, while the `dissemenination' panel showcases the need
+developing an eSTZ, while the `dissemination' panel showcases the need
 to share results so they can inform operational seed collections,
 agricultural increase, and selection of materials for a restoration. By
 Emily Woodworth}
@@ -50,7 +50,7 @@ within these directories.}
 \begin{figure}
 \centering
 \includegraphics[width=0.5\textwidth,height=\textheight]{./figures/FileNamingConventions.png}
-\caption{File Naming. The four proposed components of a filename
+\caption{File Naming. The four proposed components of a filename are
 highlighted in different colours, and with appropriate cases.}
 \end{figure}
 \efloatseparator

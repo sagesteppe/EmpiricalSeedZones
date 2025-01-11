@@ -11,7 +11,7 @@ library(tidyverse)
 #' @param x_add integer; x value to move geometry in space
 #' @param y_add integer; x value to move geometry in space
 #'
-#' #' @importFrom magrittr %>%
+#' @importFrom magrittr %>%
 
 rotate_sf <- function(data, x_add = 0, y_add = 0) {
   
