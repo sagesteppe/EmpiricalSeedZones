@@ -66,5 +66,7 @@ distributing vector data.}
 \begin{figure}
 \centering
 \includegraphics[width=0.5\textwidth,height=\textheight]{./figures/Rasters.png}
-\caption{Using multiple predictions to create a consensus product.}
+\caption{Many common classification algorithms can output probabilities
+for each class in the model. Reporting a subset of these allows users to
+interact with prediction probabilities directly.}
 \end{figure}

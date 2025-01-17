@@ -103,11 +103,15 @@ r_plot <- ggplot() +
   theme(
     legend.position="bottom", 
     plot.title = element_text(hjust = 0.5)) + 
-  labs(title = 'Three model predictions\nand a consensus layer') + 
-  annotate("text", x = 18, y = -1, size=5, color="gray15", label = "consensus") +
-  annotate("text", x = 18, y = 6, size=5, color="gray15", label = "lower CI") +
-  annotate("text", x = 18, y = 13, size=5, color="gray15", label = "estimate") + 
-  annotate("text", x = 18, y = 20, size=5, color="gray15", label = "upper CI") 
+  labs(title = 'Three model predictions\n from a classifier\nand a consensus layer') + 
+  annotate("text", x = 18, y = -1.5, size=5, color="gray15", label = "consensus") +
+
+  annotate("text", x = 18, y = 5, size=3.75, color="gray15",
+           label = deparse(bquote('1'^'st'*' classification')), parse = TRUE) + 
+  annotate("text", x = 18, y = 12, size=3.75, color="gray15", 
+           label = deparse(bquote('2'^'nd'*' classification')), parse = TRUE) + 
+  annotate("text", x = 18, y = 19, size=3.75, color="gray15", 
+           label = deparse(bquote('3'^'rd'*' classification')), parse = TRUE) 
   
 ggsave('../poster/Rasters.png', r_plot, bg = 'transparent', 
        dpi = 300, units = 'in', height = 5, width = 3.5)

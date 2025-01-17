@@ -1,7 +1,8 @@
 ---
-output: pdf_document 
-header-includes: 
-  \pagenumbering{gobble}
+output:
+  word_document: default
+  pdf_document: default
+header-includes: \pagenumbering{gobble}
 ---
 
 \vspace{25truemm}
@@ -11,21 +12,21 @@ header-includes:
 
 \vspace{5truemm}
 
-**Running headline** eSTZ conventions
+**Running headline** eSTZ data conventions
 
 \vspace{5truemm}
 
-**Authors and Affiliations** Reed Clark Benkendorf, Brianna Wieferich
+**Authors and Affiliations** Reed Clark Benkendorf^1,2^, Brianna Wieferich^2,3^
 
-$^1$ Northwestern University, Evanston, Illinois 60208, USA  
+$^1$ Northwestern University, Evanston, Illinois 60208 USA  
 $^2$ Chicago Botanic Garden, 1000 Lake Cook Road, Glencoe Illinois 60022 USA  
 $^3$ Dorena Genetic Resource Center, 34963 Shoreview Dr, Cottage Grove, Oregon 97424 USA  
 
 
 \vspace{5truemm}
 
-**Author contributions** R.C.B conceived the idea, authors jointly designed the methodology. B.W. collected the data, authors jointly analysed the data. Both authors contributed critically to the drafts and gave final approval for publication.
+**Author contributions** R.C.B conceived the idea, authors jointly designed the methodology. B.W. collected the data, authors jointly analysed the data. Both authors contributed critically to the manuscript and gave final approval for publication.
 
 \vspace{5truemm}
 
-**Data Availability Statement** All data used in this publication, as well as code to generate figures are available on a public github repository at: https://github.com/sagesteppe/EmpiricalSeedZones 
+**Data Availability Statement** All data used in this publication, as well as the code to generate figures, are available on a public github repository at: https://github.com/sagesteppe/EmpiricalSeedZones 

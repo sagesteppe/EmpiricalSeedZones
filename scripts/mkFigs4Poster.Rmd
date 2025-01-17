@@ -428,9 +428,9 @@ ggplot() +
   geom_sf_text(data = EXT, aes(label = Label))
   
 
-ggsave('../poster/ExampleFileName.png', height = 8, width = 8, units = 'in', dpi = 300)
+ggsave('../poster/ExampleFileName.png', height = 7.5, width = 7.5, units = 'in', dpi = 300)
 
-rm(fname, nrcs_poly, stz_poly, region_poly, ext_poly, NRCS, STZ, REGION, EXT)
+# rm(fname, nrcs_poly, stz_poly, region_poly, ext_poly, NRCS, STZ, REGION, EXT)
 ```
 
 
