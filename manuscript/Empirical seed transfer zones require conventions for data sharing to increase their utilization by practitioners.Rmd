@@ -20,7 +20,8 @@ abstract: "\\noindent \nEmpirical seed transfers zones (eSTZs) are being develop
    Finally, we briefly introduce an R package eSTZwritR ('easy rider') which implements
   our core suggestions for data dissemination.\n"
 output:
-  pdf_document: default
+  word_document: default
+#  pdf_document: default
   toc: false
   figsintext: false
 orcid: "Reed Benkendorf https://orcid.org/0000-0003-3110-6687"

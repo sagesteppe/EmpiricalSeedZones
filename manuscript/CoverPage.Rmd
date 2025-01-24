@@ -25,8 +25,8 @@ $^3$ Dorena Genetic Resource Center, 34963 Shoreview Dr, Cottage Grove, Oregon 9
 
 \vspace{5truemm}
 
-**Author contributions** R.C.B conceived the idea, authors jointly designed the methodology. B.W. collected the data, authors jointly analysed the data. Both authors contributed critically to the manuscript and gave final approval for publication.
+**Author contributions** RCB conceived the idea; authors jointly designed the methodology; BW collected the data; authors jointly analysed the data; both authors contributed critically to the manuscript and gave final approval for publication.
 
 \vspace{5truemm}
 
-**Data Availability Statement** All data used in this publication, as well as the code to generate figures, are available on a public github repository at: https://github.com/sagesteppe/EmpiricalSeedZones 
+**Data Availability Statement** All data used in this publication, as well as the code to generate figures, are available on a public GitHub repository at: https://github.com/sagesteppe/EmpiricalSeedZones 

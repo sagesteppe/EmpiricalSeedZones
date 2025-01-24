@@ -22,7 +22,7 @@ Dear Stephen,
 \vspace{4truemm}
   
 I am pleased to be submitting *Empirical seed transfer zones require conventions for data sharing to increase their utilization by practicioners* (running title *eSTZ data conventions*) for consideration to Restoration Ecology as an opinion piece. 
-Please note that both authors are also eligible as RE-New opinion article authors. 
+Please note that both authors are also eligible as RE-New opinion article authors, as both of us graduated from university less than three years ago. 
 
 \vspace{4truemm}  
 
@@ -49,7 +49,7 @@ We have no conflicts of interest to disclose.
 
 Please address any correspondence regarding this manuscript to me via the email provided. 
 
-\vspace{15truemm}
+\vspace{12truemm}
 
 Sincerely,  
 Reed Clark Benkendorf    
