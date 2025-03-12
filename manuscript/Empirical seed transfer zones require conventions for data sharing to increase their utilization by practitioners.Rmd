@@ -20,8 +20,8 @@ abstract: "\\noindent \nEmpirical seed transfers zones (eSTZs) are being develop
    Finally, we briefly introduce an R package eSTZwritR ('easy rider') which implements
   our core suggestions for data dissemination.\n"
 output:
-  word_document: default
-#  pdf_document: default
+#  word_document: default
+  pdf_document: default
   toc: false
   figsintext: false
 orcid: "Reed Benkendorf https://orcid.org/0000-0003-3110-6687"
@@ -41,9 +41,9 @@ header-includes:
 ## IMPLICATIONS FOR PRACTICE:
 
 - Developing a restoration plan in a short time period, as required after a natural disturbance, can be a stressful process. 
-To decrease the chances of simple mistakes being propagated into plans, we develop standards to increase the consistency between eSTZ data products making there usage in GIS software more consistent.  
+To decrease the chances of simple mistakes being introduced into plans, we develop standards to increase the consistency between eSTZ data products making there usage in GIS software more consistent.  
 
-- We implement these suggestions in an R package ‘[eSTZwritR](https://sagesteppe.github.io/eSTZwritR/)’ which should  facilitate adherence to the guidelines for scientists developing eSTZ products, allowing for a rapid uptake of these conventions.  
+- We implement these suggestions in an R package ‘[eSTZwritR](https://sagesteppe.github.io/eSTZwritR/)’ which should facilitate adherence to the guidelines for scientists developing eSTZ products, allowing for a rapid uptake of these conventions.  
 
 - We also suggest incorporating estimates of uncertainty for spatial eSTZ data products so practitioners have sufficient support for selecting material from non-target seed zones as is often required. 
 
@@ -108,7 +108,7 @@ The second directory contains information relating to the product, including a f
 
 The files within the directory should follow a naming convention which is easy for users to interpret and import to various software's, while also describing essential attributes of the data product. 
 We recommend (Figure 6) that each file name has three main components, in addition to the file extension. 
-The first component is the USDA PLANTS code, and the second is the method used to develop the STZ, and the final is the two main regions which the product overlaps. 
+The first component is the USDA PLANTS code, and the second is the method used to develop the STZ, and the final is up to the two main regions which the product overlaps. 
 We recommend the use of the 12 Department of Interior regions as they cover considerable geographic expanses and reflect the ecology of North America.  
 
 ## Maps 
@@ -124,7 +124,7 @@ In our experience tifs seem to be the most widely used of the raster data models
 ## Vector Data Field Attributes
 ![Vector Data Field Attributes. The proposed field names for distributing vector data.](./figures/FieldNames.png){width=50%}  
 
-The order of the fields (or columns) of the vector data should follow a predictable pattern (Figure 7), allowing humans interacting with the data in a GUI to quickly detect their field of interest, and while it’s bad practice – allow users code to subset columns by position rather than field name. 
+The order of the fields (or columns) of the vector data should follow a predictable pattern (Figure 7), allowing humans interacting with the data in a graphical user interface (GUI) to quickly detect their field of interest, and while it’s bad practice – allow users code to subset columns by position rather than field name. 
 
 We recommend that each shapefile has at least four fields in the following order and of the following data types.
 1) ID (numeric - integer) a unique number associated with each individual polygon in the file. 
@@ -160,7 +160,7 @@ This practice is further grounded in best scientific practice as the spatial dat
 
 # IMPLEMENTATION
 The suggestions above may seem onerous to carry out at the end of a multi-year study, especially when considering manuscripts are being prepared for publication, further funding opportunities are being applied for, and staff (e.g. postdocs) may be leaving the group at the end of the project. 
-For these reasons we have created an R package, eSTZwritR (‘pronounced easy rider’), which can implement all of them, lessen the statistical processing, with minimal user inputs. 
+For these reasons we have created an R package, eSTZwritR (pronounced 'easy rider'), which can implement all of them, lessen the statistical processing, with minimal user inputs. 
 The package is installable from GitHub https://github.com/sagesteppe/eSTZwritR, and has a GitHub pages website (https://sagesteppe.github.io/eSTZwritR/) for users interested in better understanding it's functionality and which includes supplemental figures and details not discussed here. 
 
 ### FOR DEVELOPERS  
@@ -170,11 +170,14 @@ Most importantly the entries are well outlined and easily entered without requir
 ### FOR PRACTITIONERS  
 These results should allow for simple utilization of existing empirical seed transfer zone resources. 
 We have re-processed all eSTZ data products we are aware of to follow these standards, with the exception of creating the uncertainty raster layers. 
-We have provided some sample code which showcases loading these data into a non-gui GIS at the website above.  
+We have provided some sample code which showcases loading these data into a non-GUI GIS at the website above.  
 
 # CONCLUSIONS
 Seed based active restoration will always be a relatively expensive, yet necessary, option for terrestrial restoration.
 Here we present simple standards for the scientists developing eSTZs to use in order to standardize the data products they are developing to assist in their uptake. 
 While these conventions should be easy to implement for a sufficiently motivated individual, we also present an R package which can quickly achieve these results. 
+
+# ACKNOWLEDGEMENTS
+Two anonymous reviewers are thanked for their constructive comments on this manuscript. 
 
 # LITERATURE CITED  
