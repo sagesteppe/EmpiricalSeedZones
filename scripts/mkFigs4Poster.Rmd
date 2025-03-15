@@ -284,7 +284,7 @@ Vector <- sf::st_buffer(
 # into a dataframe, We can map the 'Label' to a function later to type this out. 
 # all of these labels will be combined with the function geom_sf_label so that we
 # have a nice label box around them. 
-ge_lg_lab <- data.frame(Label = 'Genus_epithet_lgSTZ', x = 1, y = 11) |>
+ge_lg_lab <- data.frame(Label = 'Genus_epithet_gSTZ', x = 1, y = 11) |>
   st_as_sf(coords = c(x = 'x', y = 'y'))
 data_lab <- data.frame(Label = 'Data', x = 0.5, y = 10) |>
   st_as_sf(coords = c(x = 'x', y = 'y'))
@@ -301,11 +301,11 @@ raster_file <- data.frame(Label = 'ABCD_lgSTZ_UCB-LCB.tif', x = 6.25, y = 8.5) |
   st_as_sf(coords = c(x = 'x', y = 'y')) 
 vector_file <- data.frame(Label = 'ABCD_lgSTZ_UCB-LCB.shp', x = 6.25, y = 6) |>
   st_as_sf(coords = c(x = 'x', y = 'y')) 
-citation <- data.frame(Label = 'citation.txt', x = 2.5, y = 3) |>
+citation <- data.frame(Label = 'citation.txt', x = 2.45, y = 3) |>
   st_as_sf(coords = c(x = 'x', y = 'y')) 
-map <- data.frame(Label = 'map.txt', x = 2.2, y = 2) |>
+map <- data.frame(Label = 'map.pdf', x = 2.2, y = 2) |>
   st_as_sf(coords = c(x = 'x', y = 'y')) 
-paper <- data.frame(Label = 'Paper_about_making_the_STZ.pdf', x = 4.75, y = 1) |>
+paper <- data.frame(Label = 'Paper_about_making_the_STZ.pdf', x = 4.7, y = 1) |>
   st_as_sf(coords = c(x = 'x', y = 'y')) 
 
 ggplot () +

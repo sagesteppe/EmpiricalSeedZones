@@ -25,8 +25,6 @@ output:
   toc: false
   figsintext: false
 orcid: "Reed Benkendorf https://orcid.org/0000-0003-3110-6687"
-keywords: |
-  five or six of these
 csl: "./restoration-ecology.csl"
 bibliography: ./citations.bib
 link-citations: true
@@ -41,20 +39,20 @@ header-includes:
 ## IMPLICATIONS FOR PRACTICE:
 
 - Developing a restoration plan in a short time period, as required after a natural disturbance, can be a stressful process. 
-To decrease the chances of simple mistakes being introduced into plans, we develop standards to increase the consistency between eSTZ data products making there usage in GIS software more consistent.  
+To decrease the chances of simple mistakes being introduced into plans, we develop standards to increase the consistency between eSTZ data products making their usage in GIS software more consistent.  
 
 - We implement these suggestions in an R package ‘[eSTZwritR](https://sagesteppe.github.io/eSTZwritR/)’ which should facilitate adherence to the guidelines for scientists developing eSTZ products, allowing for a rapid uptake of these conventions.  
 
 - We also suggest incorporating estimates of uncertainty for spatial eSTZ data products so practitioners have sufficient support for selecting material from non-target seed zones as is often required. 
 
 # INTRODUCTION  
-![Dissemination. The first three panels indicate the process of developing an eSTZ, while the 'dissemination' panel showcases the need to share results so they can  inform operational seed collections, agricultural increase, and selection of materials for a restoration. By Emily Woodworth](./figures/Wu-naut.jpg){width=75%}  
+![Dissemination. The first three panels ('collections', 'common garden', 'analysis') indicate the process of developing an eSTZ, while the 'dissemination' panel showcases the need to share results so they can  inform operational seed collections, agricultural increase, and selection of materials for a restoration. Note that 'common garden' represents the act of eSTZ development, but could be replaced with molecular work to develop a genetic product, or modelling for a climate matched product. By Emily Woodworth](./figures/Wu-naut.jpg){width=75%}  
 
 Empirical seed transfer zones (eSTZs) are gaining popularity amongst restoration practitioners as a tool to help identify the most appropriate seed source for a species at a restoration site [@mckay2005local]. 
 eSTZs are popular for two primary reasons 1) they are based on empirical data - e.g. the phenotypes in a common garden, population genetics, or the correlation between occurrences of the species and environmental variables and 2) generally the zones are more coarse than provisional seed transfer zones thereby reducing the number of lineages requiring cultivation in agricultural settings. 
 While popular, the development of eSTZs for a species is a costly and time consuming process, most often involving common garden or genetic studies, with many populations from across the species range incorporated as samples [@kramer2015assessing].  
 
-In western North America, the majority of eSTZs have been developed by just a couple of lab groups, whilst the remainder have been developed as one-offs by other assorted groups. 
+In western North America, the majority of eSTZs have been developed by just a couple of lab groups, whilst the remainder have been developed by other assorted groups. 
 While standards for the best practices during the development of eSTZs are becoming more defined, no standards exist for *sharing* the results of eSTZs. 
 Despite eSTZs being produced by a relatively small pool of lab groups and individuals, inconsistencies vary across the spatial data products used to report eSTZs.  
 
@@ -92,7 +90,7 @@ Surprisingly, within each shapefile the field denoting the seed zones was often 
 # Recommendations 
 
 Some consensus exists among the developers of eSTZs for a range of attributes related to distribution of data products.
-Combining those opinions with our perceived best practices for data sharing, and experience as users of each of the existing empirical products, results in the following recommendations. 
+Combining those opinions with best practices for data sharing, and experience as users of each of the existing empirical products, results in the following recommendations. 
 
 ### Directory Structure
 ![Directory Structure. Each directory is named in yellow, and spans the extent of variously coloured polygons.  Individual files (or a set of files in the case of a shapefile) are depicted in black text within these directories.](./figures/DirectoryStructure.png){width=50%}
@@ -106,8 +104,9 @@ The second directory contains information relating to the product, including a f
 
 The files within the directory should follow a naming convention which is easy for users to interpret and import to various software's, while also describing essential attributes of the data product. 
 We recommend (Figure 6) that each file name has three main components, in addition to the file extension. 
-The first component is the USDA PLANTS code, and the second is the method used to develop the STZ, and the final is up to the two main regions which the product overlaps. 
-We recommend the use of the 12 Department of Interior regions as they cover considerable geographic expanses and reflect the ecology of North America.  
+The first component is the USDA PLANTS code, and the second is the method used to develop the STZ - currently one of 'g', 'cg', 'cm' (for genetic, common garden, and climate matched, respectively), and the final is up to the two main regions which the product overlaps. 
+In the United States we recommend the use of the 12 Department of Interior regions as they cover contiguous geographic expanses, are few enough they can easily be remembered, and balance L2 Omernik ecoregions and easier to remember state lines. 
+However, we recognize that in other nations the use of ecoregions may be more desirable. 
 
 ## Maps 
 Maps of the data product should be included within the 'Information' directory. 
@@ -137,7 +136,7 @@ In addition to these standard field naming and placement conventions, we further
 
 ![Many common classification algorithms can output probabilities for each class in the model. Reporting a subset of these allows users to interact with prediction probabilities directly.](./figures/Rasters.png){width=50%}  
 
-We have observed consternation from seed collection crews, curators, and restoration practitioners alike, over the appropriate classification for a seed source, and the selection of a seed source for a restoration.
+We have witnessed confusion from seed collection crews, curators, and restoration practitioners alike, over the appropriate classification for a new seed source, and the selection of a seed source for a restoration.
 Generally, these hesitations relate to a source which is on the border of multiple seed zones.
 We predict that with the increasing availability of fine resolution spatial data which more accurately reflect local ecological heterogeneity - seed zones will become more fine, increasing the perimeter to surface area ratio and the prevalence of this already common confusion [@gibson2019importance]. 
 
