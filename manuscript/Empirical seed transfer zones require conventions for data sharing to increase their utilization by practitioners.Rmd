@@ -20,7 +20,7 @@ abstract: "\\noindent \nEmpirical seed transfers zones (eSTZs) are being develop
    Finally, we briefly introduce an R package eSTZwritR ('easy rider') which implements
   our core suggestions for data dissemination.\n"
 output:
-#  word_document: default
+  word_document: default
   pdf_document: default
   toc: false
   figsintext: false
@@ -76,7 +76,7 @@ Each data products: file name structure, field naming conventions, and directory
 ![Field Names Shapefile. The three attributes of field names discussed here, with the most desirable condition in green, and the least desirable condition in grey.](./figures/fields.png){width=50%}
 
 In Figures 2 through 4, we present inconsistencies which we believe, or have observed to be, the most likely to interfere with practitioners' workflows. 
-We encountered considerable inconsistency within file names (Figure 2), in directory structure and naming (Figure 3), and cartographic elements of maps (Figure 4). 
+We encountered considerable inconsistency within file names (Figure 2), in directory structure and naming (Figure 3), and cartographic elements of the 20 maps available (Figure 4). 
 While some consensus existed around the use of USDA NRCS-Plants codes for denoting the taxon contained in the file (Figure 2), the lack of file names mentioning what attribute about the taxon they contained (e.g. 'zones', 'seed_zone', 'sz'), and the lack of specified geographic extents can make determining the specifics of the file difficult unless it is explicitly opened in a Geographic Information System (GIS) software. 
 
 The naming of the fields (columns) within shapefiles likely presented the most problematic of all results (Figure 3), while many  inconsistencies exist, here we focus on three. 
@@ -85,7 +85,7 @@ Other times, each discontinuous portion of the range would be stored as its own 
 For most infrequent Geographic Information System (GIS) users, we have observed that multipolygons can be confusing and require them to use several moderately advanced spatial techniques to interact with. 
 Surprisingly, within each shapefile the field denoting the seed zones was often ambiguously labelled, or entirely lacking any indication (Figure 3). In a number of instances it took us several minutes to determine which field was the seed zone by toggling through and visualizing many fields, despite us already having interfaced with all of these products multiple times. 
 
-![Map Components. Several essential cartographic elements - most notably a Title, a statement on data sources, and a legend for the seed zones, where missing from at least - or nearly half of the products inspected.](./figures/maps.png){width=50%}
+![Map Components (n = 20). Several essential cartographic elements - most notably a Title, a statement on data sources, and a legend for the seed zones, where missing from at least - or nearly half of the products inspected.](./figures/maps.png){width=50%}
 
 # Recommendations 
 
@@ -110,8 +110,8 @@ However, we recognize that in other nations the use of ecoregions may be more de
 
 ## Maps 
 Maps of the data product should be included within the 'Information' directory. 
-Many questions about eSTZs can be answered quickly and simply from a practitioner consulting a map saved as a PDF with the essential cartographic components.
-We recommend that each map contains the following elements: north arrow, scale bar, state borders, geographically relevant cities, coordinate reference system information, sensible categorical color schemes for the seed zones (e.g. from colorbrewer https://colorbrewer2.org), a legend, the taxons name as a title, and the maps theme ('Seed Transfer Zones') as a subtitle. 
+Many questions about eSTZs can be answered quickly and simply from a practitioner consulting a map saved as a PDF with the essential cartographic components; fortunately most developers already supply these.
+We recommend that each map contains the following elements: north arrow, scale bar, state borders, geographically relevant cities, coordinate reference system information, sensible categorical color schemes for the seed zones (e.g. from ColorBrewer https://colorbrewer2.org), a legend, the taxons name as a title, and the maps theme ('Seed Transfer Zones') as a subtitle. 
 
 ## Data Formats
 We recommend that the spatial data associated with an eSTZ be distributed using both of the popular spatial data models, vector and raster. 
@@ -154,6 +154,9 @@ In the case of regression type analyses two layers could represent predictions a
 
 We believe that conveying these uncertainties will allow users to understand and explore the caveats with model predictions. 
 This practice is further grounded in best scientific practice as the spatial data used to develop the initial zones are imperfect, the study itself was imperfect, and the classification process is itself imperfect. 
+
+*ELABORATE ON CONTINUOUS HERE. *
+IN FACT, a continuous raster based approach is being utilized for provisional type seed transfer zone products. 
 
 # IMPLEMENTATION
 To make these suggestions easy to implement we have created an R package, eSTZwritR (pronounced 'easy rider'), which can implement all of them, lessen the statistical processing, with minimal user inputs. 
