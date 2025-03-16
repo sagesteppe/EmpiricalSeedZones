@@ -155,7 +155,15 @@ In the case of regression type analyses two layers could represent predictions a
 We believe that conveying these uncertainties will allow users to understand and explore the caveats with model predictions. 
 This practice is further grounded in best scientific practice as the spatial data used to develop the initial zones are imperfect, the study itself was imperfect, and the classification process is itself imperfect. 
 
-*ELABORATE ON CONTINUOUS HERE. *
+*ELABORATE ON CONTINUOUS HERE.*
+
+A metanalysis of genetic data sets, collected over large spatial domains in Western North America, found that the probability of mixing populations of more distantly related evolutionary lineages (i.e. different clusters, or *K*, from STRUCTURE analyses) increases as a function of distance between the prospective populations, i.e. they were able to relate isolation-by-distance to probabilities of encountering a different *K* for a suite of species (Massatti et al. 2020). 
+These analyses found that to avoid the potential effects of outbreeding depression at a restoration site, where a remnant population may emerge, the most appropriate seed source is likely to be the most proximate source, rather than a more distal source from within the same pSTZ. 
+...
+
+Continuous surfaces themselves are already implemented in the Seedlot Selection and Climate Smart Selection Tools, which blend attributes of both pSTZs and eSTZs, or can be used to select the most appropriate eSTZ based seed source factoring in observed and predicted climatological values and custom functions. 
+
+(St. Clair et al. 2023*CITE*) 
 IN FACT, a continuous raster based approach is being utilized for provisional type seed transfer zone products. 
 
 # IMPLEMENTATION
