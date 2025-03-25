@@ -20,7 +20,7 @@ abstract: "\\noindent \nEmpirical seed transfers zones (eSTZs) are being develop
    Finally, we briefly introduce an R package eSTZwritR ('easy rider') which implements
   our core suggestions for data dissemination.\n"
 output:
-  word_document: default
+#  word_document: default
   pdf_document: default
   toc: false
   figsintext: false
@@ -43,17 +43,30 @@ To decrease the chances of simple mistakes being introduced into plans, we devel
 
 - We implement these suggestions in an R package ‘[eSTZwritR](https://sagesteppe.github.io/eSTZwritR/)’ which should facilitate adherence to the guidelines for scientists developing eSTZ products, allowing for a rapid uptake of these conventions.  
 
-- We also suggest incorporating estimates of uncertainty for spatial eSTZ data products so practitioners have sufficient support for selecting material from non-target seed zones as is often required. 
+- We also suggest incorporating estimates of uncertainty for spatial eSTZ data products so practitioners have sufficient support for selecting material from non-target seed zones as is often required.  
 
 # INTRODUCTION  
 ![Dissemination. The first three panels ('collections', 'common garden', 'analysis') indicate the process of developing an eSTZ, while the 'dissemination' panel showcases the need to share results so they can  inform operational seed collections, agricultural increase, and selection of materials for a restoration. Note that 'common garden' represents the act of eSTZ development, but could be replaced with molecular work to develop a genetic product, or modelling for a climate matched product. By Emily Woodworth](./figures/Wu-naut.jpg){width=75%}  
+
+
+###### new box
+Seed transfer zones are intended to increase restoration outcomes by decreasing the chances of introducing maladpted seed at a restoration site. 
+They are based on the empirically observed phenomenon of local adaption of large plant populations (@leimu2008meta) and aim to minimize the variation between prospective seed sources and restoration sites. 
+Provisional seed transfer zones (pSTZs) can be utilized across all vascular plants and are based on the similarity between several climate variables known to be broadly relevant to plant life in a region (e.g. in the U.S. Winter Minimum Temperature, and Annual Heat:Moisture index) (@bower2014generalized). 
+eSTZs have the same goal as pSTZs, but treat each individual species independently, allowing for more accurate determination of zones which seed can be transferred within under existing climate regimes. 
+
+The development of seed transfer zones in the US can be traced back to the 1960's when forestry companies, which had to replant timber stands after logging, developed guidance to ensure the success of their re-plantings (@johnson2004pacific). 
+However, it was not until the early 21^st^ century that researchers began developing STZs for other groups of plants in the US (@mckay2005local), in part due to the increasing size of large wildfires and demand for locally adapted seed (CITE). 
+Tandem to the development of STZs for non-tree species in the US has been the development of STZs in Europe. 
+
+#####
 
 Empirical seed transfer zones (eSTZs) are gaining popularity amongst restoration practitioners as a tool to help identify the most appropriate seed source for a species at a restoration site [@mckay2005local]. 
 eSTZs are popular for two primary reasons 1) they are based on empirical data - e.g. the phenotypes in a common garden, population genetics, or the correlation between occurrences of the species and environmental variables and 2) generally the zones are more coarse than provisional seed transfer zones thereby reducing the number of lineages requiring cultivation in agricultural settings. 
 While popular, the development of eSTZs for a species is a costly and time consuming process, most often involving common garden or genetic studies, with many populations from across the species range incorporated as samples [@kramer2015assessing].  
 
 In western North America, the majority of eSTZs have been developed by just a couple of lab groups, whilst the remainder have been developed by other assorted groups. 
-While practices for developing eSTZs are becoming more defined, to our knowledge no standards exist for *sharing* the results of eSTZs (@CITATION TABLE). 
+While practices for developing eSTZs are becoming more defined, to our knowledge no standards exist for *sharing* the results of eSTZs (CITATION TABLE). 
 Despite eSTZs being produced by a relatively small pool of lab groups and individuals, inconsistencies vary across the spatial data products used to report eSTZs.  
 
 The success of a restoration project relies on the timely application of techniques which are suitable for the site at hand. 
@@ -142,10 +155,14 @@ The first of these are the use of a set of abbreviated codes which reliably iden
 The second is the use of administrative ('DOI') regions for denoting a general geographic area which the specific product covers. 
 An alternative solution, which we considered for the US, is the use of ecoregions. 
 However, this was rejected due to the number of ecoregions (e.g. 10 conterminous US DOI regions to 20??? level 2 Omernik ecoregions), and most importantly because many ecoregions are not contiguous which may lead to confusion. 
+Possible alternatives should be evaluated in light of the points above before they are selected for use. 
 
 Additionally, we believe that other countries may be able to immediately start distributing their vector data as the OGC GeoPackage ('.gpkg') files, rather than shapefiles. 
 The GeoPackage format is a geodatabase (SQLite Database file) and open source standard which entails all data being stored in a single file (relative to the several files a shapefile requires), contains projection data, and is spatially indexed data. 
 In fact, the data associated with 'eSTZwritR' are all shared as GeoPackage files, and anecdotal evidence suggests it's utilization in US Government agencies is increasing. 
+
+While we suggest that seed zones have numeric representations which follow a decreasing pattern in aridity, i.e. 1 is the most dry zone, these may not be a large enough concern to warrant any consideration (CITE RESTORATION BRUTAL DUE TO HEAT). 
+Rather another focus on restoration success may be more suitable. 
 
 # Estimating Uncertainty
 
