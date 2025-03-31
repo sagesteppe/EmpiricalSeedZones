@@ -184,6 +184,7 @@ data.frame(
 library(tidyverse)
 library(sf)
 library(terra)
+library(eSTZwritR)
 source('functions.R')
 ```
 
@@ -270,8 +271,6 @@ rm(fnames, empSZ_reader)
 emp_seed_zones <- bind_rows(mget(ls()))
 
 rm(list = ls()[(ls() != 'emp_seed_zones')])
-
-head(Eriocoma_hymenoides_WUS)
 ```
 
 
@@ -287,7 +286,7 @@ template <- rast(x = w_ext, crs = "EPSG:4326", res = 1/360) # 10 arc second
 fp <- '../data/geodata/rasters/'
 
 
-esz_svy <- esz[20:25]
+esz_svy <- esz
 
 for(i in 1:length(esz_svy)){ ## need to write each tif separately!!!! 
   rasterize(vect(esz_svy[[i]]), template, field = 'Zone', fun = min, 
@@ -308,6 +307,11 @@ cols <- c('#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3','#fdb462',
           '#b3de69','#fccde5','#d9d9d9','#bc80bd','#ccebc5','#ffed6f')
 
 ```
+
+
+
+
+
 
 ```{r Determine empirical Seed zones of 2023 Great Basin SOS collections}
 

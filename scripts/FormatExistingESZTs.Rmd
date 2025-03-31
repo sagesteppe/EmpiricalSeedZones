@@ -1,0 +1,101 @@
+---
+title: "Consolidate the formatting of Western Empirical Seed Zones"
+author: "steppe"
+date: "2025-3-30"
+output: html_document
+---
+
+Let's use eSTZwritR to try and standardize all of the existing seed transfer zones. 
+*big gulp*
+
+```{r}
+# devtools::install_github('sagesteppe/eSTZwritR')
+library(eSTZwritR)
+library(sf)
+library(units)
+library(tidyverse)
+```
+
+```{r}
+dir_out <- '../RetroactivelyStandardized'
+```
+
+Start with the example for the package
+```{r acth7, eval = F}
+acth7 <- sf::st_read(file.path(
+  system.file(package="eSTZwritR"), "extdata", 'ACTH7.gpkg')
+)
+rc <- regionCoding(acth7)
+
+acth7$area_ha <- set_units(set_units(acth7$area_ha, 'ha'), 'acres')
+acth7 <- fieldsmakR(acth7, SeedZone = 'zone', ID = 'ID', AreaAcres = 'area_ha')
+acth7 <- dplyr::select(acth7, -c(GRIDCODE))
+
+ord2 <- orderZones(acth7, SeedZone, n = 1000) 
+acht7 <- ord2$Reclassified
+
+dirmakR(
+  outpath = dir_out, sci_name = 'Eriocoma thurberiana', x = acth7, 
+  nrcs_code = 'ACTH7', regioncode = rc$SuggestedName, 
+  estz_type = 'lg') 
+
+mapmakR(x = acth7, sci_name = 'Eriocoma thurberiana', SZName = SZName, landscape = FALSE, 
+        outpath = file.path(dir_out, 'Eriocoma_thurberiana_lgSTZ', 'Information'), 
+         caption = 'Data from Johnson et al. 2017. https://doi.org/10.1016/j.rama.2017.01.004')
+rm(acth7)
+```
+
+identify all products which need renaming. 
+
+```{r indentify all products}
+fnames <- paste0('../data/geodata/step1/', 
+                 list.files(path = '../data/geodata/step1/', pattern = '.shp$'))
+```
+
+```{r achy, eval = F}
+achy <- sf::st_read(fnames[[1]])
+rc <- regionCoding(achy)
+
+achy <- sf::st_transform(achy, 5070)
+achy <- fieldsmakR(achy, SeedZone = 'GRIDCODE', SZName = 'ZONE',  ID = 'ID')
+
+ord2 <- orderZones(achy, SeedZone, n = 1000) 
+achy <- ord2$Reclassified
+
+dirmakR(
+  outpath = dir_out, sci_name = 'Eriocoma hymenoides', x = achy, 
+  nrcs_code = 'ACHY', regioncode = rc$SuggestedName, 
+  estz_type = 'cg') 
+
+achy <- sf::st_transform(achy, 4326)
+mapmakR(x = achy, sci_name = 'Eriocoma hymenoides', SZName = SZName, landscape = FALSE, 
+        outpath = file.path(dir_out, 'Eriocoma_hymenoides_cgSTZ', 'Information'), 
+         caption = 'Data from Johnson et al. 2012. https://doi.org/10.2111/REM-D-11-00165.1')
+
+rm(achy)
+```
+
+
+```{r achy, eval = F}
+alac4 <- sf::st_read(fnames[[3]])
+rc <- regionCoding(alac4)
+
+alac4 <- sf::st_transform(alac4, 5070)
+alac4 <- fieldsmakR(alac4, SeedZone = 'GRIDCODE', SZName = 'ZONE',  ID = 'ID')
+
+ord2 <- orderZones(alac4, SeedZone, n = 3000) 
+alac4 <- ord2$Reclassified
+
+dirmakR(
+  outpath = dir_out, sci_name = 'Allium acuminatum', x = alac4, 
+  nrcs_code = 'ALAC4', regioncode = rc$SuggestedName, 
+  estz_type = 'cg') 
+
+alac4 <- sf::st_transform(alac4, 4326)
+mapmakR(x = alac4, sci_name = 'Allium acuminatum', SZName = SZName, landscape = FALSE, 
+        outpath = file.path(dir_out, 'Allium_acuminatum_cgSTZ', 'Information'), 
+         caption = 'Data from Johnson et al. 2012. https://doi.org/10.2111/REM-D-11-00165.1')
+
+rm(alac4)
+```
+
