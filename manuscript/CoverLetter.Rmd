@@ -1,0 +1,57 @@
+---
+output:
+  pdf_document: default
+header-includes: \pagenumbering{gobble}
+---
+
+\vspace{25truemm}
+
+\large
+
+Stephen Murphy  
+Editor-in-Chief  
+*Restoration Ecology*  
+
+\vspace{5truemm}
+
+January 11^th^ 2025
+
+\vspace{5truemm}
+
+Dear Stephen, 
+\vspace{4truemm}
+  
+I am pleased to be submitting *Empirical seed transfer zones require conventions for data sharing to increase their utilization by practicioners* (running title *eSTZ data conventions*) for consideration to Restoration Ecology as an opinion piece. 
+Please note that both authors are also eligible as RE-New opinion article authors, as both of us graduated from university less than three years ago. 
+
+\vspace{4truemm}  
+
+In this piece, we briefly discuss the results from analysing critical aspects of file naming, directory structure, and other attributes of spatial data products associated with, to our knowledge, all empirical seed transfer zone products (eSTZs) for the Western United States. 
+Upon consideration of current conventions, and best practices for data management, we recommend a set of standards to unify the reporting of eSTZs going forwards. 
+We utilize these products extensively in our professional work and have seen rather considerable confusion arise due to differences in the existing products, and assure you that these standardization are badly needed. 
+To assist in the implementation of our suggestions we have developed a well documented R package ('*eSTZwritR*') which implements essentially every suggestion. 
+
+\vspace{4truemm}
+
+In regards to suggested reviewers please note I have some considerations to voice which would have been included in a comment box if it had been available. 
+Regarding Rob Massatti, collectively both authors have sent him hundreds of leaf samples for genetic analysis, as well as numerous seed collections; this was on work we were funded to perform by the Bureau of Land Management. 
+Hence, he *may* recognize our names, but I wouldn't expect much beyond that. 
+Both myself, R.C. Johnson and Beth Leger are members of the National Intragency Seed and Restoration Center (NISRC) working group. 
+I anticipate no issues with this. 
+Note that a data set R.C. and Beth developed is used as the sample data for the associated R package. 
+While I'd like to suggest some totally unknown reviewers - I guess maybe it really is a small world after all. 
+
+\vspace{4truemm}
+
+We have no conflicts of interest to disclose. 
+
+\vspace{4truemm}
+
+Please address any correspondence regarding this manuscript to me via the email provided. 
+
+\vspace{12truemm}
+
+Sincerely,  
+Reed Clark Benkendorf    
+reedbenkendorf2021@u.northwestern.edu   
+Chicago Botanic Garden   

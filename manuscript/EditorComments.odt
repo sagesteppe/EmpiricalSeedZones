@@ -1,0 +1,35 @@
+﻿Your submission has been reviewed by two reviewers. Both recognized the relevance of the manuscript to restoration practitioners but pointed out suggestions to improve the text. Reviewer 1 indicates that it needs to be heavily edited to be suitable for publication and I agree with reviewer 1. Thus, I am recommending major revision for your manuscript.
+
+Reviewers have provided useful suggestions on how their comments may be appropriately addressed. But, additionally to the reviewers’ comments, I also have made comments below.
+
+First, I would like to understand the reasons you submitted this as an opinion paper instead of a practice and technical article. Both are suitable for the ideas and data the manuscript contains.
+
+Our reasons for opting for the opinion piece were as follows:
+	1) We had no novel data collection, no explicit hypotheses, and simple analyses. We did not see the paper as being robust enough for a technical piece. One author had just finished writing a ‘Software Note’ and was not sure that a similar approach here would be good, as online documentation has made several Software note type formats somewhat redundant. 
+	2) There are not many ‘rules’ in data sharing, until committees come together to create things like “Ecological Metadata Language”. We reached out to a few individuals to see if they were interested in working on this, but it was not a high enough priority for them to engage. If we had more collaborators, we think this would have been suitable for a technical piece. Hence, we used the best practices we could find support for, and in the end combined them with our opinions on best data sharing practices from being in the more data intensive side of the field. 
+	3) 
+
+But in an opinion paper I would expect a well-argued commentary, analysis, or discussion of the issue of eSTZs. In addition, opinion papers can outline new ideas about restoration ecology in a sophisticated and reflective manner but are not data-driven. So, if you can keep this as an opinion paper, a more relevant discussion and citation of relevant references are  certainly needed. Alternatively, you can make this a practice and technical article as you are proposing and divulgating a new tool or conventions for standardizing data sharing from eSTZs. Indeed, you analyzed data on eSTZs to justify the idea of creating standards for data sharing. If you decide to write a practice and technical article, be aware that the structure for this category of paper is different and less flexible than it is for opinion papers. 
+
+Whatever you decide, I miss a clear definition of seed transfer zones and empirical seed transfer zones. Please include the definition of both at the beginning of your introduction. Also mention the global relevance of this topic nowadays.
+
+In addition, it is important to make clear in the abstract, end of introduction and at the conclusions that you are proposing a specific set of rules and fields to be informed for eSTZ located in the United States. 
+
+Great point, this a bit embarrassing. We collated everything we could from Europe, but felt their approaches were different enough from the US approaches, and that we didn’t have enough (any) relevant experience there. Hence the scope was narrowed mid-project and we neglected to mention why. We also came across some similar data from other regions, but realized we were to ignorant to speak to them. 
+
+Great point, the abstract has been amended to include:
+
+“In order to maximize the utilization of eSTZs we propsose standards to guide their distribution in the United States, ... “
+
+The final sentence of the introduction is now:
+
+“Subsequently, using any consensus (wisdom of the masses) from these data, combined with standard conventions of data sharing, we present a set of guiding standards for researchers in the United States to employ in making results more consistent.” 
+
+Finally, we have added the following to the end of the discussion:
+
+
+
+Is it or are you proposing something that can be implemented worldwide? I ask because some of the information and data you mention seem possible to be provided for eSTZ located in the United States or Norh America (L 106-109 and the name for the file, for instance) but not for those from other parts of the world. It is ok if this is for a region or the United States only,  but make it clear. Anyway, this topic is globally relevant. Thus, adding information (at least a paragraph at the end of the text) on how this could be used, adapted and impact seed collection and restoration in other parts of the world would increase interest in your article by the global audience connected to Restoration Ecology.
+
+Please double check Restoration Ecology guidelines for proper in-line citation of references. In L53-56, you do not need to cite all the references. Not sure if those references are the eSTZ you assessed. If yes, you could list all of them in a supplemental table, and cite this table instead of citing them all in the text.
+

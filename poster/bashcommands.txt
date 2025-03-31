@@ -1,0 +1,5 @@
+convert filenames.png -gravity north -chop 0x5 -gravity east -chop 5x0 -gravity south -chop 0x5 -gravity west -chop 5x0 filenames.png
+
+convert maps.png -gravity north -chop 0x5 -gravity east -chop 5x0 -gravity south -chop 0x5 -gravity west -chop 5x0 maps.png
+
+convert fields.png -gravity north -chop 0x5 -gravity east -chop 5x0 -gravity south -chop 0x5 -gravity west -chop 5x0 fields.png
