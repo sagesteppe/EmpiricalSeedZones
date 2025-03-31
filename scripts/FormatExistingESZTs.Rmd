@@ -8,16 +8,47 @@ output: html_document
 Let's use eSTZwritR to try and standardize all of the existing seed transfer zones. 
 *big gulp*
 
-```{r}
+```{r, message = F}
 # devtools::install_github('sagesteppe/eSTZwritR')
 library(eSTZwritR)
 library(sf)
 library(units)
 library(tidyverse)
+set.seed(12) # guess I'm going to be the be all end all on the proposed method for ordering
+# seed zones. hmmmm.
 ```
 
 ```{r}
 dir_out <- '../RetroactivelyStandardized'
+```
+
+Mostly we just need to change a few variables... Here is a wrapper function which allows us to do that. 
+```{r}
+wrapper <- function(x, SeedZone, nrcs_code, sci_name, estz_type, caption, ls = FALSE, ... ){
+  
+  if(typeof(x)!='list'){
+    taxon <- sf::st_read(x)
+  } else {taxon <- x}
+  rc <- regionCoding(taxon)
+  
+  taxon <- sf::st_transform(taxon, 5070)
+  taxon <- fieldsmakR(taxon, SeedZone = SeedZone, ...)
+
+  ord2 <- orderZones(taxon, n = 3000) 
+  taxon <- ord2$Reclassified
+  return(taxon)
+
+  dirmakR(
+    outpath = dir_out, sci_name = sci_name, x = taxon, 
+    nrcs_code = nrcs_code, regioncode = rc$SuggestedName, overwrite = TRUE,
+    estz_type = estz_type) 
+  
+  taxon <- sf::st_transform(taxon, 4326)
+  mapmakR(x = taxon, sci_name = gsub('_', ' ', sci_name), SZName = SZName, landscape = ls,
+        outpath = file.path(dir_out, paste0(sci_name, '_', estz_type, 'STZ'), 'Information'), 
+         caption = caption)
+  return(taxon)
+}
 ```
 
 Start with the example for the package
@@ -52,112 +83,83 @@ fnames <- paste0('../data/geodata/step1/',
                  list.files(path = '../data/geodata/step1/', pattern = '.shp$'))
 ```
 
-```{r achy, eval = F}
-achy <- sf::st_read(fnames[[1]])
-rc <- regionCoding(achy)
 
-achy <- sf::st_transform(achy, 5070)
-achy <- fieldsmakR(achy, SeedZone = 'GRIDCODE', SZName = 'ZONE',  ID = 'ID')
-
-ord2 <- orderZones(achy, SeedZone, n = 1000) 
-achy <- ord2$Reclassified
-
-dirmakR(
-  outpath = dir_out, sci_name = 'Eriocoma hymenoides', x = achy, 
-  nrcs_code = 'ACHY', regioncode = rc$SuggestedName, 
-  estz_type = 'cg') 
-
-achy <- sf::st_transform(achy, 4326)
-mapmakR(x = achy, sci_name = 'Eriocoma hymenoides', SZName = SZName, landscape = FALSE, 
-        outpath = file.path(dir_out, 'Eriocoma_hymenoides_cgSTZ', 'Information'), 
-         caption = 'Data from Johnson et al. 2012. https://doi.org/10.2111/REM-D-11-00165.1')
-
-rm(achy)
+```{r allium acuminatum}
+wrapper(x = st_read(fnames[[grep('Allium_acuminatum', fnames)]]),  
+        SeedZone = 'GRIDCODE', SZName = 'ZONE', nrcs_code = 'ALAC4',
+        sci_name = 'Allium_acuminatum', 
+        estz_type = 'cg', 
+        caption = 'Data from Johnson et al. 2013. dx.doi.org/10.1139/cjb-2013-0046')
 ```
 
+NOTE ACHY Is a weird one... the gridcode is one thing, and the SZNames are numbers which do not match (they are consecutive version of gridcode). 
+We will overwrite the SZName to make them confluent with our 'new' values. To do this we just omit the original zone column. 
 
 ```{r achy, eval = F}
-alac4 <- sf::st_read(fnames[[3]])
-rc <- regionCoding(alac4)
 
-alac4 <- sf::st_transform(alac4, 5070)
-alac4 <- fieldsmakR(alac4, SeedZone = 'GRIDCODE', SZName = 'ZONE',  ID = 'ID')
+wrapper(x = st_read(fnames[[grep('Eriocoma_hymenoides', fnames)]]) |> select(-area_ha, -zone),  
+        SeedZone = 'GRIDCODE',  nrcs_code = 'LECI4',
+        sci_name = 'Eriocoma_hymenoides', 
+        estz_type = 'cg', 
+        caption = 'Data from Johnson et al. 2012. https://doi.org/10.2111/REM-D-11-00165.1')
 
-ord2 <- orderZones(alac4, SeedZone, n = 3000) 
-alac4 <- ord2$Reclassified
-
-dirmakR(
-  outpath = dir_out, sci_name = 'Allium acuminatum', x = alac4, 
-  nrcs_code = 'ALAC4', regioncode = rc$SuggestedName, 
-  estz_type = 'cg') 
-
-alac4 <- sf::st_transform(alac4, 4326)
-mapmakR(x = alac4, sci_name = 'Allium acuminatum', SZName = SZName, landscape = FALSE, 
-        outpath = file.path(dir_out, 'Allium_acuminatum_cgSTZ', 'Information'), 
-         caption = 'Data from Johnson et al. 2012. https://doi.org/10.2111/REM-D-11-00165.1')
-
-rm(alac4)
 ```
 
 The formatting of the sage files are unique, we will come back to them. 
 ```{r Artemisia, eval = F}
-taxon <- sf::st_read(fnames[[2]])
-rc <- regionCoding(taxon)
 
-taxon <- sf::st_transform(taxon, 5070)
-taxon <- fieldsmakR(taxon, SeedZone = 'GRIDCODE')
-
-ord2 <- orderZones(taxon, SeedZone, n = 3000) 
-taxon <- ord2$Reclassified
-
-dirmakR(
-  outpath = dir_out, sci_name = 'Artemisia tridentata spp. vaseyana', x = taxon, 
-  nrcs_code = 'ARTRV', regioncode = rc$SuggestedName, overwrite = TRUE,
-  estz_type = 'cg') 
-
-taxon <- sf::st_transform(taxon, 4326)
-mapmakR(x = taxon, sci_name = 'Artemisia_tridentata_spp_vaseyana', SZName = SZName, landscape = FALSE, 
-        outpath = file.path(dir_out, 'Artemisia_tridentata_spp_vaseyana_cgSTZ', 'Information'), 
-         caption = 'Data from Richardson, B. A., & Chaney, L. (2018). https://doi.org/10.1002/eap.1804')
+wrapper(x = fnames[[grep('spp._vaseyana', fnames)]],
+        SeedZone = 'GRIDCODE', nrcs_code = 'ARTRV',
+        sci_name = 'Artemisia_tridentata_spp_vaseyana', ls = FALSE,
+        estz_type = 'cm', 
+        caption = 'Data from Richardson, B. A., & Chaney, L. (2018). https://doi.org/10.1002/eap.1804')
 
 ```
 
 
-Mostly we just need to change a few variables... Here is a wrapper function which allows us to do that. 
-```{r}
-wrapper <- function(x, SeedZone, nrcs_code, sci_name, estz_type, caption, ... ){
-  
-  if(typeof(x)!='list'){
-    taxon <- sf::st_read(x)
-  } else {taxon <- x}
-  rc <- regionCoding(taxon)
-  
-  taxon <- sf::st_transform(taxon, 5070)
-  taxon <- fieldsmakR(taxon, SeedZone = SeedZone, ...)
+```{r leymus cinereus, eval = F}
+wrapper(
+  x = st_read(fnames[[grep('Leymus_cinereus', fnames)]]) |> dplyr::select(-c(area_ha, zone)),
+  SeedZone = 'GRIDCODE', nrcs_code = 'LECI4',
+  sci_name = 'Leymus_cinereus', 
+  estz_type = 'cg', 
+  caption = 'Data from Johnson & Vance-Borland 2016. https://doi.org/10.1371/journal.pone.0148982')
 
-  ord2 <- orderZones(taxon, SeedZone, n = 3000) 
-  taxon <- ord2$Reclassified
-
-  dirmakR(
-    outpath = dir_out, sci_name = sci_name, x = taxon, 
-    nrcs_code = nrcs_code, regioncode = rc$SuggestedName, overwrite = TRUE,
-    estz_type = estz_type) 
-  
-  taxon <- sf::st_transform(taxon, 4326)
-  mapmakR(x = taxon, sci_name = gsub('_', ' ', sci_name), SZName = SZName, landscape = FALSE,
-        outpath = file.path(dir_out, paste0(sci_name, '_', estz_type, 'STZ'), 'Information'), 
-         caption = caption)
-  
-  return(taxon)
-}
 ```
 
-```{r, eval = F}
+```{r ASLO BOGR2 KOMA SPCR HEMU3 SPPA surfaces, eval = F}
+
+wrapper(
+  x = st_read(fnames[[grep('Astragalus_lonchocarpus-CP', fnames)]]) |> select(-Shape_Leng, -Shape_Area),
+        SeedZone = 'OBJECTID', nrcs_code = 'ASLO3',
+        sci_name = 'Astragalus_lonchocarpus', 
+        estz_type = 'cm', 
+        caption = 'Data from Doherty et al. 2017.')
+
 wrapper(x = fnames[[grep('Bouteloua_gracilis', fnames)]],
         SeedZone = 'OBJECTID', nrcs_code = 'BOGR2',
         sci_name = 'Bouteloua_gracilis', 
         estz_type = 'cm', 
         caption = 'Data from Doherty et al. 2017.')
+
+wrapper(x = fnames[[grep('Koeleria_macrantha', fnames)]],
+        SeedZone = 'OBJECTID', nrcs_code = 'KOMA',
+        sci_name = 'Koeleria_macrantha', 
+        estz_type = 'cm', 
+        caption = 'Data from Doherty et al. 2017.')
+
+maca <- st_read(fnames[[grep('Machaeranthera_canescens', fnames)]])
+maca <- rename_with(maca, ~ gsub("TS", "BIO4", .x)) |>
+  rename_with(~ gsub("MDR", "BIO2", .x))
+wrapper(maca, SeedZone = 'Axis', sci_name = 'Dieteria_canescens', 
+        nrcs_code = 'MACA2',
+        estz_type = 'cm', caption = 'Data from Doherty et al. 2017.')
+
+spcr <- st_read(fnames[[grep('Sporobolus_cryptandrus', fnames)]])
+spcr <- rename_with(spcr, ~ gsub("Tseas", "BIO4", .x)) 
+wrapper(spcr, SeedZone = 'gridcode', sci_name = 'Sporobolus_cryptandrus', 
+        nrcs_code = 'SPCR',
+        estz_type = 'cm', caption = 'Data from Doherty et al. 2017.')
 
 hemu3 <- st_read(fnames[[grep('Heliomeris_multiflora', fnames)]])
 hemu3 <- rename_with(hemu3, ~ gsub("PS", "BIO15", .x)) |>
@@ -166,8 +168,67 @@ hemu3 <- rename_with(hemu3, ~ gsub("PS", "BIO15", .x)) |>
 wrapper(hemu3, SeedZone = 'assignment', sci_name = 'Heliomeris_multiflora', 
         nrcs_code = 'HEMU3',
         estz_type = 'cm', caption = 'Data from Doherty et al. 2017.')
+
+sppa2 <- st_read(fnames[[grep('Sphaeralcea_parvifolia', fnames)]])
+sppa2 <- rename_with(sppa2, ~ gsub("MDR", "BIO2", .x)) |>
+  rename_with(~ gsub("Tseas", "BIO4", .x))|>
+  rename_with(~ gsub("TwetQ", "BIO8", .x))|>
+  rename_with(~ gsub("TwetQ", "BIO8", .x))|>
+  rename_with(~ gsub("Pseas", "BIO15", .x))
+
+wrapper(sppa2, SeedZone = 'gridcode', sci_name = 'Sphaeralcea_parvifolia', 
+        nrcs_code = 'SPPA2',
+        estz_type = 'cm', caption = 'Data from Doherty et al. 2017.')
+
+rm(hemu3, spcr)
 ```
 
+```{r poa secunda, eval = F}
+pose <- st_read(fnames[[grep('Poa_secunda', fnames)]]) |>
+  select(-Area)
+
+# these warnings are 'safe' https://github.com/r-spatial/sf/issues/306
+wrapper(x = pose, 
+        SeedZone = 'GRIDCODE', SZName = 'ZONE', sci_name = 'Poa_secunda', 
+        nrcs_code = 'POSE',
+        estz_type = 'cg', caption = 'Data from Johnson et al. 2015.')
+```
+
+
+```{r Pleuraphis jamesii, eval = F}
+
+plja <- st_read(fnames[[grep('Pleuraphis_jamesii', fnames)]])
+plja <- rename_with(plja, ~ gsub("Tseas", "BIO4", .x)) |>
+  rename_with( ~ gsub('MAT', 'BIO1', .x)) |>
+  rename_with( ~ gsub('MDR', 'BIO2', .x)) |>
+  select(-population)
+wrapper(plja, SeedZone = 'gridcode', sci_name = 'Pleuraphis_jamesii', 
+        nrcs_code = 'PLJA', ls = TRUE,
+        estz_type = 'cm', caption = 'Data from Massatii 2020')
+```
+
+```{r pseudoroegneria spicata}
+pssp6 <- st_read(fnames[[grep('Pseudoroegneria_spicata', fnames)]]) |>
+  select(-AREA, -PERIMETER)
+
+wrapper(pssp6, SeedZone = 'GRID_CODE', SZName = 'ZONE', sci_name = 'Pseudoroegneria_spicata', 
+        nrcs_code = 'PSSP6', ls = TRUE,
+        estz_type = 'cg', 
+        caption = 'Data from Bradley St. Clair et al. 2013. doi:10.1111/eva.12077')
+
+```
+
+
+```{r astragalus lonchocarpus genetic, eval = F}
+
+aslo3 <- st_read(fnames[[grep('Astragalus_lonchocarpus-GSTZ', fnames)]]) |>
+  rename_with(~ gsub("TS", "BIO4", .x))
+
+wrapper(aslo3, SeedZone = 'assignment', sci_name = 'Astragalus_lonchocarpus', 
+        nrcs_code = 'ASLO3', ls = TRUE,
+        estz_type = 'lg', 
+        caption = 'Data from Massatti & Winkler 2022. https://doi.org/10.1111/2041-210X.13902')
+```
 
 ```{r cleome lutea, eval = F}
 
@@ -219,6 +280,7 @@ mapmakR(x = clse, sci_name = gsub('_', ' ', 'Cleome_serrulata'), SZName = SZName
          caption = 'Data from Massatti et al. 2020. doi: 10.1111/rec.13142')
 ```
 
+
 ```{r elymus glaucus}
 taxon <- st_read(fnames[[grep('Elymus_glaucus', fnames)]])
 rc <- regionCoding(taxon)
@@ -255,21 +317,6 @@ wrapper(x = fnames[[grep('Sphaeralcea_ambigua', fnames)]],
         estz_type = 'lg', 
         caption = 'Data from Shyrock et al. 2017. https://doi.org/10.1002/eap.1447')
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
