@@ -99,3 +99,230 @@ mapmakR(x = alac4, sci_name = 'Allium acuminatum', SZName = SZName, landscape = 
 rm(alac4)
 ```
 
+The formatting of the sage files are unique, we will come back to them. 
+```{r Artemisia, eval = F}
+taxon <- sf::st_read(fnames[[2]])
+rc <- regionCoding(taxon)
+
+taxon <- sf::st_transform(taxon, 5070)
+taxon <- fieldsmakR(taxon, SeedZone = 'GRIDCODE')
+
+ord2 <- orderZones(taxon, SeedZone, n = 3000) 
+taxon <- ord2$Reclassified
+
+dirmakR(
+  outpath = dir_out, sci_name = 'Artemisia tridentata spp. vaseyana', x = taxon, 
+  nrcs_code = 'ARTRV', regioncode = rc$SuggestedName, overwrite = TRUE,
+  estz_type = 'cg') 
+
+taxon <- sf::st_transform(taxon, 4326)
+mapmakR(x = taxon, sci_name = 'Artemisia_tridentata_spp_vaseyana', SZName = SZName, landscape = FALSE, 
+        outpath = file.path(dir_out, 'Artemisia_tridentata_spp_vaseyana_cgSTZ', 'Information'), 
+         caption = 'Data from Richardson, B. A., & Chaney, L. (2018). https://doi.org/10.1002/eap.1804')
+
+```
+
+
+Mostly we just need to change a few variables... Here is a wrapper function which allows us to do that. 
+```{r}
+wrapper <- function(x, SeedZone, nrcs_code, sci_name, estz_type, caption, ... ){
+  
+  if(typeof(x)!='list'){
+    taxon <- sf::st_read(x)
+  } else {taxon <- x}
+  rc <- regionCoding(taxon)
+  
+  taxon <- sf::st_transform(taxon, 5070)
+  taxon <- fieldsmakR(taxon, SeedZone = SeedZone, ...)
+
+  ord2 <- orderZones(taxon, SeedZone, n = 3000) 
+  taxon <- ord2$Reclassified
+
+  dirmakR(
+    outpath = dir_out, sci_name = sci_name, x = taxon, 
+    nrcs_code = nrcs_code, regioncode = rc$SuggestedName, overwrite = TRUE,
+    estz_type = estz_type) 
+  
+  taxon <- sf::st_transform(taxon, 4326)
+  mapmakR(x = taxon, sci_name = gsub('_', ' ', sci_name), SZName = SZName, landscape = FALSE,
+        outpath = file.path(dir_out, paste0(sci_name, '_', estz_type, 'STZ'), 'Information'), 
+         caption = caption)
+  
+  return(taxon)
+}
+```
+
+```{r, eval = F}
+wrapper(x = fnames[[grep('Bouteloua_gracilis', fnames)]],
+        SeedZone = 'OBJECTID', nrcs_code = 'BOGR2',
+        sci_name = 'Bouteloua_gracilis', 
+        estz_type = 'cm', 
+        caption = 'Data from Doherty et al. 2017.')
+
+hemu3 <- st_read(fnames[[grep('Heliomeris_multiflora', fnames)]])
+hemu3 <- rename_with(hemu3, ~ gsub("PS", "BIO15", .x)) |>
+  rename_with(~ gsub("MP", "BIO12", .x))
+
+wrapper(hemu3, SeedZone = 'assignment', sci_name = 'Heliomeris_multiflora', 
+        nrcs_code = 'HEMU3',
+        estz_type = 'cm', caption = 'Data from Doherty et al. 2017.')
+```
+
+
+```{r cleome lutea, eval = F}
+
+cllu2 <- st_read(fnames[[grep('Cleome_lutea', fnames)]])
+colnames(cllu2) <- gsub('TS', 'BIO4', colnames(cllu2))
+
+rc <- regionCoding(cllu2)
+
+cllu2 <- sf::st_transform(cllu2, 5070)
+cllu2 <- fieldsmakR(cllu2, SeedZone = 'Axis')
+
+cllu2 <- sf::st_make_valid(cllu2)
+ord2 <- orderZones(cllu2, SeedZone, n = 3000) 
+cllu2 <- ord2$Reclassified
+
+dirmakR(
+    outpath = dir_out, sci_name = 'Cleome_lutea', x = cllu2, 
+    nrcs_code = 'CLLU2', regioncode = rc$SuggestedName, overwrite = TRUE,
+    estz_type = 'lg') 
+  
+cllu2 <- sf::st_transform(cllu2, 4326)
+mapmakR(x = cllu2, sci_name = gsub('_', ' ', 'Cleome_lutea'), SZName = SZName, landscape = FALSE,
+        outpath = file.path(dir_out, paste0('Cleome_lutea', '_', 'lg', 'STZ'), 'Information'), 
+         caption = 'Data from Massatti et al. 2020. doi: 10.1111/rec.13142')
+
+rm(cllu2)
+```
+
+```{r cleome serrulata eval = F}
+clse <- st_read(fnames[[grep('Cleome_serrulata', fnames)]])
+colnames(clse) <- gsub('TS', 'BIO4', colnames(clse))
+
+rc <- regionCoding(clse)
+
+clse <- sf::st_transform(clse, 5070)
+clse <- fieldsmakR(clse, SeedZone = 'assignment')
+
+ord2 <- orderZones(clse, SeedZone, n = 3000) 
+clse <- ord2$Reclassified
+
+dirmakR(
+    outpath = dir_out, sci_name = 'Cleome_serrulata', x = clse, 
+    nrcs_code = 'CLSE', regioncode = rc$SuggestedName, overwrite = TRUE,
+    estz_type = 'lg') 
+  
+clse <- sf::st_transform(clse, 4326)
+mapmakR(x = clse, sci_name = gsub('_', ' ', 'Cleome_serrulata'), SZName = SZName, landscape = FALSE,
+        outpath = file.path(dir_out, paste0('Cleome_serrulata', '_', 'lg', 'STZ'), 'Information'), 
+         caption = 'Data from Massatti et al. 2020. doi: 10.1111/rec.13142')
+```
+
+```{r elymus glaucus}
+taxon <- st_read(fnames[[grep('Elymus_glaucus', fnames)]])
+rc <- regionCoding(taxon)
+
+taxon <- sf::st_transform(taxon, 5070)
+clse <- fieldsmakR(taxon, SeedZone = 'OBJECTID', SZName = 'ZONE')
+
+clse <- dplyr::select(clse, -c(ACCURACY, DATA_SOURC, GLOBALID, NAME, REV_DATE, SHAPE_AREA, SHAPE_LEN))
+
+ord2 <- orderZones(clse, SeedZone, n = 3000) 
+clse <- ord2$Reclassified
+
+dirmakR(
+    outpath = dir_out, sci_name = 'Elymus_glaucus', x = clse, 
+    nrcs_code = 'ELGL', regioncode = rc$SuggestedName, overwrite = TRUE,
+    estz_type = 'cg') 
+  
+clse <- sf::st_transform(clse, 4326)
+mapmakR(x = clse, sci_name = gsub('_', ' ', 'Elymus_glaucus'), SZName = SZName, landscape = FALSE,
+        outpath = file.path(dir_out, paste0('Elymus_glaucus', '_', 'cg', 'STZ'), 'Information'), 
+         caption = 'Data from Erickson et al. 2004. https://doi.org/10.1139/b04-141')
+```
+
+```{r Ephedra nevadensis and Sphaeralcea ambigua}
+wrapper(x = fnames[[grep('Ephedra_nevadensis', fnames)]],
+        SeedZone = 'GRIDCODE', nrcs_code = 'EPNE',
+        sci_name = 'Ephedra_nevadensis', 
+        estz_type = 'lg', 
+        caption = 'Data from Shyrock et al. 2017. https://doi.org/10.1002/eap.1447')
+
+wrapper(x = fnames[[grep('Sphaeralcea_ambigua', fnames)]],
+        SeedZone = 'GRIDCODE', nrcs_code = 'SPAM',
+        sci_name = 'Sphaeralcea_ambigua', 
+        estz_type = 'lg', 
+        caption = 'Data from Shyrock et al. 2017. https://doi.org/10.1002/eap.1447')
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+something weird here - revisit it, shouldnt be clipped so close to this area. 
+
+```{r elymus elymoides climate matched}
+
+elel5 <- st_read(fnames[[grep('Elymus_elymoides-CP', fnames)]])
+
+rc <- regionCoding(elel5)
+
+elel5 <- sf::st_transform(elel5, 5070)
+elel5 <- fieldsmakR(elel5, SeedZone = 'OBJECTID')
+
+elel5 <- orderZones(elel5, SeedZone, n = 3000) 
+elel5 <- ord2$Reclassified
+
+dirmakR(
+    outpath = dir_out, sci_name = 'Elymus_elymoides', x = elel5, 
+    nrcs_code = 'ELEL5', regioncode = rc$SuggestedName, overwrite = TRUE,
+    estz_type = 'cm') 
+  
+elel5 <- sf::st_transform(elel5, 4326)
+mapmakR(x = elel5, sci_name = gsub('_', ' ', 'Elymus_elymoides'), SZName = SZName, landscape = FALSE,
+        outpath = file.path(dir_out, paste0('Elymus_elymoides', '_', 'cm', 'STZ'), 'Information'), 
+         caption = 'Data from Doherty et al. 2017.')
+```
+
+Something weird here too. revisit it
+
+```{r elymus elymoides landscape }
+
+elel5 <- st_read(fnames[[grep('Elymus_elymoides-WUS', fnames)]])
+
+rc <- regionCoding(elel5)
+
+elel5 <- sf::st_transform(elel5, 5070)
+elel5 <- fieldsmakR(elel5, SeedZone = 'GRIDCODE')
+
+elel5 <- orderZones(elel5, SeedZone, n = 3000) 
+elel5 <- ord2$Reclassified
+ggplot() + 
+  geom_sf(data = elel5)
+
+dirmakR(
+    outpath = dir_out, sci_name = 'Elymus_elymoides', x = elel5, 
+    nrcs_code = 'ELEL5', regioncode = rc$SuggestedName, overwrite = TRUE,
+    estz_type = 'cg') 
+  
+elel5 <- sf::st_transform(elel5, 4326)
+mapmakR(x = elel5, sci_name = gsub('_', ' ', 'Elymus_elymoides'), SZName = SZName, landscape = FALSE,
+        outpath = file.path(dir_out, paste0('Elymus_elymoides', '_', 'cg', 'STZ'), 'Information'), 
+         caption = 'Data from Doherty et al. 2017.')
+```

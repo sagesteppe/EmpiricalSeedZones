@@ -1,27 +1,27 @@
-"Species","PLANTS_code","Method_broad","Method_fine"
-"Astragalus lonchocarpus","ASLO3","Climate-Matched","Climate-Matched"
-"Bouteloua gracilis","BOGR2","Climate-Matched","Climate-Matched"
-"Heliomeris multiflora","HEMU3","Climate-Matched","Climate-Matched"
-"Koeleria macrantha","KOMA","Climate-Matched","Climate-Matched"
-"Elymus elymoides","ELEL5","Climate-Matched","Climate-Matched"
-"Elymus glaucus","ELGL","Empirical","Common Garden"
-"Elymus elymoides","ELEL5","Empirical","Common Garden"
-"Leymus cinereus","LECI4","Empirical","Common Garden"
-"Bromus carinatus","BRCA5","Empirical","Common Garden"
-"Koeleria macrantha","KOMA","Empirical","Common Garden"
-"Pseudoroegneria spicata","PSSP6","Empirical","Common Garden"
-"Poa secunda","POSE","Empirical","Common Garden"
-"Allium acuminatum","ALAC4","Empirical","Common Garden"
-"Achnatherum hymenoides","ACHY","Empirical","Common Garden"
-"Holodiscus discolor","HODI","Empirical","Common Garden"
-"Achnatherum thurberianum","ACHT7","Empirical","Common Garden"
-"Artemisia tridentata spp. vaseyana","ARTRV","Empirical","Common Garden"
-"Artemisia tridentata spp. wyomingensis","ARTRW8","Empirical","Common Garden"
-"Artemisia tridentata ssp. tridentata","ARTRT","Empirical","Common Garden"
-"Sphaeralcea ambigua","SPAM2","Empirical","Landscape Genetic"
-"Ephedra nevadensis","EPNE","Empirical","Landscape Genetic"
-"Macheranthera canescens","MACA3","Empirical","Landscape Genetic"
-"Cleome lutea","CLLU2","Empirical","Landscape Genetic"
-"Sphaeralcea parvifolia","SPPA2","Empirical","Landscape Genetic"
-"Sporobolus cryptandrus","SPCR","Empirical","Landscape Genetic"
-"Pleuraphis jamesii","PLJA","Empirical","Landscape Genetic"
+Species,PLANTS_code,Method_broad,Method_fine
+Astragalus lonchocarpus,ASLO3,Climate-Matched,Climate-Matched
+Bouteloua gracilis,BOGR2,Climate-Matched,Climate-Matched
+Heliomeris multiflora,HEMU3,Climate-Matched,Climate-Matched
+Koeleria macrantha,KOMA,Climate-Matched,Climate-Matched
+Elymus elymoides,ELEL5,Climate-Matched,Climate-Matched
+Elymus glaucus,ELGL,Empirical,Common Garden
+Elymus elymoides,ELEL5,Empirical,Common Garden
+Leymus cinereus,LECI4,Empirical,Common Garden
+Bromus carinatus,BRCA5,Empirical,Common Garden
+Koeleria macrantha,KOMA,Empirical,Common Garden
+Pseudoroegneria spicata,PSSP6,Empirical,Common Garden
+Poa secunda,POSE,Empirical,Common Garden
+Allium acuminatum,ALAC4,Empirical,Common Garden
+Achnatherum hymenoides,ACHY,Empirical,Common Garden
+Holodiscus discolor,HODI,Empirical,Common Garden
+Achnatherum thurberianum,ACHT7,Empirical,Common Garden
+Artemisia tridentata spp. vaseyana,ARTRV,Empirical,Common Garden
+Artemisia tridentata spp. wyomingensis,ARTRW8,Empirical,Common Garden
+Artemisia tridentata ssp. tridentata,ARTRT,Empirical,Common Garden
+Sphaeralcea ambigua,SPAM2,Empirical,Landscape Genetic
+Ephedra nevadensis,EPNE,Empirical,Landscape Genetic
+Macheranthera canescens,MACA3,Empirical,Landscape Genetic
+Cleome lutea,CLLU2,Empirical,Landscape Genetic
+Sphaeralcea parvifolia,SPPA2,Empirical,Landscape Genetic
+Sporobolus cryptandrus,SPCR,Empirical,Landscape Genetic
+Pleuraphis jamesii,PLJA,Empirical,Landscape Genetic
