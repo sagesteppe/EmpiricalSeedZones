@@ -91,45 +91,25 @@ wrapper(x = st_read(fnames[[grep('Allium_acuminatum', fnames)]]),
         caption = 'Data from Johnson et al. 2013. dx.doi.org/10.1139/cjb-2013-0046')
 ```
 
-NOTE ACHY Is a weird one... the gridcode is a non consecutive range of numbers not starting from 0 or 1, and the SZNames are a consecutive version of these numbers starting from 1. 
-We will overwrite the SZName to make them confluent with our 'new' values which are based on aridity.
-To do this we just omit the original zone column. 
-
-
-ACHY IS a dupe of THURBERS??? CHECK FIX 
-
-```{r achy, eval = F}
-wrapper(x = st_read(fnames[[grep('Eriocoma_hymenoides', fnames)]]) |> select(-area_ha, -zone),  
-        SeedZone = 'GRIDCODE',  nrcs_code = 'ACHY',
-        sci_name = 'Eriocoma_hymenoides', 
-        estz_type = 'cg', 
-        caption = 'Data from Johnson et al. 2012. https://doi.org/10.2111/REM-D-11-00165.1')
-```
-
 The formatting of the sage files are unique, we will come back to them. 
 ```{r Artemisia, eval = F}
 
-ob <- wrapper(x = fnames[[grep('spp._vaseyana', fnames)]],
+wrapper(x = fnames[[grep('spp._vaseyana', fnames)]],
         SeedZone = 'GRIDCODE', nrcs_code = 'ARTRV',
         sci_name = 'Artemisia_tridentata_spp_vaseyana', ls = FALSE,
         estz_type = 'cm', 
         caption = 'Data from Richardson, B. A., & Chaney, L. (2018). https://doi.org/10.1002/eap.1804')
 
-arrange(ob, SeedZone)
-```
-
-
-```{r leymus cinereus, eval = F}
 wrapper(
-  x = st_read(fnames[[grep('Leymus_cinereus', fnames)]]) |> dplyr::select(-c(area_ha, zone)),
-  SeedZone = 'GRIDCODE', nrcs_code = 'LECI4',
-  sci_name = 'Leymus_cinereus', 
-  estz_type = 'cg', 
-  caption = 'Data from Johnson & Vance-Borland 2016. https://doi.org/10.1371/journal.pone.0148982')
+  x = st_read(fnames[[grep('Artemisia_tridentata-WUS', fnames)]]) |> select(SeedZone = Seedzone),
+        SeedZone = 'SeedZone', nrcs_code = 'ARTR',
+        sci_name = 'Artemisia_tridentata', ls = FALSE,
+        estz_type = 'cm', 
+        caption = 'Data from Richardson, B. A., & Chaney, L. (2018). https://doi.org/10.1002/eap.1804')
 
 ```
 
-```{r ASLO BOGR2 KOMA SPCR HEMU3 SPPA surfaces, eval = F}
+```{r Astragalus lonchocarpus}
 
 wrapper(
   x = st_read(fnames[[grep('Astragalus_lonchocarpus-CP', fnames)]]) |> select(-Shape_Leng, -Shape_Area),
@@ -138,31 +118,105 @@ wrapper(
         estz_type = 'cm', 
         caption = 'Data from Doherty et al. 2017.')
 
+aslo3 <- st_read(fnames[[grep('Astragalus_lonchocarpus-GSTZ', fnames)]]) |>
+  rename_with(~ gsub("TS", "BIO4", .x))
+
+wrapper(aslo3, SeedZone = 'assignment', sci_name = 'Astragalus_lonchocarpus', 
+        nrcs_code = 'ASLO3', ls = TRUE,
+        estz_type = 'lg', 
+        caption = 'Data from Massatti & Winkler 2022. https://doi.org/10.1111/2041-210X.13902')
+
+rm(aslo3)
+```
+
+```{r bouteloua gracilis, eval = F}
 wrapper(x = fnames[[grep('Bouteloua_gracilis', fnames)]],
         SeedZone = 'OBJECTID', nrcs_code = 'BOGR2',
         sci_name = 'Bouteloua_gracilis', 
         estz_type = 'cm', 
         caption = 'Data from Doherty et al. 2017.')
+```
 
-wrapper(x = fnames[[grep('Koeleria_macrantha', fnames)]],
-        SeedZone = 'OBJECTID', nrcs_code = 'KOMA',
-        sci_name = 'Koeleria_macrantha', 
-        estz_type = 'cm', 
-        caption = 'Data from Doherty et al. 2017.')
+```{r bromus sitchensis}
 
-maca <- st_read(fnames[[grep('Machaeranthera_canescens', fnames)]])
-maca <- rename_with(maca, ~ gsub("TS", "BIO4", .x)) |>
-  rename_with(~ gsub("MDR", "BIO2", .x))
-wrapper(maca, SeedZone = 'Axis', sci_name = 'Dieteria_canescens', 
-        nrcs_code = 'MACA2',
+```
+
+
+```{r cleome lutea, eval = F}
+
+cllu2 <- st_read(fnames[[grep('Cleome_lutea', fnames)]])
+cllu2 <- rename_with(cllu2, ~ gsub("TS", "BIO4", .x))
+
+wrapper(cllu2, SeedZone = 'Axis', sci_name = 'Cleomella_lutea', 
+        nrcs_code = 'CLLU2',
+        estz_type = 'lg', caption = 'Data from Massatti et al. 2020. doi: 10.1111/rec.13142')
+
+rm(cllu2)
+```
+
+```{r cleome serrulata eval = F}
+clse <- st_read(fnames[[grep('Cleome_serrulata', fnames)]])
+clse <- rename_with(clse, ~ gsub("TS", "BIO4", .x))
+
+wrapper(clse, SeedZone = 'assignment', sci_name = 'Cleome_serrulata', 
+        nrcs_code = 'CLSE',
+        estz_type = 'lg', caption = 'Data from Massatti 2022. 10.5066/P9H9M79K')
+rm(clse)
+```
+
+```{r elymus elymoides climate matched}
+elel5 <- st_read(fnames[[grep('Elymus_elymoides-CP', fnames)]]) |>
+  select(-Shape_Area, -Shape_Leng)
+
+wrapper(elel5, SeedZone = 'OBJECTID', sci_name = 'Elymus_elymoides', 
+        nrcs_code = 'ELEL5',
         estz_type = 'cm', caption = 'Data from Doherty et al. 2017.')
+```
 
-spcr <- st_read(fnames[[grep('Sporobolus_cryptandrus', fnames)]])
-spcr <- rename_with(spcr, ~ gsub("Tseas", "BIO4", .x)) 
-wrapper(spcr, SeedZone = 'gridcode', sci_name = 'Sporobolus_cryptandrus', 
-        nrcs_code = 'SPCR',
-        estz_type = 'cm', caption = 'Data from Doherty et al. 2017.')
 
+```{r elymus elymoides GENETIC}
+elel5 <- st_read(fnames[[grep('Elymus_elymoides-WUS', fnames)]])
+
+wrapper(elel5, SeedZone = 'GRIDCODE', sci_name = 'Elymus_elymoides', 
+        nrcs_code = 'ELEL5',
+        estz_type = 'cg', caption = 'WHERE DID THIS COME FROM??? WHY DID I START THIS PROJECT? WHY AM I HERE?')
+rm(elel5)
+```
+
+```{r elymus glaucus}
+taxon <- st_read(fnames[[grep('Elymus_glaucus', fnames)]]) |>
+  select(-c(ACCURACY, DATA_SOURC, GLOBALID, NAME, REV_DATE, SHAPE_AREA, SHAPE_LEN))
+
+wrapper(taxon, SeedZone = 'OBJECTID', SZName = 'ZONE',
+        nrcs_code = 'ELGL', estz_type = 'lg', sci_name = 'Elymus_glaucus', 
+        caption = 'Data from Erickson et al. 2004. https://doi.org/10.1139/b04-141')
+rm(taxon)
+```
+
+```{r Ephedra nevadensis}
+wrapper(x = fnames[[grep('Ephedra_nevadensis', fnames)]],
+        SeedZone = 'GRIDCODE', nrcs_code = 'EPNE',
+        sci_name = 'Ephedra_nevadensis',
+        estz_type = 'lg', 
+        caption = 'Data from Shyrock et al. 2017. https://doi.org/10.1002/eap.1447')
+```
+
+
+NOTE ACHY Is a weird one... the gridcode is a non consecutive range of numbers not starting from 0 or 1, and the SZNames are a consecutive version of these numbers starting from 1. 
+We will overwrite the SZName to make them confluent with our 'new' values which are based on aridity.
+To do this we just omit the original zone column. 
+
+ACHY IS a dupe of THURBERS??? CHECK FIX 
+
+```{r eriocoma hymenoides, eval = F}
+wrapper(x = st_read(fnames[[grep('Eriocoma_hymenoides', fnames)]]) |> select(-area_ha, -zone),  
+        SeedZone = 'GRIDCODE',  nrcs_code = 'ACHY',
+        sci_name = 'Eriocoma_hymenoides', 
+        estz_type = 'cg', 
+        caption = 'Data from Johnson et al. 2012. https://doi.org/10.2111/REM-D-11-00165.1')
+```
+
+```{r heliomeris multiflora}
 hemu3 <- st_read(fnames[[grep('Heliomeris_multiflora', fnames)]])
 hemu3 <- rename_with(hemu3, ~ gsub("PS", "BIO15", .x)) |>
   rename_with(~ gsub("MP", "BIO12", .x))
@@ -170,43 +224,58 @@ hemu3 <- rename_with(hemu3, ~ gsub("PS", "BIO15", .x)) |>
 wrapper(hemu3, SeedZone = 'assignment', sci_name = 'Heliomeris_multiflora', 
         nrcs_code = 'HEMU3',
         estz_type = 'cm', caption = 'Data from Doherty et al. 2017.')
+rm(hemu3)
+```
 
-sppa2 <- st_read(fnames[[grep('Sphaeralcea_parvifolia', fnames)]])
-sppa2 <- rename_with(sppa2, ~ gsub("MDR", "BIO2", .x)) |>
-  rename_with(~ gsub("Tseas", "BIO4", .x))|>
-  rename_with(~ gsub("TwetQ", "BIO8", .x))|>
-  rename_with(~ gsub("TwetQ", "BIO8", .x))|>
-  rename_with(~ gsub("Pseas", "BIO15", .x))
+```{r koeleria macrantha}
+wrapper(x = fnames[[grep('Koeleria_macrantha', fnames)]],
+        SeedZone = 'OBJECTID', nrcs_code = 'KOMA',
+        sci_name = 'Koeleria_macrantha', 
+        estz_type = 'cm', 
+        caption = 'Data from Doherty et al. 2017.')
+```
 
-wrapper(sppa2, SeedZone = 'gridcode', sci_name = 'Sphaeralcea_parvifolia', 
-        nrcs_code = 'SPPA2',
+```{r leymus cinereus, eval = F}
+wrapper(
+  x = st_read(fnames[[grep('Leymus_cinereus', fnames)]]) |> dplyr::select(-c(area_ha, zone)),
+  SeedZone = 'GRIDCODE', nrcs_code = 'LECI4',
+  sci_name = 'Leymus_cinereus', 
+  estz_type = 'cg', 
+  caption = 'Data from Johnson & Vance-Borland 2016. https://doi.org/10.1371/journal.pone.0148982')
+```
+
+```{r dieteria canescens}
+maca <- st_read(fnames[[grep('Machaeranthera_canescens', fnames)]])
+maca <- rename_with(maca, ~ gsub("TS", "BIO4", .x)) |>
+  rename_with(~ gsub("MDR", "BIO2", .x))
+wrapper(maca, SeedZone = 'Axis', sci_name = 'Dieteria_canescens', 
+        nrcs_code = 'MACA2',
         estz_type = 'cm', caption = 'Data from Doherty et al. 2017.')
+rm(maca)
+```
 
-rm(hemu3, spcr)
+```{r Pleuraphis jamesii, eval = F}
+plja <- st_read(fnames[[grep('Pleuraphis_jamesii', fnames)]])
+plja <- rename_with(plja, ~ gsub("Tseas", "BIO4", .x)) |>
+  rename_with( ~ gsub('MAT', 'BIO1', .x)) |>
+  rename_with( ~ gsub('MDR', 'BIO2', .x)) |>
+  select(-population)
+
+wrapper(plja, SeedZone = 'gridcode', sci_name = 'Pleuraphis_jamesii', 
+        nrcs_code = 'PLJA', ls = TRUE,
+        estz_type = 'cm', caption = 'Data from Massatii 2020')
 ```
 
 ```{r poa secunda, eval = F}
 pose <- st_read(fnames[[grep('Poa_secunda', fnames)]]) |>
   select(-Area)
 
-# these warnings are 'safe' https://github.com/r-spatial/sf/issues/306
 wrapper(x = pose, 
         SeedZone = 'GRIDCODE', SZName = 'ZONE', sci_name = 'Poa_secunda', 
         nrcs_code = 'POSE',
         estz_type = 'cg', caption = 'Data from Johnson et al. 2015.')
-```
 
-
-```{r Pleuraphis jamesii, eval = F}
-
-plja <- st_read(fnames[[grep('Pleuraphis_jamesii', fnames)]])
-plja <- rename_with(plja, ~ gsub("Tseas", "BIO4", .x)) |>
-  rename_with( ~ gsub('MAT', 'BIO1', .x)) |>
-  rename_with( ~ gsub('MDR', 'BIO2', .x)) |>
-  select(-population)
-wrapper(plja, SeedZone = 'gridcode', sci_name = 'Pleuraphis_jamesii', 
-        nrcs_code = 'PLJA', ls = TRUE,
-        estz_type = 'cm', caption = 'Data from Massatii 2020')
+rm(pose)
 ```
 
 ```{r pseudoroegneria spicata}
@@ -218,101 +287,10 @@ wrapper(pssp6, SeedZone = 'GRID_CODE', SZName = 'ZONE', sci_name = 'Pseudoroegne
         estz_type = 'cg', 
         caption = 'Data from Bradley St. Clair et al. 2013. doi:10.1111/eva.12077')
 
+rm(pssp6)
 ```
 
-
-```{r astragalus lonchocarpus genetic, eval = F}
-
-aslo3 <- st_read(fnames[[grep('Astragalus_lonchocarpus-GSTZ', fnames)]]) |>
-  rename_with(~ gsub("TS", "BIO4", .x))
-
-wrapper(aslo3, SeedZone = 'assignment', sci_name = 'Astragalus_lonchocarpus', 
-        nrcs_code = 'ASLO3', ls = TRUE,
-        estz_type = 'lg', 
-        caption = 'Data from Massatti & Winkler 2022. https://doi.org/10.1111/2041-210X.13902')
-```
-
-```{r cleome lutea, eval = F}
-
-cllu2 <- st_read(fnames[[grep('Cleome_lutea', fnames)]])
-colnames(cllu2) <- gsub('TS', 'BIO4', colnames(cllu2))
-
-rc <- regionCoding(cllu2)
-
-cllu2 <- sf::st_transform(cllu2, 5070)
-cllu2 <- fieldsmakR(cllu2, SeedZone = 'Axis')
-
-cllu2 <- sf::st_make_valid(cllu2)
-ord2 <- orderZones(cllu2, SeedZone, n = 3000) 
-cllu2 <- ord2$Reclassified
-
-dirmakR(
-    outpath = dir_out, sci_name = 'Cleome_lutea', x = cllu2, 
-    nrcs_code = 'CLLU2', regioncode = rc$SuggestedName, overwrite = TRUE,
-    estz_type = 'lg') 
-  
-cllu2 <- sf::st_transform(cllu2, 4326)
-mapmakR(x = cllu2, sci_name = gsub('_', ' ', 'Cleome_lutea'), SZName = SZName, landscape = FALSE,
-        outpath = file.path(dir_out, paste0('Cleome_lutea', '_', 'lg', 'STZ'), 'Information'), 
-         caption = 'Data from Massatti et al. 2020. doi: 10.1111/rec.13142')
-
-rm(cllu2)
-```
-
-```{r cleome serrulata eval = F}
-clse <- st_read(fnames[[grep('Cleome_serrulata', fnames)]])
-colnames(clse) <- gsub('TS', 'BIO4', colnames(clse))
-
-rc <- regionCoding(clse)
-
-clse <- sf::st_transform(clse, 5070)
-clse <- fieldsmakR(clse, SeedZone = 'assignment')
-
-ord2 <- orderZones(clse, SeedZone, n = 3000) 
-clse <- ord2$Reclassified
-
-dirmakR(
-    outpath = dir_out, sci_name = 'Cleome_serrulata', x = clse, 
-    nrcs_code = 'CLSE', regioncode = rc$SuggestedName, overwrite = TRUE,
-    estz_type = 'lg') 
-  
-clse <- sf::st_transform(clse, 4326)
-mapmakR(x = clse, sci_name = gsub('_', ' ', 'Cleome_serrulata'), SZName = SZName, landscape = FALSE,
-        outpath = file.path(dir_out, paste0('Cleome_serrulata', '_', 'lg', 'STZ'), 'Information'), 
-         caption = 'Data from Massatti et al. 2020. doi: 10.1111/rec.13142')
-```
-
-
-```{r elymus glaucus}
-taxon <- st_read(fnames[[grep('Elymus_glaucus', fnames)]])
-rc <- regionCoding(taxon)
-
-taxon <- sf::st_transform(taxon, 5070)
-clse <- fieldsmakR(taxon, SeedZone = 'OBJECTID', SZName = 'ZONE')
-
-clse <- dplyr::select(clse, -c(ACCURACY, DATA_SOURC, GLOBALID, NAME, REV_DATE, SHAPE_AREA, SHAPE_LEN))
-
-ord2 <- orderZones(clse, SeedZone, n = 3000) 
-clse <- ord2$Reclassified
-
-dirmakR(
-    outpath = dir_out, sci_name = 'Elymus_glaucus', x = clse, 
-    nrcs_code = 'ELGL', regioncode = rc$SuggestedName, overwrite = TRUE,
-    estz_type = 'cg') 
-  
-clse <- sf::st_transform(clse, 4326)
-mapmakR(x = clse, sci_name = gsub('_', ' ', 'Elymus_glaucus'), SZName = SZName, landscape = FALSE,
-        outpath = file.path(dir_out, paste0('Elymus_glaucus', '_', 'cg', 'STZ'), 'Information'), 
-         caption = 'Data from Erickson et al. 2004. https://doi.org/10.1139/b04-141')
-```
-
-```{r Ephedra nevadensis and Sphaeralcea ambigua}
-wrapper(x = fnames[[grep('Ephedra_nevadensis', fnames)]],
-        SeedZone = 'GRIDCODE', nrcs_code = 'EPNE',
-        sci_name = 'Ephedra_nevadensis', 
-        estz_type = 'lg', 
-        caption = 'Data from Shyrock et al. 2017. https://doi.org/10.1002/eap.1447')
-
+```{r Sphaeralcea ambigua}
 wrapper(x = fnames[[grep('Sphaeralcea_ambigua', fnames)]],
         SeedZone = 'GRIDCODE', nrcs_code = 'SPAM',
         sci_name = 'Sphaeralcea_ambigua', 
@@ -320,58 +298,26 @@ wrapper(x = fnames[[grep('Sphaeralcea_ambigua', fnames)]],
         caption = 'Data from Shyrock et al. 2017. https://doi.org/10.1002/eap.1447')
 ```
 
+```{r Sphaeralcea parvifolia surfaces, eval = F}
+sppa2 <- st_read(fnames[[grep('Sphaeralcea_parvifolia', fnames)]])
+sppa2 <- rename_with(sppa2, ~ gsub("MDR", "BIO2", .x)) |>
+  rename_with(~ gsub("Tseas", "BIO4", .x))|>
+  rename_with(~ gsub("TwetQ", "BIO8", .x))|>
+  rename_with(~ gsub("TwetQ", "BIO8", .x))|>
+  rename_with(~ gsub("Pseas", "BIO15", .x))
 
+wrapper(sppa2, SeedZone = 'gridcode', sci_name = 'Sphaeralcea_parvifolia', 
+        nrcs_code = 'SPPA2',
+        estz_type = 'cm', caption = 'Data from Doherty et al. 2017.')
 
-
-
-something weird here - revisit it, shouldnt be clipped so close to this area. 
-
-```{r elymus elymoides climate matched}
-
-elel5 <- st_read(fnames[[grep('Elymus_elymoides-CP', fnames)]])
-
-rc <- regionCoding(elel5)
-
-elel5 <- sf::st_transform(elel5, 5070)
-elel5 <- fieldsmakR(elel5, SeedZone = 'OBJECTID')
-
-elel5 <- orderZones(elel5, SeedZone, n = 3000) 
-elel5 <- ord2$Reclassified
-
-dirmakR(
-    outpath = dir_out, sci_name = 'Elymus_elymoides', x = elel5, 
-    nrcs_code = 'ELEL5', regioncode = rc$SuggestedName, overwrite = TRUE,
-    estz_type = 'cm') 
-  
-elel5 <- sf::st_transform(elel5, 4326)
-mapmakR(x = elel5, sci_name = gsub('_', ' ', 'Elymus_elymoides'), SZName = SZName, landscape = FALSE,
-        outpath = file.path(dir_out, paste0('Elymus_elymoides', '_', 'cm', 'STZ'), 'Information'), 
-         caption = 'Data from Doherty et al. 2017.')
+rm(sppa2)
 ```
 
-Something weird here too. revisit it
-
-```{r elymus elymoides landscape }
-
-elel5 <- st_read(fnames[[grep('Elymus_elymoides-WUS', fnames)]])
-
-rc <- regionCoding(elel5)
-
-elel5 <- sf::st_transform(elel5, 5070)
-elel5 <- fieldsmakR(elel5, SeedZone = 'GRIDCODE')
-
-elel5 <- orderZones(elel5, SeedZone, n = 3000) 
-elel5 <- ord2$Reclassified
-ggplot() + 
-  geom_sf(data = elel5)
-
-dirmakR(
-    outpath = dir_out, sci_name = 'Elymus_elymoides', x = elel5, 
-    nrcs_code = 'ELEL5', regioncode = rc$SuggestedName, overwrite = TRUE,
-    estz_type = 'cg') 
-  
-elel5 <- sf::st_transform(elel5, 4326)
-mapmakR(x = elel5, sci_name = gsub('_', ' ', 'Elymus_elymoides'), SZName = SZName, landscape = FALSE,
-        outpath = file.path(dir_out, paste0('Elymus_elymoides', '_', 'cg', 'STZ'), 'Information'), 
-         caption = 'Data from Doherty et al. 2017.')
+```{r sporobolus cryptandrus}
+spcr <- st_read(fnames[[grep('Sporobolus_cryptandrus', fnames)]])
+spcr <- rename_with(spcr, ~ gsub("Tseas", "BIO4", .x)) 
+wrapper(spcr, SeedZone = 'gridcode', sci_name = 'Sporobolus_cryptandrus', 
+        nrcs_code = 'SPCR',
+        estz_type = 'cm', caption = 'Data from Doherty et al. 2017.')
+rm(spcr)
 ```
