@@ -34,9 +34,8 @@ wrapper <- function(x, SeedZone, nrcs_code, sci_name, estz_type, caption, ls = F
   taxon <- sf::st_transform(taxon, 5070)
   taxon <- fieldsmakR(taxon, SeedZone = SeedZone, ...)
 
-  ord2 <- orderZones(taxon, n = 3000) 
+  ord2 <- orderZones(taxon, n = 5000) 
   taxon <- ord2$Reclassified
-  return(taxon)
 
   dirmakR(
     outpath = dir_out, sci_name = sci_name, x = taxon, 
@@ -92,28 +91,31 @@ wrapper(x = st_read(fnames[[grep('Allium_acuminatum', fnames)]]),
         caption = 'Data from Johnson et al. 2013. dx.doi.org/10.1139/cjb-2013-0046')
 ```
 
-NOTE ACHY Is a weird one... the gridcode is one thing, and the SZNames are numbers which do not match (they are consecutive version of gridcode). 
-We will overwrite the SZName to make them confluent with our 'new' values. To do this we just omit the original zone column. 
+NOTE ACHY Is a weird one... the gridcode is a non consecutive range of numbers not starting from 0 or 1, and the SZNames are a consecutive version of these numbers starting from 1. 
+We will overwrite the SZName to make them confluent with our 'new' values which are based on aridity.
+To do this we just omit the original zone column. 
+
+
+ACHY IS a dupe of THURBERS??? CHECK FIX 
 
 ```{r achy, eval = F}
-
 wrapper(x = st_read(fnames[[grep('Eriocoma_hymenoides', fnames)]]) |> select(-area_ha, -zone),  
-        SeedZone = 'GRIDCODE',  nrcs_code = 'LECI4',
+        SeedZone = 'GRIDCODE',  nrcs_code = 'ACHY',
         sci_name = 'Eriocoma_hymenoides', 
         estz_type = 'cg', 
         caption = 'Data from Johnson et al. 2012. https://doi.org/10.2111/REM-D-11-00165.1')
-
 ```
 
 The formatting of the sage files are unique, we will come back to them. 
 ```{r Artemisia, eval = F}
 
-wrapper(x = fnames[[grep('spp._vaseyana', fnames)]],
+ob <- wrapper(x = fnames[[grep('spp._vaseyana', fnames)]],
         SeedZone = 'GRIDCODE', nrcs_code = 'ARTRV',
         sci_name = 'Artemisia_tridentata_spp_vaseyana', ls = FALSE,
         estz_type = 'cm', 
         caption = 'Data from Richardson, B. A., & Chaney, L. (2018). https://doi.org/10.1002/eap.1804')
 
+arrange(ob, SeedZone)
 ```
 
 
