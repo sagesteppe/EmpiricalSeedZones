@@ -198,7 +198,7 @@ raw_names <- data.frame(
   Path_Name = paste0(p2raw, list.files(p2raw)),
   Raw_Name = list.files(p2raw),
   New_Name = c(
-    'Achnatherum_hymenoides-WUS', 'Achnatherum_thurberianum-WUS',
+    'Achnatherum_thurberianum-WUS',
     'Allium_acuminatum-WUS', 'Artemisia_tridentata-WUS', 
     'Artemisia_tridentata_spp._vaseyana-WUS', 'Astragalus_lonchocarpus-CP', 'Astragalus_lonchocarpus-GSTZ', 
     'Pseudoroegneria_spicata-WUS', 'Bouteloua_gracilis-CP', 'Cleome_lutea-CP', 'Cleome_serrulata-', 
@@ -206,6 +206,7 @@ raw_names <- data.frame(
     'Ephedra_nevadensis-MD', 'Heliomeris_multiflora-CP', 
     'Koeleria_macrantha-CB-GB', 'Leymus_cinereus-CB-GB', 'Machaeranthera_canescens-CP', 
     'Bromus_sitchensis_ssp._carinatus-BM', 'Pleuraphis_jamesii-CP-GB-MD-WP', 
+    'Eriocoma_hymenoides-WUS', 
     'Poa_secunda-WUS', 'Sporobolus_cryptandrus-CP', 'Sphaeralcea_ambigua-MD',
     'Sphaeralcea_parvifolia-CP-GB'
     )

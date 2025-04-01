@@ -1,27 +1,27 @@
-USDA_Species,Species,PLANTS_code
-Astragalus lonchocarpus,Astragalus lonchocarpus,ASLO3
-Bouteloua gracilis,Bouteloua gracilis,BOGR2
-Heliomeris multiflora,Heliomeris multiflora,HEMU3
-Koeleria macrantha,Koeleria macrantha,KOMA
-Elymus elymoides,Elymus elymoides,ELEL5
-Elymus glaucus,Elymus glaucus,ELGL
-Elymus elymoides,Elymus elymoides,ELEL5
-Leymus cinereus,Leymus cinereus,LECI4
-Bromus carinatus,Bromus sitchensis ssp. carinatus,BRCA5
-Koeleria macrantha,Koeleria macrantha,KOMA
-Pseudoroegneria spicata,Pseudoroegneria spicata,PSSP6
-Poa secunda,Poa secunda,POSE
-Allium acuminatum,Allium acuminatum,ALAC4
-Achnatherum hymenoides,Eriocoma hymenoides,ACHY
-Holodiscus discolor,Holodiscus discolor,HODI
-Achnatherum thurberianum,Eriocoma thurberiana,ACHT7
-Artemisia tridentata spp. vaseyana,Artemisia tridentata spp. vaseyana,ARTRV
-Artemisia tridentata spp. wyomingensis,Artemisia tridentata spp. wyomingensis,ARTRW8
-Artemisia tridentata ssp. tridentata,Artemisia tridentata ssp. tridentata,ARTRT
-Sphaeralcea ambigua,Sphaeralcea ambigua,SPAM2
-Ephedra nevadensis,Ephedra nevadensis,EPNE
-Macheranthera canescens,Macheranthera canescens,MACA2
-Cleome lutea,Cleomella lutea,CLLU2
-Sphaeralcea parvifolia,Sphaeralcea parvifolia,SPPA2
-Sporobolus cryptandrus,Sporobolus cryptandrus,SPCR
-Pleuraphis jamesii,Pleuraphis jamesii,PLJA
+"USDA_Species","Species","PLANTS_code"
+"Astragalus lonchocarpus","Astragalus lonchocarpus","ASLO3"
+"Bouteloua gracilis","Bouteloua gracilis","BOGR2"
+"Heliomeris multiflora","Heliomeris multiflora","HEMU3"
+"Koeleria macrantha","Koeleria macrantha","KOMA"
+"Elymus elymoides","Elymus elymoides","ELEL5"
+"Elymus glaucus","Elymus glaucus","ELGL"
+"Elymus elymoides","Elymus elymoides","ELEL5"
+"Leymus cinereus","Leymus cinereus","LECI4"
+"Bromus carinatus","Bromus sitchensis ssp. carinatus","BRCA5"
+"Koeleria macrantha","Koeleria macrantha","KOMA"
+"Pseudoroegneria spicata","Pseudoroegneria spicata","PSSP6"
+"Poa secunda","Poa secunda","POSE"
+"Allium acuminatum","Allium acuminatum","ALAC4"
+"Achnatherum hymenoides","Eriocoma hymenoides","ACHY"
+"Holodiscus discolor","Holodiscus discolor","HODI"
+"Achnatherum thurberianum","Eriocoma thurberiana","ACHT7"
+"Artemisia tridentata spp. vaseyana","Artemisia tridentata spp. vaseyana","ARTRV"
+"Artemisia tridentata spp. wyomingensis","Artemisia tridentata spp. wyomingensis","ARTRW8"
+"Artemisia tridentata ssp. tridentata","Artemisia tridentata ssp. tridentata","ARTRT"
+"Sphaeralcea ambigua","Sphaeralcea ambigua","SPAM2"
+"Ephedra nevadensis","Ephedra nevadensis","EPNE"
+"Macheranthera canescens","Macheranthera canescens","MACA2"
+"Cleome lutea","Cleomella lutea","CLLU2"
+"Sphaeralcea parvifolia","Sphaeralcea parvifolia","SPPA2"
+"Sporobolus cryptandrus","Sporobolus cryptandrus","SPCR"
+"Pleuraphis jamesii","Pleuraphis jamesii","PLJA"
