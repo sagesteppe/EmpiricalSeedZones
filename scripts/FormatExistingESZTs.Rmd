@@ -68,8 +68,7 @@ Here we retroactively apply the ordered seed zone number approach to the old dat
 Note that ordering seed zones this way is not even a core recommendation for new data sets. 
 Hopefully folks read a README before they start using this data set. 
 
-Start with the example for the package
-```{r acth7, eval = F}
+```{r acth7}
 acth7 <- sf::st_read(file.path(
   system.file(package="eSTZwritR"), "extdata", 'ACTH7.gpkg')
 ) |>
@@ -81,7 +80,7 @@ wrapper(acth7, SeedZone = 'zone', sci_name = 'Eriocoma_thurberiana',
         caption = 'Data from Johnson et al. 2017. https://doi.org/10.1016/j.rama.2017.01.004')
 ```
 
-```{r allium acuminatum, eval = F}
+```{r allium acuminatum}
 wrapper(x = st_read(fnames[[grep('Allium_acuminatum', fnames)]]),  
         SeedZone = 'GRIDCODE', SZName = 'ZONE', nrcs_code = 'ALAC4',
         sci_name = 'Allium_acuminatum', 
@@ -89,7 +88,7 @@ wrapper(x = st_read(fnames[[grep('Allium_acuminatum', fnames)]]),
         caption = 'Data from Johnson et al. 2013. dx.doi.org/10.1139/cjb-2013-0046')
 ```
 
-```{r Artemisia, eval = F}
+```{r Artemisia}
 wrapper(x = fnames[[grep('spp._vaseyana', fnames)]],
         SeedZone = 'GRIDCODE', nrcs_code = 'ARTRV',
         sci_name = 'Artemisia_tridentata_spp_vaseyana', ls = FALSE,
@@ -124,7 +123,7 @@ wrapper(aslo3, SeedZone = 'assignment', sci_name = 'Astragalus_lonchocarpus',
 rm(aslo3)
 ```
 
-```{r bouteloua gracilis, eval = F}
+```{r bouteloua gracilis}
 wrapper(
   x = st_read(fnames[[grep('Bouteloua_gracilis', fnames)]]) |>
     dplyr::select(-c(Shape_Area, Shape_Leng)),
@@ -144,7 +143,7 @@ wrapper(
         caption = 'Data from Johnson et al. 2010. doi:10.1139/B10-047')
 ```
 
-```{r cleome lutea, eval = F}
+```{r cleome lutea}
 cllu2 <- st_read(fnames[[grep('Cleome_lutea', fnames)]])
 cllu2 <- rename_with(cllu2, ~ gsub("TS", "BIO4", .x))
 
@@ -156,7 +155,7 @@ wrapper(cllu2, SeedZone = 'Axis', sci_name = 'Cleomella_lutea',
 rm(cllu2)
 ```
 
-```{r cleome serrulata eval = F}
+```{r cleome serrulata}
 clse <- st_read(fnames[[grep('Cleome_serrulata', fnames)]])
 clse <- rename_with(clse, ~ gsub("TS", "BIO4", .x))
 
@@ -200,7 +199,7 @@ wrapper(x = fnames[[grep('Ephedra_nevadensis', fnames)]],
         caption = 'Data from Shyrock et al. 2017. https://doi.org/10.1002/eap.1447')
 ```
 
-```{r eriocoma hymenoides, eval = F}
+```{r eriocoma hymenoides}
 wrapper(x = st_read(fnames[[grep('Eriocoma_hymenoides', fnames)]]),  
         SeedZone = 'GRIDCODE',  SZName = 'ZONE', nrcs_code = 'ACHY',
         sci_name = 'Eriocoma_hymenoides', ls = TRUE,
@@ -227,7 +226,7 @@ wrapper(x = fnames[[grep('Koeleria_macrantha', fnames)]],
         caption = 'Data from Doherty et al. 2017.')
 ```
 
-```{r leymus cinereus, eval = F}
+```{r leymus cinereus}
 wrapper(
   x = st_read(fnames[[grep('Leymus_cinereus', fnames)]]) |> dplyr::select(-c(area_ha, zone)),
   SeedZone = 'GRIDCODE', nrcs_code = 'LECI4',
@@ -246,7 +245,7 @@ wrapper(maca, SeedZone = 'Axis', sci_name = 'Dieteria_canescens',
 rm(maca)
 ```
 
-```{r Pleuraphis jamesii, eval = F}
+```{r Pleuraphis jamesii}
 plja <- st_read(fnames[[grep('Pleuraphis_jamesii', fnames)]])
 plja <- rename_with(plja, ~ gsub("Tseas", "BIO4", .x)) |>
   rename_with( ~ gsub('MAT', 'BIO1', .x)) |>
@@ -259,7 +258,7 @@ wrapper(plja, SeedZone = 'gridcode', sci_name = 'Pleuraphis_jamesii',
 rm(plja)
 ```
 
-```{r poa secunda, eval = F}
+```{r poa secunda}
 pose <- st_read(fnames[[grep('Poa_secunda', fnames)]]) |>
   select(-Area)
 
@@ -291,7 +290,7 @@ wrapper(x = fnames[[grep('Sphaeralcea_ambigua', fnames)]],
         caption = 'Data from Shyrock et al. 2017. https://doi.org/10.1002/eap.1447')
 ```
 
-```{r Sphaeralcea parvifolia surfaces, eval = F}
+```{r Sphaeralcea parvifolia surfaces}
 sppa2 <- st_read(fnames[[grep('Sphaeralcea_parvifolia', fnames)]])
 sppa2 <- rename_with(sppa2, ~ gsub("MDR", "BIO2", .x)) |>
   rename_with(~ gsub("Tseas", "BIO4", .x))|>
@@ -315,21 +314,20 @@ wrapper(spcr, SeedZone = 'gridcode', sci_name = 'Sporobolus_cryptandrus',
 rm(spcr)
 ```
 
-
 ## Combine all vector data to form a multi-layer geopackage
-
-Combine 
 
 ```{r combine vector data into single geopackage}
 p <- '../RetroactivelyReclassified'
 files <- list.files(p, recursive = TRUE, pattern = '.shp$')
-nms <- gsub('[.]shp$', '', basename(f))
+nms <- gsub('[.]shp$', '', basename(files))
 
 # first we create the file 
 st_write(
-  sf::st_read(file.path(p, files[1])), 
+  sf::st_transform(
+    sf::st_read(file.path(p, files[1]), quiet = TRUE), 4326), 
   dsn = '../eSTZs_RetroactivelyReclassified.gpkg', 
-  layer = nms[1]
+  layer = nms[1], 
+  append = FALSE
 )
 
 # and then we simply append each vector data set onto it. 
@@ -352,8 +350,7 @@ rm(p, files, nms, f)
 dir_out <- '../RetroactivelyStandardized'
 ```
 
-
-```{r acth7, eval = F}
+```{r acth7}
 acth7 <- sf::st_read(file.path(
   system.file(package="eSTZwritR"), "extdata", 'ACTH7.gpkg')
 ) |>
@@ -365,7 +362,7 @@ wrapper(acth7, SeedZone = 'zone', sci_name = 'Eriocoma_thurberiana',
         caption = 'Data from Johnson et al. 2017. https://doi.org/10.1016/j.rama.2017.01.004')
 ```
 
-```{r allium acuminatum, eval = F}
+```{r allium acuminatum}
 wrapper(x = st_read(fnames[[grep('Allium_acuminatum', fnames)]]),  
         SeedZone = 'GRIDCODE', SZName = 'ZONE', nrcs_code = 'ALAC4',
         sci_name = 'Allium_acuminatum', reclass = TRUE,
@@ -373,7 +370,7 @@ wrapper(x = st_read(fnames[[grep('Allium_acuminatum', fnames)]]),
         caption = 'Data from Johnson et al. 2013. dx.doi.org/10.1139/cjb-2013-0046')
 ```
 
-```{r Artemisia, eval = F}
+```{r Artemisia}
 wrapper(x = fnames[[grep('spp._vaseyana', fnames)]],
         SeedZone = 'GRIDCODE', nrcs_code = 'ARTRV', reclass = TRUE,
         sci_name = 'Artemisia_tridentata_spp_vaseyana', ls = FALSE,
@@ -408,7 +405,7 @@ wrapper(aslo3, SeedZone = 'assignment', sci_name = 'Astragalus_lonchocarpus',
 rm(aslo3)
 ```
 
-```{r bouteloua gracilis, eval = F}
+```{r bouteloua gracilis}
 wrapper(
   x = st_read(fnames[[grep('Bouteloua_gracilis', fnames)]]) |>
     dplyr::select(-c(Shape_Area, Shape_Leng)),
@@ -429,7 +426,7 @@ wrapper(
 ```
 
 
-```{r cleome lutea, eval = F}
+```{r cleome lutea}
 cllu2 <- st_read(fnames[[grep('Cleome_lutea', fnames)]])
 cllu2 <- rename_with(cllu2, ~ gsub("TS", "BIO4", .x))
 
@@ -441,7 +438,7 @@ wrapper(cllu2, SeedZone = 'Axis', sci_name = 'Cleomella_lutea',
 rm(cllu2)
 ```
 
-```{r cleome serrulata eval = F}
+```{r cleome serrulata}
 clse <- st_read(fnames[[grep('Cleome_serrulata', fnames)]])
 clse <- rename_with(clse, ~ gsub("TS", "BIO4", .x))
 
@@ -458,10 +455,7 @@ elel5 <- st_read(fnames[[grep('Elymus_elymoides-CP', fnames)]]) |>
 wrapper(elel5, SeedZone = 'OBJECTID', sci_name = 'Elymus_elymoides', 
         nrcs_code = 'ELEL5', reclass = TRUE,
         estz_type = 'cm', caption = 'Data from Doherty et al. 2017.')
-```
 
-
-```{r elymus elymoides GENETIC}
 elel5 <- st_read(fnames[[grep('Elymus_elymoides-WUS', fnames)]])
 
 wrapper(elel5, SeedZone = 'GRIDCODE', sci_name = 'Elymus_elymoides', 
@@ -488,7 +482,7 @@ wrapper(x = fnames[[grep('Ephedra_nevadensis', fnames)]],
         caption = 'Data from Shyrock et al. 2017. https://doi.org/10.1002/eap.1447')
 ```
 
-```{r eriocoma hymenoides, eval = F}
+```{r eriocoma hymenoides}
 wrapper(x = st_read(fnames[[grep('Eriocoma_hymenoides', fnames)]]),  
         SeedZone = 'GRIDCODE',  SZName = 'ZONE', nrcs_code = 'ACHY',
         sci_name = 'Eriocoma_hymenoides', ls = TRUE,
@@ -515,7 +509,7 @@ wrapper(x = fnames[[grep('Koeleria_macrantha', fnames)]],
         caption = 'Data from Doherty et al. 2017.')
 ```
 
-```{r leymus cinereus, eval = F}
+```{r leymus cinereus}
 wrapper(
   x = st_read(fnames[[grep('Leymus_cinereus', fnames)]]) |> dplyr::select(-c(area_ha, zone)),
   SeedZone = 'GRIDCODE', nrcs_code = 'LECI4',
@@ -534,7 +528,7 @@ wrapper(maca, SeedZone = 'Axis', sci_name = 'Dieteria_canescens',
 rm(maca)
 ```
 
-```{r Pleuraphis jamesii, eval = F}
+```{r Pleuraphis jamesii}
 plja <- st_read(fnames[[grep('Pleuraphis_jamesii', fnames)]])
 plja <- rename_with(plja, ~ gsub("Tseas", "BIO4", .x)) |>
   rename_with( ~ gsub('MAT', 'BIO1', .x)) |>
@@ -547,7 +541,7 @@ wrapper(plja, SeedZone = 'gridcode', sci_name = 'Pleuraphis_jamesii',
 rm(plja)
 ```
 
-```{r poa secunda, eval = F}
+```{r poa secunda}
 pose <- st_read(fnames[[grep('Poa_secunda', fnames)]]) |>
   select(-Area)
 
@@ -579,7 +573,7 @@ wrapper(x = fnames[[grep('Sphaeralcea_ambigua', fnames)]],
         caption = 'Data from Shyrock et al. 2017. https://doi.org/10.1002/eap.1447')
 ```
 
-```{r Sphaeralcea parvifolia surfaces, eval = F}
+```{r Sphaeralcea parvifolia surfaces}
 sppa2 <- st_read(fnames[[grep('Sphaeralcea_parvifolia', fnames)]])
 sppa2 <- rename_with(sppa2, ~ gsub("MDR", "BIO2", .x)) |>
   rename_with(~ gsub("Tseas", "BIO4", .x))|>
@@ -601,5 +595,38 @@ wrapper(spcr, SeedZone = 'gridcode', sci_name = 'Sporobolus_cryptandrus',
         nrcs_code = 'SPCR', reclass = TRUE,
         estz_type = 'cm', caption = 'Data from Doherty et al. 2017.')
 rm(spcr)
+```
+
+## Combine all vector data to form a multi-layer geopackage
+
+```{r combine vector data into single geopackage}
+p <- '../RetroactivelyStandardized'
+files <- list.files(p, recursive = TRUE, pattern = '.shp$')
+nms <- gsub('[.]shp$', '', basename(files))
+
+# first we create the file 
+st_write(
+  sf::st_transform(sf::st_read(file.path(p, files[1])), 4326), 
+  dsn = '../RetroactivelyStandardized.gpkg', 
+  layer = nms[1], 
+  append = FALSE
+)
+
+# and then we simply append each vector data set onto it. 
+for (f in seq(from = 2, to = length(files))){
+  sf::st_write(
+    sf::st_transform(
+      sf::st_read(file.path(p, files[f]), quiet = TRUE), 4326),
+    dsn = "../RetroactivelyStandardized.gpkg",
+    layer = nms[f],
+    quiet = TRUE,
+    append = TRUE)
+}
+
+rm(p, files, nms, f)
+```
+
+```{r}
+
 ```
 

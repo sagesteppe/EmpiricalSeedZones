@@ -48,12 +48,13 @@ po/*~
 # RStudio Connect folder
 rsconnect/
 
-geodata/*
+#ignore various spatial data 
 geodata/
-
 GlobalAridityIndex/
-GlobalAridityIndex/*
 RetroactivelyStandardized/
 RetroactivelyReclassified/
 eSTZs_RetroactivelyReclassified.gpkg
 eSTZs_RetroactivelyStandardized.gpkg 
+RetroactivelyStandardized.gpkg
+RetroactivelyReclassified.gpkg
+
