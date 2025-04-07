@@ -47,19 +47,6 @@ To decrease the chances of simple mistakes being introduced into plans, we devel
 # INTRODUCTION  
 ![Dissemination. The first three panels ('collections', 'common garden', 'analysis') indicate the process of developing an eSTZ, while the 'dissemination' panel showcases the need to share results so they can  inform operational seed collections, agricultural increase, and selection of materials for a restoration. Note that 'common garden' represents the act of eSTZ development, but could be replaced with molecular work to develop a genetic product, or modelling for a climate matched product. By Emily Woodworth](./figures/Wu-naut.jpg){width=75%}  
 
-
-###### new box
-Seed transfer zones are intended to increase restoration outcomes by decreasing the chances of introducing maladpted seed at a restoration site [@kramer2009plant]. 
-They are based on the empirically observed phenomenon of local adaption of large plant populations [@leimu2008meta] and aim to minimize the variation between prospective seed sources and restoration sites. 
-Provisional seed transfer zones (pSTZs) can be utilized across all vascular plants and are based on the similarity between several climate variables known to be broadly relevant to plant life in a region (e.g. in the U.S. Winter Minimum Temperature, and Annual Heat:Moisture index) [@bower2014generalized]. 
-eSTZs have the same goal as pSTZs, but are tailored for individual species, allowing for more accurate determination of zones which seed can be transferred within under existing climate regimes. 
-
-The development of seed transfer zones in the US can be traced back to the 1960's when forestry companies, which had to replant timber stands after logging, developed guidance to ensure the success of their re-plantings [@johnson2004pacific]. 
-However, it was not until the early 21^st^ century that researchers began developing STZs for other groups of plants in the US [@mckay2005local], in part due to the increasing size of large wildfires and demand for locally adapted seed [@national2023assessment] 
-Tandem to the development of STZs for non-tree species in the US has been the development of STZs in both Europe [@johnson2004pacific]. 
-
-#####
-
 Empirical seed transfer zones (eSTZs) are gaining popularity amongst restoration practitioners as a tool to help identify the most appropriate seed source for a species at a restoration site [@mckay2005local]. 
 eSTZs are becoming more widely used for two primary reasons 1) they are based on empirical data - e.g. the phenotypes in a common garden, population genetics, or the correlation between occurrences of the species and environmental variables and 2) generally their are fewer zones than provisional seed transfer zones thereby reducing the number of lineages requiring cultivation in agricultural settings. 
 While popular, the development of eSTZs for a species is a costly and time consuming process, most often involving common garden or genetic studies, with many populations from across the species range incorporated as samples [@kramer2015assessing].  
@@ -155,7 +142,7 @@ An alternative solution, which we considered for the US, is the use of ecoregion
 However, this was rejected due to the number of ecoregions (e.g. 10 conterminous US DOI regions to 20 level 2 Omernik ecoregions), and most importantly because many ecoregions are not contiguous which may lead to confusion. 
 Possible alternatives should be evaluated in light of the points above before they are selected for use. 
 
-Additionally, we believe that other countries may be able to immediately start distributing their vector data as the OGC GeoPackage ('.gpkg') files, rather than shapefiles. 
+Additionally, we believe that many other countries may be able to immediately start distributing their vector data as the OGC GeoPackage ('.gpkg') files, rather than shapefiles. 
 The GeoPackage format is a geodatabase (SQLite Database file) and open source standard which entails all data being stored in a single file (relative to the several files a shapefile requires), contains projection data, and is spatially indexed data. 
 In fact, the data associated with 'eSTZwritR' are all shared as GeoPackage files, and anecdotal evidence suggests it's utilization in US Government agencies is increasing. 
 
@@ -183,7 +170,7 @@ For a simple example, a raster with four layers would have three layers of raw m
 In the case of regression type analyses two layers could represent predictions at the lower and upper confidence intervals and the final layer a model prediction, while in the case of a classification algorithm the three classes with the highest predicted probabilities and a consensus class would be present. 
 
 We believe that conveying these uncertainties will allow users to better understand and explore the caveats with model predictions. 
-This practice is further grounded in best scientific practice as the spatial data used to develop the initial zones are imperfect representations of the modelled phenomenon itself, the study itself introduced a variety of errors, and the classification process itself is a generalization [@ascough2008future; @li20181; @lechner2012landscape]. 
+This practice is further grounded in best scientific practice as the spatial data used to develop the initial zones are imperfect representations of the modelled phenomenon itself, the study itself introduced a variety of errors, and the classification (modelling) process itself is a generalization [@ascough2008future; @li20181; @lechner2012landscape]. 
 
 A meta-analysis of genetic data sets, collected over large spatial domains in Western North America, found that the probability of mixing populations of more distantly related evolutionary lineages (i.e. different clusters, or *K*, identified by STRUCTURE analyses) increases as a function of distance between the prospective populations [@massatti2020assessment]. 
 These analyses suggest that to avoid the potential effects of outbreeding depression at a restoration site the most appropriate seed source will likely be the most proximate source, relative to a more distal source from within the same pSTZ. 
@@ -204,7 +191,7 @@ The package is installable from GitHub https://github.com/sagesteppe/eSTZwritR, 
 
 ### FOR DEVELOPERS
 The package requires only 5 functions to produce a directory with the contents discussed above, with minimal data entry. 
-Most importantly the entries are well outlined and easily entered without requiring close attention to detail, an omnipresent scenario when processing standards by hand.  
+Most importantly the entries are well outlined and easily entered without requiring close attention to detail, an omnipresent scenario when processing standards by hand. 
 
 ### FOR PRACTITIONERS
 These results should allow for simple utilization of existing empirical seed transfer zone resources. 
@@ -219,4 +206,18 @@ While these conventions should be easy to implement for a sufficiently motivated
 # ACKNOWLEDGEMENTS
 Two anonymous reviewers are thanked for their constructive comments on this manuscript. 
 
+# DATA AVAILABILITY STATEMENT
+The scored data for the analysis, and post processed eSTZ data sets are openly available on Dryad at ... (doi)... reference number ... 
+
+## Term box
+Seed transfer zones are intended to improve restoration outcomes by decreasing the chances of using maladpted seed at a restoration site [@kramer2009plant]. 
+They seek to characterize (empirically), or estimate (provisionally), local adaption and aim to minimize the variation between prospective seed sources and restoration sites [@leimu2008meta; @kramer2009plant]. 
+Provisional seed transfer zones (pSTZs) can be utilized across all vascular plants and are based on the similarity between several climate variables known to be broadly relevant to plant life in a region (e.g. in the U.S. Winter Minimum Temperature, and Annual Heat:Moisture index) [@bower2014generalized]. 
+eSTZs have the same goal as pSTZs, but are tailored for individual species, allowing for more accurate determination of zones which seed can be transferred within under existing climate regimes. 
+
+The development of seed transfer zones in the US can be traced back to the 1960's when forestry companies, which had to replant timber stands after logging, developed guidance to ensure the success of their re-plantings [@johnson2004pacific]. 
+However, it was not until the early 21^st^ century that researchers began developing STZs for other groups of plants in the US [@mckay2005local], in part due to the increasing size of large wildfires and demand for locally adapted seed [@national2023assessment] 
+Tandem to the development of STZs for non-tree species in the US has been the development of STZs in both Europe [@johnson2004pacific]. 
+
 # LITERATURE CITED  
+
