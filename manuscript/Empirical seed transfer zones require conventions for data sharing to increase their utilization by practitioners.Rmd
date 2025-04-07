@@ -2,10 +2,9 @@
 title: Empirical seed transfer zones require conventions for data sharing to increase
   their utilization by practitioners
 author: "| Reed Clark Benkendorf$^1$$^,$$^2$^[Correspondence:
-  rbenkendorf@chicagobotanic.org], Brianna Wieferich$^2$$^,$$^3$^[Authors contributed equally, and are listed alphabetically.],  \n| $^1$ Northwestern University, Evanston, Illinois
+  reedbenkendorf2021@u.northwestern.edu], Brianna Wieferich$^2$^[Authors contributed equally, and are listed alphabetically.],  \n| $^1$ Northwestern University, Evanston, Illinois
   60208 USA  \n| $^2$ Chicago Botanic Garden, 1000 Lake Cook Road, Glencoe Illinois
-  60022 USA  \n| $^3$ Dorena Genetic Resource Center, 34963 Shoreview Dr, Cottage
-  Grove, Oregon 97424 USA  \n"
+  60022 USA  \n"
 abstract: "\\noindent \nEmpirical seed transfers zones (eSTZs) are being developed
   more often to help guide both the agricultural development of native plant
   materials, and the selection of these materials for restoration projects. Despite
@@ -38,7 +37,7 @@ header-includes:
 
 ## IMPLICATIONS FOR PRACTICE:
 
-- Developing a restoration plan in a short time period, as required after a natural disturbance, can be a stressful process. 
+- Developing a restoration plan in a short time period, as required after a natural disturbance, can be a difficult process. 
 To decrease the chances of simple mistakes being introduced into plans, we develop standards to increase the consistency between eSTZ data products making their usage in GIS software more consistent.  
 
 - We implement these suggestions in an R package ‘[eSTZwritR](https://sagesteppe.github.io/eSTZwritR/)’ which should facilitate adherence to the guidelines for scientists developing eSTZ products, allowing for a rapid uptake of these conventions.  
@@ -50,23 +49,23 @@ To decrease the chances of simple mistakes being introduced into plans, we devel
 
 
 ###### new box
-Seed transfer zones are intended to increase restoration outcomes by decreasing the chances of introducing maladpted seed at a restoration site. 
-They are based on the empirically observed phenomenon of local adaption of large plant populations (@leimu2008meta) and aim to minimize the variation between prospective seed sources and restoration sites. 
-Provisional seed transfer zones (pSTZs) can be utilized across all vascular plants and are based on the similarity between several climate variables known to be broadly relevant to plant life in a region (e.g. in the U.S. Winter Minimum Temperature, and Annual Heat:Moisture index) (@bower2014generalized). 
-eSTZs have the same goal as pSTZs, but treat each individual species independently, allowing for more accurate determination of zones which seed can be transferred within under existing climate regimes. 
+Seed transfer zones are intended to increase restoration outcomes by decreasing the chances of introducing maladpted seed at a restoration site [@kramer2009plant]. 
+They are based on the empirically observed phenomenon of local adaption of large plant populations [@leimu2008meta] and aim to minimize the variation between prospective seed sources and restoration sites. 
+Provisional seed transfer zones (pSTZs) can be utilized across all vascular plants and are based on the similarity between several climate variables known to be broadly relevant to plant life in a region (e.g. in the U.S. Winter Minimum Temperature, and Annual Heat:Moisture index) [@bower2014generalized]. 
+eSTZs have the same goal as pSTZs, but are tailored for individual species, allowing for more accurate determination of zones which seed can be transferred within under existing climate regimes. 
 
-The development of seed transfer zones in the US can be traced back to the 1960's when forestry companies, which had to replant timber stands after logging, developed guidance to ensure the success of their re-plantings (@johnson2004pacific). 
-However, it was not until the early 21^st^ century that researchers began developing STZs for other groups of plants in the US (@mckay2005local), in part due to the increasing size of large wildfires and demand for locally adapted seed (CITE). 
-Tandem to the development of STZs for non-tree species in the US has been the development of STZs in Europe. 
+The development of seed transfer zones in the US can be traced back to the 1960's when forestry companies, which had to replant timber stands after logging, developed guidance to ensure the success of their re-plantings [@johnson2004pacific]. 
+However, it was not until the early 21^st^ century that researchers began developing STZs for other groups of plants in the US [@mckay2005local], in part due to the increasing size of large wildfires and demand for locally adapted seed [@national2023assessment] 
+Tandem to the development of STZs for non-tree species in the US has been the development of STZs in both Europe [@johnson2004pacific]. 
 
 #####
 
 Empirical seed transfer zones (eSTZs) are gaining popularity amongst restoration practitioners as a tool to help identify the most appropriate seed source for a species at a restoration site [@mckay2005local]. 
-eSTZs are popular for two primary reasons 1) they are based on empirical data - e.g. the phenotypes in a common garden, population genetics, or the correlation between occurrences of the species and environmental variables and 2) generally the zones are more coarse than provisional seed transfer zones thereby reducing the number of lineages requiring cultivation in agricultural settings. 
+eSTZs are becoming more widely used for two primary reasons 1) they are based on empirical data - e.g. the phenotypes in a common garden, population genetics, or the correlation between occurrences of the species and environmental variables and 2) generally their are fewer zones than provisional seed transfer zones thereby reducing the number of lineages requiring cultivation in agricultural settings. 
 While popular, the development of eSTZs for a species is a costly and time consuming process, most often involving common garden or genetic studies, with many populations from across the species range incorporated as samples [@kramer2015assessing].  
 
 In western North America, the majority of eSTZs have been developed by just a couple of lab groups, whilst the remainder have been developed by other assorted groups. 
-While practices for developing eSTZs are becoming more defined, to our knowledge no standards exist for *sharing* the results of eSTZs (CITATION TABLE). 
+While practices for developing eSTZs are becoming more defined, to our knowledge no standards exist for *sharing* the results of eSTZs (Supplemental 1). 
 Despite eSTZs being produced by a relatively small pool of lab groups and individuals, inconsistencies vary across the spatial data products used to report eSTZs.  
 
 The success of a restoration project relies on the timely application of techniques which are suitable for the site at hand. 
@@ -76,7 +75,7 @@ However, ideas have varying levels of complexity which may hinder their transmit
 For example seeding rates may be verbally communicated, while seed mixes are likely to require written documentation, whereas spatial data require both written and geographic data (e.g. coordinates and relations between them) in the form of spatial data products (e.g. rasters, shapefiles) to accurately convey their meaning. 
 Given the relative complexity of communicating precise spatial information standards should exist to ensure not only its accuracy and precision, but also the ease by which it can be interpreted and used. 
 
-Using 23 sets of eSTZs produced for 22 taxa, we show that most of the spatial data developed and disseminated, to share the results of an eSTZ, are inconsistent ([@doherty2017matching], [@erickson2004landscape], [@johnson2016linking], [@johnson2010mapping], [@bradley2013genetic], [@johnson2015relating], [@johnson2013genecology],  [@johnson2012genecology],  [@horning2010genecology], [@johnson2017genecology], [@shryock2017landscape], [@massatti2019genetically], [@richardson2018climate], [@massatti2022spatially]). 
+Using 23 sets of eSTZs produced for 22 taxa, we show that most of the spatial data developed and disseminated, to share the results of an eSTZ, are inconsistent (Supplemental 1). 
 We have already observed significant hindrances to the uptake of these data at the level of practitioners, and search for consensus within these data. 
 Subsequently, using any consensus (wisdom of the masses) from these data, combined with standard conventions of data sharing, we present a set of guiding standards for researchers in the United States to employ in making results more consistent. 
 
@@ -145,24 +144,23 @@ We propose that semi-informative names should be developed before data distribut
 
 In addition to these standard field naming and placement conventions, we further recommend a series of standards for the contents within these essential fields, and how to format any additional fields relevant to the project (see package website).  
 
-
 ## Adapting our Proposals to other Regions
-We believe that the core set of our proposals are readily adaptable in a variety of regions globally.  
+We believe that our core set of our proposals are readily adaptable in a variety of regions globally.  
 However, some scoping is required to ensure seamless implementation. 
 Notably our suggestions for file names contains three parts, two of which are specific to data sources which are limited in scope to the United States. 
 The first of these are the use of a set of abbreviated codes which reliably identify a plant taxon ('NRCS PLANTS code'). 
 
 The second is the use of administrative ('DOI') regions for denoting a general geographic area which the specific product covers. 
 An alternative solution, which we considered for the US, is the use of ecoregions. 
-However, this was rejected due to the number of ecoregions (e.g. 10 conterminous US DOI regions to 20??? level 2 Omernik ecoregions), and most importantly because many ecoregions are not contiguous which may lead to confusion. 
+However, this was rejected due to the number of ecoregions (e.g. 10 conterminous US DOI regions to 20 level 2 Omernik ecoregions), and most importantly because many ecoregions are not contiguous which may lead to confusion. 
 Possible alternatives should be evaluated in light of the points above before they are selected for use. 
 
 Additionally, we believe that other countries may be able to immediately start distributing their vector data as the OGC GeoPackage ('.gpkg') files, rather than shapefiles. 
 The GeoPackage format is a geodatabase (SQLite Database file) and open source standard which entails all data being stored in a single file (relative to the several files a shapefile requires), contains projection data, and is spatially indexed data. 
 In fact, the data associated with 'eSTZwritR' are all shared as GeoPackage files, and anecdotal evidence suggests it's utilization in US Government agencies is increasing. 
 
-While we suggest that seed zones have numeric representations which follow a decreasing pattern in aridity, i.e. 1 is the most dry zone, these may not be a large enough concern to warrant any consideration (CITE RESTORATION BRUTAL DUE TO HEAT). 
-Rather another focus on restoration success may be more suitable. 
+For the US we suggest that seed zones have numeric representations following a generally decreasing pattern in aridity, this is because the success of restorations oftentimes follows this gradient [@shriver2018adapting]. 
+However, in other regions other climate conditions may be more important drivers of restoration outcomes, and they should be used instead of this variable. 
 
 # Estimating Uncertainty
 
@@ -179,23 +177,23 @@ Whereas raster data, or gridded surfaces, are used for representing continuous p
 Common examples of raster data usages include climate variables, land cover classes, and predictions of modelled species habitat suitability.
 
 While we agree with the consensus that vector data are generally the best method of distributing data, given the number of times we have observed classification confusion we believe the inclusion of raster data is always warranted. 
-Raster data have an additional benefit that they can intuitively incorporate multiple layers (a 'raster stack') for each of their pixels. 
+Raster data have an additional benefit that they can intuitively incorporate multiple layers (a 'raster stack') for each of their pixels (although this functionality is easily achievable with geopackages). 
 Thus allowing for a first layer of consensus predictions (the data conveyed in a vector data set), and other levels of raw predictions. 
-For example, a raster with four layers would have three layers of raw model output while the final layer is a consensus of these products. 
+For a simple example, a raster with four layers would have three layers of raw model output while the final layer is a consensus of these products. 
 In the case of regression type analyses two layers could represent predictions at the lower and upper confidence intervals and the final layer a model prediction, while in the case of a classification algorithm the three classes with the highest predicted probabilities and a consensus class would be present. 
 
-We believe that conveying these uncertainties will allow users to understand and explore the caveats with model predictions. 
-This practice is further grounded in best scientific practice as the spatial data used to develop the initial zones are imperfect, the study itself was imperfect, and the classification process is itself imperfect. 
+We believe that conveying these uncertainties will allow users to better understand and explore the caveats with model predictions. 
+This practice is further grounded in best scientific practice as the spatial data used to develop the initial zones are imperfect representations of the modelled phenomenon itself, the study itself introduced a variety of errors, and the classification process itself is a generalization [@ascough2008future; @li20181; @lechner2012landscape]. 
 
-*ELABORATE ON CONTINUOUS HERE.*
+A meta-analysis of genetic data sets, collected over large spatial domains in Western North America, found that the probability of mixing populations of more distantly related evolutionary lineages (i.e. different clusters, or *K*, identified by STRUCTURE analyses) increases as a function of distance between the prospective populations [@massatti2020assessment]. 
+These analyses suggest that to avoid the potential effects of outbreeding depression at a restoration site the most appropriate seed source will likely be the most proximate source, relative to a more distal source from within the same pSTZ. 
+This work provides a strong foundation to support restoration ecologists in leaning towards using closer, rather than further away seed sources even if they are located within the same seed zone; combining the above findings with metrics of uncertainty from eSTZ classifications may further bolster decision making. 
 
-A metanalysis of genetic data sets, collected over large spatial domains in Western North America, found that the probability of mixing populations of more distantly related evolutionary lineages (i.e. different clusters, or *K*, identified by STRUCTURE analyses) increases as a function of distance between the prospective populations [@massatti2020assessment]. 
-These analyses found that to avoid the potential effects of outbreeding depression at a restoration site the most appropriate seed source will likely be the most proximate source, relative to a more distal source from within the same pSTZ. 
-This work provides a strong foundation to support restoration ecologists in leaning towards using closer, rather than further away seed sources; combining the above findings with metrics of uncertainty from eSTZ classifications may further bolster decision making. 
-
-The use of raster surfaces are already implemented in the Seedlot Selection and Climate-Smart Restoration Tool, which blends attributes of both pSTZs and eSTZs, or can be used to select the most appropriate eSTZ based seed source factoring in observed and forecast (e.g. RCP pathways) climatic values and custom functions (@st2022seedlot). 
+The use of raster surfaces are already implemented in the Seedlot Selection and Climate-Smart Restoration Tool, which blends attributes of both pSTZs and eSTZs, or can be used to select the most appropriate eSTZ based seed source factoring in observed and forecast (e.g. RCP pathways) climatic values and custom functions [@st2022seedlot]. 
 These tools offer both an alternative format for guiding native germplasm development (e.g. spatially where should germplasm be developed from?) via gap analysis, and especially for choosing a priority seed source for a restoration when multiple are available.  
-However, ...
+However, one drawback of the existing implementation of these tools is that they calculate climate similarity from a single focal cell, e.g. a restoration site, to the entire surface. 
+In many instances seed lot's need to be developed before a restoration site is known, for example in the case of severe disturbances (e.g. wildfires). 
+By combining the development of seed sources within zones, which allows for seed availability, with the Climate-Smart Restoration Tool to evaluate potential options after a natural disaster may lead to the most pragmatic decisions.  
 
 # IMPLEMENTATION
 
