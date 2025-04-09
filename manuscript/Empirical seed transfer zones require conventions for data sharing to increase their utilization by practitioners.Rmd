@@ -19,7 +19,7 @@ abstract: "\\noindent \nEmpirical seed transfers zones (eSTZs) are being develop
    Finally, we briefly introduce an R package eSTZwritR ('easy rider') which implements
   our core suggestions for data dissemination.\n"
 output:
-#  word_document: default
+  word_document: default
   pdf_document: default
   toc: false
   figsintext: false
@@ -178,7 +178,7 @@ This work provides a precedent which supports restoration ecologists in leaning 
 The use of raster surfaces are already implemented in the Seedlot Selection Tool and Climate-Smart Restoration Tool, which blend attributes of pSTZs and eSTZs, or can be used to select the most appropriate eSTZ based seed source factoring in observed and forecast (e.g. RCP pathways) climatic values and custom functions [@st2022seedlot]. 
 These tools offer both an alternative format for guiding native germplasm development (e.g. spatially where should germplasm be developed from?) via gap analysis, and especially for choosing a priority seed source for a restoration when multiple are available. 
 However, one drawback of the existing implementation of these tools is that they calculate climate similarity from a single focal cell, e.g. a restoration site, to the entire surface. 
-In many instances seed lot's need to be developed *before* a restoration site is known, for example in the case of severe disturbances (e.g. wildfires). 
+In many instances seed lots need to be developed *before* a restoration site is known, for example in the case of reseeding severe disturbances (e.g. wildfires). 
 Combining the development of seed sources within zones, which allows for decision making to develop seed availability, with the Climate-Smart Restoration Tool to select potential seed source options after a natural disaster may lead to the most pragmatic decisions.  
 
 # IMPLEMENTATION
