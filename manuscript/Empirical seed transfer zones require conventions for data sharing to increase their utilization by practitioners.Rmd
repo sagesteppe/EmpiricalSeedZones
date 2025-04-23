@@ -19,20 +19,20 @@ abstract: "\\noindent \nEmpirical seed transfer zones (eSTZs) are being develope
    Finally, we briefly introduce the R package eSTZwritR ('easy rider'), which implements
   our core suggestions for data dissemination.\n"
 output:
-  word_document: default
   pdf_document: default
   toc: false
   figsintext: false
 orcid: "Reed Benkendorf https://orcid.org/0000-0003-3110-6687"
 csl: "./restoration-ecology.csl"
 bibliography: ./citations.bib
+citation_package: biblatex
 link-citations: true
 fig_caption: true
 header-includes:
-- \usepackage{endfloat}
-- \usepackage{setspace}\doublespacing
-- \usepackage{lineno}
-- \linenumbers
+  - \usepackage[markers]{endfloat}
+  - \usepackage{setspace}\doublespacing
+  - \usepackage{lineno}
+  - \linenumbers
 ---
 
 ## IMPLICATIONS FOR PRACTICE:
@@ -213,5 +213,15 @@ The development of seed transfer zones in the US can be traced back to the 1960s
 However, it was not until the early 21^st^ century that researchers began developing STZs for other groups of plants in the US [@mckay2005local], in part because of the increasing size of large wildfires and demand for locally adapted seeds [@national2023assessment]."
 **Tandem to the development of STZs for non-tree species in the US has been the development of STZs in both Europe [@johnson2004pacific].* 
 
-# LITERATURE CITED  
+\singlespacing  
+
+# LITERATURE CITED
+
+<div id="refs"></div>
+
+# FIGURES 
+
+\clearpage
+\processdelayedfloats
+\clearpage
 

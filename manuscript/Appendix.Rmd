@@ -1,0 +1,7 @@
+---
+output:
+  pdf_document: default
+  toc: false
+---
+
+![All data sets scored.](./figures/eSTZ_Product_Appendix.png){width=100%}
