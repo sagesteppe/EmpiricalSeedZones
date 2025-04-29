@@ -1,0 +1,57 @@
+---
+output:
+  pdf_document: default
+header-includes: \pagenumbering{gobble}
+---
+
+\vspace{25truemm}
+
+\large
+
+Ricardo Augusto Gorne Viani
+*Restoration Ecology*  
+
+\vspace{5truemm}
+
+April 29^th^ 2025
+
+\vspace{5truemm}
+
+Dear Ricardo, 
+\vspace{4truemm}
+  
+I am pleased to be submitting the revisions for *Empirical seed transfer zones require conventions for data sharing to increase their utilization by practicioners* (running title *eSTZ data conventions*) to Restoration Ecology as a Practice and Technical article. 
+
+\vspace{4truemm}  
+
+You will find that cosmetically this piece has been dramatically altered. 
+The entire manuscript underwent heavy editing for grammar and style, has been revised to fit the format for a Practice and Technical article, includes new sections detailing what an STZ is ('Definitions Box 1'), how our approach can be adapted globally, and the movement of all scored data sets into an appendix ('eSTZ Product Appendix'). 
+Two additional and related set of analyses ('Ecoregions and DOIregions', 'Number STZ compare Prov2Emp') were performed in consideration of one reviewers opinions; our results, interpretations, and suggestions are unchanged. 
+We have also attached our responses to the reviewers and editor ('Reviewer Comments'). 
+
+\vspace{4truemm}
+
+We are not submitting a track changed document as per the new Wiley portal. 
+Their is one reason for this: 1) We do not use a word editor like Microsoft Word for writing content, rather we use Rmarkdown and LaTeX, and version control software 'git' which actually records all changes to the documents (Pereira Braga et al. 2023). 
+The repositories detailing all changes to the manuscript and reviewer comments are linked in the Author response file, 'Changes Are Logged in Git'.
+Additionally in the spirit of reproducible research our processed data sets and scored data have been submitted to Dryad, and are under review (a URL to them are in the manuscript). 
+Please note that our responses to reviewers were filled out before the editing services were performed, so our final phrasing may vary, but the content should be accurate.  
+
+\vspace{4truemm}
+
+While it may seem like our changes have been substantive, I reiterate modifications have essentially been made to grammar and structure alone, leaving the core ideas untouched. 
+
+We have no conflicts of interest to disclose. 
+
+\vspace{4truemm}
+
+Please address any correspondence regarding this manuscript to me via the email provided. 
+Please note that both authors were in contracts with the US federal government and are now in new unrelated positions, and will be slow to respond. 
+Author affiliations have been updated accordingly, and we propose a move from my contact @chicagobotanic.org to the @u.northwestern.edu email below. 
+
+\vspace{12truemm}
+
+Sincerely,  
+Reed Clark Benkendorf    
+reedbenkendorf2021@u.northwestern.edu   
+Chicago Botanic Garden   
