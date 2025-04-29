@@ -23,8 +23,8 @@ output:
   toc: false
   figsintext: false
 orcid: "Reed Benkendorf https://orcid.org/0000-0003-3110-6687"
-csl: "./restoration-ecology.csl"
-bibliography: ./citations.bib
+csl: "./citations/restoration-ecology.csl"
+bibliography: ./citations/citations.bib
 citation_package: biblatex
 link-citations: true
 fig_caption: true
