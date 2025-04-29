@@ -1,0 +1,23 @@
+---
+title: Definitions Box 1
+output:
+  word_document: default
+  pdf_document: default
+  toc: false
+  figsintext: false
+orcid: "Reed Benkendorf https://orcid.org/0000-0003-3110-6687"
+csl: "./restoration-ecology.csl"
+bibliography: ./citations.bib
+citation_package: biblatex
+link-citations: true
+---
+
+Seed transfer zones are intended to improve restoration outcomes by decreasing the chances of using maladapted seeds at a restoration site [@kramer2009plant].
+They seek to characterize (empirically) or estimate (provisionally) local adaptation and aim to minimize the variation between prospective seed sources and restoration sites [@leimu2008meta; @kramer2009plant]. 
+Provisional seed transfer zones (pSTZs) can be utilized across all vascular plants and are based on the similarity between several climate variables known to be broadly relevant to plant life in a region (e.g., in the US). Winter Minimum Temperature, and Annual Heat:Moisture index) [@bower2014generalized]. 
+eSTZs have the same goal as pSTZs but are tailored for individual species, allowing for more accurate determination of zones in which seeds can be transferred under existing climate regimes.  
+
+The development of seed transfer zones in the US can be traced back to the 1960s when forestry companies, which had to replant timber stands after logging, developed guidance to ensure the success of their re-plantings [@johnson2004pacific].
+However, it was not until the early 21^st^ century that researchers began developing STZs for other groups of plants in the US [@mckay2005local], in part because of the increasing size of large wildfires and demand for locally adapted seeds [@national2023assessment]. 
+
+# Referencess
